@@ -24,18 +24,18 @@ root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
 
 EXP_ID=13
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
-LANG = "ru"
-test_on = "wmt${SLURM_ARRAY_TASK_ID}"
+lang = "ru"
+test_set= "wmt${SLURM_ARRAY_TASK_ID}"
 checkpoint = $ROOT_DIR/models/google/microsoft-deberta-v3-large_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-1600
 arch="microsoft/deberta-v3-large"
-logfile="${root_dir}/results/${LANG}/${test_on}/eval_seed=${SLURM_ARRAY_TASK_ID}.out"
+logfile="${ROOT_DIR}/results/${lang}/${test_set}/eval_seed=${SLURM_ARRAY_TASK_ID}.out"
 
 cd $HOME/HT-vs-MT/
 python classifier_trf.py \
 --root_dir $ROOT_DIR \
 --arch $arch \
---test_on $test
---test_on_language $LANG
+--test $test_set
+--test_on_language $lang
 --load_model $checkpoint
 &> $logfile
 
