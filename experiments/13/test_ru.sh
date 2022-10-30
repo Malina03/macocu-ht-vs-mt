@@ -22,7 +22,7 @@ EXP_ID=13
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 lang = "ru"
 test_on = "google"
-checkpoint = $ROOT_DIR/models/google/microsoft-deberta-v3-large_lr\=1e-05_bsz\=32_epochs\=5_seed\=1/checkpoint-1600
+checkpoint = $ROOT_DIR/models/google/microsoft-deberta-v3-large_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-1600
 arch="microsoft/deberta-v3-large"
 logfile="${root_dir}/results/${lang}/${test_on}/eval_seed=${SLURM_ARRAY_TASK_ID}.out"
 
