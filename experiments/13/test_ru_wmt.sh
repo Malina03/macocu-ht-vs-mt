@@ -34,8 +34,8 @@ cd $HOME/HT-vs-MT/
 python classifier_trf.py \
 --root_dir $ROOT_DIR \
 --arch $arch \
---test $test_set
---test_on_language $lang
---load_model $checkpoint
+--test $test_set \
+--test_on_language $lang \
+--load_model $checkpoint \
 &> $logfile
 
