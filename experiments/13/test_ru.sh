@@ -20,17 +20,17 @@ source /data/$USER/.envs/macocu/bin/activate
 
 EXP_ID=13
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
-LANG = "ru"
+lang = "ru"
 test_on = "google"
 checkpoint = $ROOT_DIR/models/google/microsoft-deberta-v3-large_lr\=1e-05_bsz\=32_epochs\=5_seed\=1/checkpoint-1600
 arch="microsoft/deberta-v3-large"
-logfile="${root_dir}/results/${LANG}/${test_on}/eval_seed=${seed}.out"
+logfile="${root_dir}/results/${lang}/${test_on}/eval_seed=${SLURM_ARRAY_TASK_ID}.out"
 
 cd $HOME/HT-vs-MT/
 python classifier_trf.py \
 --root_dir $ROOT_DIR \
 --arch $arch \
 --test_on $test
---test_on_language $LANG
+--test_on_language $lang
 --load_model $checkpoint
 &> $logfile

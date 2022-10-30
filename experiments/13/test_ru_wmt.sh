@@ -28,7 +28,7 @@ LANG = "ru"
 test_on = "wmt${SLURM_ARRAY_TASK_ID}"
 checkpoint = $ROOT_DIR/models/google/microsoft-deberta-v3-large_lr\=1e-05_bsz\=32_epochs\=5_seed\=1/checkpoint-1600
 arch="microsoft/deberta-v3-large"
-logfile="${root_dir}/results/${LANG}/${test_on}/eval_seed=${seed}.out"
+logfile="${root_dir}/results/${LANG}/${test_on}/eval_seed=${SLURM_ARRAY_TASK_ID}.out"
 
 cd $HOME/HT-vs-MT/
 python classifier_trf.py \
