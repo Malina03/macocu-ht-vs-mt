@@ -27,7 +27,7 @@ arch="microsoft/deberta-v3-large"
 logfile="${ROOT_DIR}/results/ru/google/eval_seed=${SLURM_ARRAY_TASK_ID}.out"
 
 cd $HOME/HT-vs-MT/
-python classifier_trf.py \
+python classifier_trf_hf.py \
 --root_dir $ROOT_DIR \
 --arch $arch \
 --test $test_set \
