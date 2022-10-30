@@ -7,6 +7,88 @@ from transformers import AutoTokenizer
 from util import HFDataset
 
 
+
+
+ 
+
+def load_language_tests(args, phase, split_docs_by_sentence=False):
+    """
+    Load sentence-label pairs from disk.
+
+    Args:
+        args: arguments as processed by parse_args()
+        phase: phase for which data should be loaded
+        split_docs_by_sentence: whether to split documents into sentences for the
+            purpose of majority classification
+    Returns:
+        HFDataset returning sentence-label pairs
+    """
+
+    if phase != 'test':
+        raise ValueError("Phase should be 'test'")
+    
+    if args.use_normalized_data:
+        raise NotImplementedError()
+
+    if not args.test_on_language:
+        raise ValueError("A language has to be specified")
+    
+    apdx = args.test_on_language
+    apdx_name = apdx + '-en'
+    print(f"=> Loading {phase} corpus for {apdx} ...")
+
+    corpus_data = []
+    root_dir = Path(args.root_dir).resolve()
+
+    mt_name = args.test
+
+    if mt_name.startswith("wmt"):
+        mt = "wmt_submissions"
+        paths = {
+            0: list((root_dir / f"data/{mt}/{phase}/{apdx_name}/{mt_name}/").glob("*.txt")),
+            1: (
+                list((root_dir / f"data/{mt}/{phase}/{apdx_name}/{mt_name}/").glob("*.wmt"))
+            ),
+        }  # all the text files per class
+    else:
+        paths = {
+            0: list((root_dir / f"data/{mt}/{phase}/{apdx_name}/").glob("*.txt")),
+            1: (
+            list((root_dir / f"data/{mt}/{phase}/{apdx_name}").glob("*.deepl.en"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx_name}").glob("*.en.google"))
+            ),
+        }  # all the text files per class
+    print(paths)
+    assert (
+        len(paths[0]) != 0 and len(paths[1]) != 0
+    ), f"{len(paths[0])}, {len(paths[1])}"
+
+    idx_to_docid = dict() if split_docs_by_sentence else None
+    doc_id = 0
+    for label, path_lst in paths.items():
+        for path in path_lst:
+            with open(path, encoding="utf-8") as corpus:
+                for line in corpus:
+                    if split_docs_by_sentence:
+                        # In this case, a single line contains a full document.
+                        for seg in line.split(". "):
+                            corpus_data.append([f"{seg.rstrip()}.", label])
+                            idx_to_docid[len(corpus_data) - 1] = doc_id
+                    else:
+                        corpus_data.append([line.rstrip(), label])
+                    doc_id += 1
+    sents, labels = zip(*corpus_data)
+    sents = list(sents)
+
+    # Encode the sentences using the HuggingFace tokenizer.
+    tokenizer = AutoTokenizer.from_pretrained(
+        args.arch, model_max_length=args.max_length
+    )
+    sents_enc = tokenizer(sents, padding=True, truncation=True)
+    return HFDataset(sents_enc, labels), idx_to_docid
+
+
+
 def load_corpus(args, phase, split_docs_by_sentence=False):
     """
     Load sentence-label pairs from disk.

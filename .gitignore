@@ -3,3 +3,4 @@ __pycache__
 tags
 TODO.txt
 env
+experiments/13/data/*

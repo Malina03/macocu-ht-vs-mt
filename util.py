@@ -198,6 +198,14 @@ def parse_args_hf():
         "monolingual sentences",
     )
     parser.add_argument(
+        "--test_on_language",
+        type=str,
+        nargs = '?',
+        choices = ["de", "fi", "gu", "kk", "lt", "ru", "zh"],
+        help="Test a classifier on test sets from different lanuages"
+        "from the WMT 19 news dataset.",
+    )
+    parser.add_argument(
         "--use_majority_classification",
         action="store_true",
         help="Make predictions by predicting each segment in a "
@@ -211,11 +219,12 @@ def parse_args_hf():
         choices=["deepl", "google", "wmt1", "wmt2", "wmt3", "wmt4"],
         help="Test a classifier on one of the test sets. For WMT "
         "submissions there are 4 options, originating from the "
-        "WMT 19 test set. Along with their DA scores:"
-        "- wmt1: Facebook-FAIR (best, 81.6)"
-        "- wmt2: RWTH-Aachen (2nd best, 81.5)"
-        "- wmt3: PROMPT-NMT (2nd worst, 71.8)"
-        "- wmt4: online-X (worst, 69.7)",
+        "WMT 19 test sets, for each language."
+        "For exact systems: https://www.statmt.org/wmt19/pdf/53/WMT01.pdf "
+        "- wmt1: best system"
+        "- wmt2: 2nd best system"
+        "- wmt3: 2nd worst system"
+        "- wmt4: worst system",
     )
     parser.add_argument(
         "--eval", action="store_true", help="Evaluate on dev set using a trained model"
