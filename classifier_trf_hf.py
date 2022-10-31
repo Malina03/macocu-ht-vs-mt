@@ -60,7 +60,7 @@ def main():
         eval_data = load_corpus_sentence_pairs(args, test_or_dev)
 
     elif args.test_on_language:
-        # train_data, _ = load_corpus(args, "train")
+        train_data, _ = load_corpus(args, "train")
         eval_data, idx_to_docid = load_language_tests(
             args, 'test', split_docs_by_sentence=args.use_majority_classification
         )
