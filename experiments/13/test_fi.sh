@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='13_test_de'
+#SBATCH --job-name='13_test_fi'
 #SBATCH --partition=gpushort
 #SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
@@ -23,7 +23,7 @@ lang="fi"
 test_set="google"
 checkpoint=${ROOT_DIR}/models/google/microsoft-deberta-v3-large_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-1600
 arch="microsoft/deberta-v3-large"
-logdir="${ROOT_DIR}/results/${lang}/wmt${SLURM_ARRAY_TASK_ID}/"
+logdir="${ROOT_DIR}/results/${lang}/${test_set}/"
 logfile"${logdir}/eval_seed=${SLURM_ARRAY_TASK_ID}.out"
 mkdir -p $logdir
 
