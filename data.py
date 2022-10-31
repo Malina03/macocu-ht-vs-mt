@@ -51,6 +51,7 @@ def load_language_tests(args, phase, split_docs_by_sentence=False):
             ),
         }  # all the text files per class
     else:
+        mt = mt_name
         paths = {
             0: list((root_dir / f"data/{mt}/{phase}/{apdx_name}/").glob("*.txt")),
             1: (
