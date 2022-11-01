@@ -88,16 +88,24 @@ def main():
             model_name, num_labels=2, classifier_dropout=args.dropout
         )
         if args.load_sentence_pairs:
-            model = BilingualSentenceClassifier(
-                XLMRobertaModel.from_pretrained(
-                    model_name,
-                    config=config,
-                    local_files_only=False,
-                    add_pooling_layer=False,
-                ),
-                config.hidden_size,
-                dropout=args.dropout,
-            )
+            if args.load_sentence_pairs == 'mean_embedding':
+                model = BilingualSentenceClassifier(
+                    XLMRobertaModel.from_pretrained(
+                        model_name,
+                        config=config,
+                        local_files_only=False,
+                        add_pooling_layer=False,
+                    ),
+                    config.hidden_size,
+                    dropout=args.dropout,
+                )
+            elif args.load_sentence_pairs == 'default':
+                model = XLMRobertaModel.from_pretrained(
+                        model_name,
+                        config=config,
+                        local_files_only=False,
+                        add_pooling_layer=False,
+                    )
         else:
             model = AutoModelForSequenceClassification.from_pretrained(
                 model_name, config=config, local_files_only=False

@@ -180,7 +180,9 @@ def parse_args_hf():
     parser.add_argument("--max_length", type=int, default=1e30)
     parser.add_argument(
         "--load_sentence_pairs",
-        action="store_true",
+        type=str,
+        nargs = '?',
+        choices = ["default", "mean_embeddings"],
         help="Set this flag to classify HT vs. MT for "
         "source/translation pairs, rather than just "
         "translations.",
