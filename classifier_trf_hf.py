@@ -13,7 +13,7 @@ from transformers import (
 )
 
 from data import load_corpus, load_corpus_sentence_pairs, load_language_tests
-from models import BilingualSentenceClassifier
+from models import BilingualSentenceClassifier, SimpleBilingualSentenceClassifier
 from util import get_training_arguments, compute_metrics, parse_args_hf
 
 
@@ -100,12 +100,9 @@ def main():
                     dropout=args.dropout,
                 )
             elif args.load_sentence_pairs == 'default':
-                model = XLMRobertaForSequenceClassification.from_pretrained(
-                        model_name,
-                        config=config,
-                        local_files_only=False,
-                        add_pooling_layer=False,
-                    )
+                model = AutoModelForSequenceClassification.from_pretrained(
+                    model_name, config=config, local_files_only=False
+                )
         else:
             model = AutoModelForSequenceClassification.from_pretrained(
                 model_name, config=config, local_files_only=False
