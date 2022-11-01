@@ -13,7 +13,7 @@ from transformers import (
 )
 
 from data import load_corpus, load_corpus_sentence_pairs, load_language_tests
-from models import BilingualSentenceClassifier, SimpleBilingualSentenceClassifier
+from models import BilingualSentenceClassifier
 from util import get_training_arguments, compute_metrics, parse_args_hf
 
 
