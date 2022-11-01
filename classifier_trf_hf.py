@@ -100,7 +100,7 @@ def main():
                     dropout=args.dropout,
                 )
             elif args.load_sentence_pairs == 'default':
-                model = XLMRobertaModel.from_pretrained(
+                model = XLMRobertaForSequenceClassification.from_pretrained(
                         model_name,
                         config=config,
                         local_files_only=False,
