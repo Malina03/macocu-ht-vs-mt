@@ -28,6 +28,7 @@ if [ $trained_on == "google" ]; then
     ckpt=1600
 else
     ckpt=1800
+fi
 
 checkpoint=${ROOT_DIR}/models/${trained_on}/${arch}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-${ckpt}
 
