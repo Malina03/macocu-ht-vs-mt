@@ -20,9 +20,16 @@ source /data/$USER/.envs/macocu/bin/activate
 EXP_ID=13
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
-trained_on="google"
+#trained_on="google"
+trained_on="deepl"
 arch="microsoft/deberta-v3-large"
-checkpoint=${ROOT_DIR}/models/${trained_on}/${arch}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-1600
+
+if [ $trained_on == "google" ]; then
+    ckpt=1600
+else
+    ckpt=1800
+
+checkpoint=${ROOT_DIR}/models/${trained_on}/${arch}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-${ckpt}
 
 languages=( "de" "fi" "gu" "kk" "lt" "ru" "zh" )
 sets=( "google" "wmt1" "wmt2" "wmt3" "wmt4" )
