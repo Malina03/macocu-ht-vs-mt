@@ -42,7 +42,7 @@ else
     flags=""
 fi
 
-log_model_name="${arch}_no_pairs"
+log_model_name="xlm-roberta-no-pairs"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}_lr=${learning_rate}_bsz=${bsz}_seed=${seed}/"

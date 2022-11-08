@@ -7,8 +7,9 @@
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=m.chichirau@student.rug.nl
 #SBATCH --array=2-3
-
 
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
 export WANDB_DISABLED=true  # for some reason this is necessary
@@ -19,7 +20,7 @@ seed=${SLURM_ARRAY_TASK_ID}
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
-source $HOME/activate_py3.8.6
+source /data/$USER/.envs/macocu/bin/activate
 
 # Hyper-parameters
 arch="xlm-roberta-base"
@@ -49,13 +50,13 @@ mkdir -p $logdir
 
 # Copy source code
 mkdir -p $logdir/src
-cp $HOME/MaCoCu/student_project_mt_ht/classifier_trf_hf.py $logdir/src
+cp $HOME/HT-vs-MT/classifier_trf_hf.py $logdir/src
 
 # Copy this script
 cp $(realpath $0) $logdir
 
 
-cd $HOME/MaCoCu/student_project_mt_ht/
+cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
 --arch $arch \
