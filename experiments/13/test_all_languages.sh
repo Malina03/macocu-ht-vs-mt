@@ -22,7 +22,7 @@ ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
 trained_on="google"
 # trained_on="deepl"
-arch="microsoft/deberta-v3-large"
+arch="microsoft-deberta-v3-large"
 
 if [ $trained_on == "google" ]; then
     ckpt="1600"
