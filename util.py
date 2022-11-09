@@ -60,6 +60,7 @@ def compute_metrics(
 def get_training_arguments(args):
     """Load all training arguments here. There are a lot more not specified, check:
     https://github.com/huggingface/transformers/blob/master/src/transformers/training_args.py#L72"""
+
     return TrainingArguments(
         output_dir=args.output_dir,
         evaluation_strategy=args.strategy,
@@ -83,6 +84,7 @@ def get_training_arguments(args):
         log_level="debug",
         metric_for_best_model="accuracy",
         save_total_limit=2,
+        report_to=args.wandb
     )
 
 
@@ -191,6 +193,11 @@ def parse_args_hf():
         "--use_google_data",
         action="store_true",
         help="Use Google Translate data instead of DeepL data for train/dev/test.",
+    )
+    parser.add_argument(
+        "--wandb",
+        action="store_true",
+        help="Report training metrics to weights and biases.",
     )
     parser.add_argument(
         "--use_normalized_data",

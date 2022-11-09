@@ -15,9 +15,9 @@ SEED=${SLURM_ARRAY_TASK_ID}
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
-source $HOME/activate_py3.8.6
+source /data/$USER/.envs/macocu/bin/activate
 
-cd $HOME/MaCoCu/student_project_mt_ht/
+cd $HOME/HT-vs-MT/
 python classifier_trf.py \
 --root_dir $ROOT_DIR \
 --load_sentence_pairs \

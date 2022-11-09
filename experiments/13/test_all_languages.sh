@@ -22,14 +22,15 @@ ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
 trained_on="google"
 # trained_on="deepl"
-arch="microsoft-deberta-v3-large"
+arch="microsoft/deberta-v3-large"
+arch_folder="microsoft-deberta-v3-large"
 
 if [ $trained_on == "google" ]; then
     ckpt="1600"
 else
     ckpt="1800"
 fi
-checkpoint=${ROOT_DIR}/models/${trained_on}/${arch}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-${ckpt}
+checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-${ckpt}
 
 languages=("de" "fi" "gu" "kk" "lt" "ru" "zh")
 sets=("google" "wmt1" "wmt2" "wmt3" "wmt4")
