@@ -196,8 +196,8 @@ def parse_args_hf():
     )
     parser.add_argument(
         "--wandb",
-        action="store_true",
-        help="Report training metrics to weights and biases.",
+        type='int',
+        help="Report training metrics to weights and biases. Value indicates the experiments number.",
     )
     parser.add_argument(
         "--use_normalized_data",

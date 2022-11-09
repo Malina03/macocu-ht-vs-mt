@@ -18,7 +18,7 @@ from util import get_training_arguments, compute_metrics, parse_args_hf
 
 import wandb
 
-wandb.init(project="HT-vs-MT-13", entity="malina03")
+
 
 
 def main():
@@ -28,11 +28,20 @@ def main():
     # Get arguments.
     args = parse_args_hf()
 
-    wandb.config = {
-    "learning_rate": args.learning_rate,
-    # "epochs": args.num_epochs,
-    "batch_size": args.batch_size
-    }
+    if args.wandb:
+        wandb.init(project=str("HT-vs-MT-"+ str(args.wandb)), entity="malina03")
+        if args.load_sentence_pairs:
+            task = 'bilingual_' + str(args.load_sentence_pairs) 
+        else:
+            task = 'monolingual'
+
+        wandb.config = {
+        "learning_rate": args.learning_rate,
+        # "epochs": args.num_epochs,
+        "batch_size": args.batch_size,
+        "architecture": args.arch,
+        "task": task,
+        }
 
     # Set random seed.
     np.random.seed(args.seed)

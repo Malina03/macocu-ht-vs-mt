@@ -26,6 +26,7 @@ source /data/$USER/.envs/macocu/bin/activate
 # Default Hyper-parameters
 arch="xlm-roberta-base"
 mt="deepl"
+
 num_epochs=10
 weight_decay=0
 max_grad_norm=1
@@ -74,9 +75,11 @@ for learning_rate in ${learning_rates[@]}; do
         --dropout $dropout \
         --seed $seed \
         --load_sentence_pairs \
-        --wandb
+        --wandb 7
         $flags \
         &> $logfile
 
         #move back
         cd ../../
+    done
+done
