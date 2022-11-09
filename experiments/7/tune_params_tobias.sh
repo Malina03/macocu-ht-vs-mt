@@ -61,8 +61,8 @@ for learning_rate in ${learning_rates[@]}; do
         # Copy this script
         cp $(realpath $0) $logdir
 
-        cd $HOME/HT-vs-MT/
-        python classifier_trf_hf.py \
+        
+        python $HOME/HT-vs-MT/classifier_trf_hf.py \
         --root_dir $root_dir \
         --arch $arch \
         --learning_rate $learning_rate \
@@ -76,11 +76,9 @@ for learning_rate in ${learning_rates[@]}; do
         --seed $seed \
         --load_sentence_pairs \
         --wandb
-        --exp-no ${EXP_ID}
+        --exp_no ${EXP_ID}
         $flags \
         &> $logfile
 
-        #move back
-        cd ../../
     done
 done
