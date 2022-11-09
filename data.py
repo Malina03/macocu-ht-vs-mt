@@ -59,7 +59,6 @@ def load_language_tests(args, phase, split_docs_by_sentence=False):
             + list((root_dir / f"data/{mt}/{phase}/{apdx_name}").glob("*.en.google"))
             ),
         }  # all the text files per class
-    print(paths)
     assert (
         len(paths[0]) != 0 and len(paths[1]) != 0
     ), f"{len(paths[0])}, {len(paths[1])}"

@@ -9,8 +9,8 @@
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
-#SBATCH --array=1
 
+export WANDB_DISABLED=true  # for some reason this is necessary
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
