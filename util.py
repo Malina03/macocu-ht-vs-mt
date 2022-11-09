@@ -198,14 +198,12 @@ def parse_args_hf():
         "--wandb",
         action="store_true",
         help="Report training metrics to weights and biases.",
-        require=False,
     )
 
     parser.add_argument(
         "--exp_no",
         type=int,
         help="Value indicates the experiments number.",
-        require=False,
     )
 
     parser.add_argument(
