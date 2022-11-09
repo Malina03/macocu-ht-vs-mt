@@ -16,6 +16,10 @@ from data import load_corpus, load_corpus_sentence_pairs, load_language_tests
 from models import BilingualSentenceClassifier
 from util import get_training_arguments, compute_metrics, parse_args_hf
 
+import wandb
+
+wandb.init(project="HT-vs-MT-13", entity="malina03")
+
 
 def main():
     """
@@ -23,6 +27,12 @@ def main():
     """
     # Get arguments.
     args = parse_args_hf()
+
+    wandb.config = {
+    "learning_rate": args.learning_rate,
+    # "epochs": args.num_epochs,
+    "batch_size": args.batch_size
+    }
 
     # Set random seed.
     np.random.seed(args.seed)

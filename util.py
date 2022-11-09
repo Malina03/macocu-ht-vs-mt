@@ -84,7 +84,7 @@ def get_training_arguments(args):
         log_level="debug",
         metric_for_best_model="accuracy",
         save_total_limit=2,
-        report_to=args.wandb
+        report_to= ("wandb" if (args.wandb) else None)
     )
 
 
