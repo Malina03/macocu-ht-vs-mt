@@ -9,7 +9,8 @@
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
-#SBATCH --array=2-3
+#SBATCH --array=1
+
 
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
 export WANDB_DISABLED=true  # for some reason this is necessary

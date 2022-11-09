@@ -25,25 +25,27 @@ trained_on="deepl"
 arch="microsoft/deberta-v3-large"
 
 if [ $trained_on == "google" ]; then
-    ckpt=1600
+    ckpt="1600"
 else
-    ckpt=1800
+    ckpt="1800"
 fi
-
 checkpoint=${ROOT_DIR}/models/${trained_on}/${arch}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-${ckpt}
 
-languages=( "de" "fi" "gu" "kk" "lt" "ru" "zh" )
-sets=( "google" "wmt1" "wmt2" "wmt3" "wmt4" )
-i=0
-j=0
-len_i=${#languages[@]}
-len_j=${#sets[@]}
-while [ $i -lt $len_i ];
-do 
-    lang=${languages[$i]}
-    while [ $j -lt $len_j ];
-    do
-        test_set=${sets[$j]}
+languages=("de" "fi" "gu" "kk" "lt" "ru" "zh")
+sets=("google" "wmt1" "wmt2" "wmt3" "wmt4")
+
+# i=0
+# j=0
+# len_i=${#languages[@]}
+# len_j=${#sets[@]}
+# while [ $i -lt $len_i ]; do 
+#     lang=${languages[$i]}
+#     while [ $j -lt $len_j ]; do
+#         test_set=${sets[$j]}
+
+cd $HOME/HT-vs-MT/
+for lang in ${languages[@]}; do
+    for test_set in ${sets[@]}; do
         logdir="${ROOT_DIR}/results/${trained_on}/${lang}/${test_set}/"
         logfile="${logdir}/eval.out"
         mkdir -p $logdir
@@ -53,8 +55,7 @@ do
         else
             flags=""
         fi
-
-        cd $HOME/HT-vs-MT/
+        
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
         --arch $arch \
@@ -63,7 +64,7 @@ do
         --load_model $checkpoint \
         &> $logfile
 
-        let i++
-        let j++
+        # let i++
+        # let j++
     done
 done
