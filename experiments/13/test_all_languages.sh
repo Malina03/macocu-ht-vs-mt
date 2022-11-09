@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name='13_test_all'
-#SBATCH --partition=gpu
-#SBATCH --time=03:00:00
+#SBATCH --partition=gpushort
+#SBATCH --time=01:30:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
