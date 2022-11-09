@@ -75,7 +75,8 @@ for learning_rate in ${learning_rates[@]}; do
         --dropout $dropout \
         --seed $seed \
         --load_sentence_pairs \
-        --wandb 7
+        --wandb
+        --exp-no ${EXP_ID}
         $flags \
         &> $logfile
 

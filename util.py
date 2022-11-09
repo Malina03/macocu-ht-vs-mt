@@ -196,9 +196,18 @@ def parse_args_hf():
     )
     parser.add_argument(
         "--wandb",
-        type='int',
-        help="Report training metrics to weights and biases. Value indicates the experiments number.",
+        action="store_true",
+        help="Report training metrics to weights and biases.",
+        require=False,
     )
+
+    parser.add_argument(
+        "--exp_no",
+        type=int,
+        help="Value indicates the experiments number.",
+        require=False,
+    )
+
     parser.add_argument(
         "--use_normalized_data",
         action="store_true",
@@ -241,4 +250,5 @@ def parse_args_hf():
     parser.add_argument(
         "--seed", type=int, default=1, help="Random number generator seed."
     )
+
     return parser.parse_args()

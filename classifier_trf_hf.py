@@ -29,7 +29,7 @@ def main():
     args = parse_args_hf()
 
     if args.wandb:
-        wandb.init(project=str("HT-vs-MT-"+ str(args.wandb)), entity="malina03")
+        wandb.init(project=str("HT-vs-MT-"+ str(args.exp_no)), entity="malina03")
         if args.load_sentence_pairs:
             task = 'bilingual_' + str(args.load_sentence_pairs) 
         else:
