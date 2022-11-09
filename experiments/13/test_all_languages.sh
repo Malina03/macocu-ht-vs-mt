@@ -20,8 +20,8 @@ source /data/$USER/.envs/macocu/bin/activate
 EXP_ID=13
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
-#trained_on="google"
-trained_on="deepl"
+trained_on="google"
+# trained_on="deepl"
 arch="microsoft/deberta-v3-large"
 
 if [ $trained_on == "google" ]; then
