@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name='7_train'
-#SBATCH --partition=gpu
+#SBATCH --partition=shortgpu
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
@@ -60,7 +60,6 @@ for learning_rate in ${learning_rates[@]}; do
 
         # Copy this script
         cp $(realpath $0) $logdir
-
         
         python $HOME/HT-vs-MT/classifier_trf_hf.py \
         --root_dir $root_dir \
@@ -75,8 +74,8 @@ for learning_rate in ${learning_rates[@]}; do
         --dropout $dropout \
         --seed $seed \
         --load_sentence_pairs \
-        --wandb
-        --exp_no ${EXP_ID}
+        --wandb \
+        --exp_no $EXP_ID \
         $flags \
         &> $logfile
 
