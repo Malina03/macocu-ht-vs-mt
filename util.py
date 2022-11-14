@@ -133,6 +133,13 @@ def parse_args_hf():
         help="Location of the root directory. By default, this is "
         "the data from WMT08-19, without Translationese.",
     )
+
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        help="Location of the output directory. If not specified, it will be created from the model name and parameters.",
+    )
+
     parser.add_argument(
         "--load_model",
         type=str,

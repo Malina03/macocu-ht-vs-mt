@@ -33,7 +33,7 @@ max_grad_norm=1
 warmup_steps=400
 label_smoothing=0.0
 dropout=0.1
-seed=${SLURM_ARRAY_TASK_ID}
+
 
 if [ $mt == "google" ]; then
     flags="--use_google_data"
@@ -63,6 +63,7 @@ for learning_rate in ${learning_rates[@]}; do
         
         python $HOME/HT-vs-MT/classifier_trf_hf.py \
         --root_dir $root_dir \
+        --output_dir $logdir
         --arch $arch \
         --learning_rate $learning_rate \
         --batch_size $bsz \
@@ -74,7 +75,6 @@ for learning_rate in ${learning_rates[@]}; do
         --dropout $dropout \
         --seed $seed \
         --load_sentence_pairs \
-        --strategy "no" \
         --wandb \
         --exp_no $EXP_ID \
         $flags \

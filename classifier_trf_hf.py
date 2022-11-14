@@ -65,10 +65,13 @@ def main():
     eff_bsz = args.gradient_accumulation_steps * args.batch_size
     if args.test:
         mt = args.test
-    output_dir = (
-        root_dir
-        / f"models/{mt}/{model_name}_lr={args.learning_rate}_bsz={eff_bsz}_epochs={args.num_epochs}_seed={args.seed}/"
-    )
+    if not args.output_dir:
+        output_dir = (
+            root_dir
+            / f"models/{mt}/{model_name}_lr={args.learning_rate}_bsz={eff_bsz}_epochs={args.num_epochs}_seed={args.seed}/"
+        )
+    else:
+        output_dir = args.output_dir
     if args.eval:
         output_dir = Path(output_dir.parent) / (output_dir.name + "_eval")
     elif args.test:
