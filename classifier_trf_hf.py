@@ -114,7 +114,7 @@ def main():
             model_name, num_labels=2, classifier_dropout=args.dropout
         )
         if args.load_sentence_pairs:
-            if args.load_sentence_pairs == 'mean_embedding':
+            if args.load_sentence_pairs == 'mean_embeddings':
                 model = BilingualSentenceClassifier(
                     XLMRobertaModel.from_pretrained(
                         model_name,
