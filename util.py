@@ -109,22 +109,22 @@ def parse_args_hf():
     :return: Namespace of parsed CLI arguments.
     """
 
-    config_parser = argparse.ArgumentParser(
-        description="Training Configuration", add_help=False
-    )
+    # config_parser = argparse.ArgumentParser(
+    #     description="Training Configuration", add_help=False
+    # )
 
     parser = argparse.ArgumentParser(
         description="Arguments for running the classifier."
     )
 
-    parser.add_argument(
-        "-c",
-        "--config",
-        type=str,
-        metavar="FILE",
-        default="",
-        help="Path to the YAML config file specifying the default parameters.",
-    )
+    # parser.add_argument(
+    #     "-c",
+    #     "--config",
+    #     type=str,
+    #     metavar="FILE",
+    #     default="",
+    #     help="Path to the YAML config file specifying the default parameters.",
+    # )
 
     parser.add_argument(
         "--root_dir",
@@ -279,6 +279,6 @@ def parse_args_hf():
         "--seed", type=int, default=1, help="Random number generator seed."
     )
 
-    args = _parse_args(parser, config_parser)
+    # args = _parse_args(parser, config_parser)
 
-    return args
+    return parser.parse_args()
