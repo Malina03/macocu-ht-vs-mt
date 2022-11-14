@@ -112,6 +112,11 @@ def parse_args_hf():
     config_parser = argparse.ArgumentParser(
         description="Training Configuration", add_help=False
     )
+
+    parser = argparse.ArgumentParser(
+        description="Arguments for running the classifier."
+    )
+
     parser.add_argument(
         "-c",
         "--config",
@@ -121,9 +126,6 @@ def parse_args_hf():
         help="Path to the YAML config file specifying the default parameters.",
     )
 
-    parser = argparse.ArgumentParser(
-        description="Arguments for running the classifier."
-    )
     parser.add_argument(
         "--root_dir",
         type=str,
