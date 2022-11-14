@@ -81,11 +81,11 @@ def get_training_arguments(args):
         save_strategy=args.strategy,
         save_steps=args.save_steps,
         seed=args.seed,
-        load_best_model_at_end=(True if args.save_strategy != 'no' else False),
+        load_best_model_at_end=(True if args.strategy != 'no' else False),
         label_smoothing_factor=args.label_smoothing,
         log_level="debug",
         metric_for_best_model="accuracy",
-        save_total_limit= (2 if args.save_strategy != 'no' else None),
+        save_total_limit= (2 if args.strategy != 'no' else None),
         report_to= ("wandb" if args.wandb else None)
     )
 
