@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name='7_tobias'
-#SBATCH --partition=shortgpu
+#SBATCH --partition=gpushort
 #SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
