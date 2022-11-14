@@ -74,7 +74,6 @@ for learning_rate in ${learning_rates[@]}; do
         --dropout $dropout \
         --seed $seed \
         --load_sentence_pairs "default" \
-        --strategy "epoch" \
         $flags \
         &> $logfile
     done

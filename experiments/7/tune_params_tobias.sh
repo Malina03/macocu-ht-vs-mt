@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name='7_tobias'
-#SBATCH --partition=gpushort
-#SBATCH --time=01:00:00
+#SBATCH --partition=gpu
+#SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -75,7 +75,6 @@ for learning_rate in ${learning_rates[@]}; do
         --dropout $dropout \
         --seed $seed \
         --load_sentence_pairs "mean_embeddings" \
-        --strategy "epoch" \
         $flags \
         &> $logfile
     done
