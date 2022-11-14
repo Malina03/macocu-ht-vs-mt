@@ -26,29 +26,32 @@ def main():
     # Get arguments.
     args = parse_args_hf()
 
-    if args.wandb:
-        import wandb
+    # if args.wandb:
+    #     import wandb
 
-        wandb.init(project=str("HT-vs-MT-"+ str(args.exp_no)), entity="malina03")
+    #     wandb.init(project=str("HT-vs-MT-"+ str(args.exp_no)), entity="malina03")
 
-        # if args.load_sentence_pairs:
-        #     task = 'bilingual_' + str(args.load_sentence_pairs) 
-        # else:
-        #     task = 'monolingual'
+    #     # if args.load_sentence_pairs:
+    #     #     task = 'bilingual_' + str(args.load_sentence_pairs) 
+    #     # else:
+    #     #     task = 'monolingual'
 
-        wandb.config = {
-        "learning_rate": args.learning_rate,
-        # "epochs": args.num_epochs,
-        "batch_size": args.batch_size,
-        "architecture": args.arch,
-        # "task": task,
-        }
+    #     wandb.config = {
+    #     "learning_rate": args.learning_rate,
+    #     # "epochs": args.num_epochs,
+    #     "batch_size": args.batch_size,
+    #     "architecture": args.arch,
+    #     # "task": task,
+    #     }
 
     # Set random seed.
     np.random.seed(args.seed)
 
     # Set directories.
-    root_dir = Path(args.root_dir)
+    if not args.root_dir:
+        root_dir = Path("/data/pg-macocu/MT_vs_HT/experiments/").joinpath(args.exp_no)
+    else:
+        root_dir = Path(args.root_dir)
 
     if args.load_model is not None:  # initialize a trained model
         assert Path(
