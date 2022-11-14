@@ -63,7 +63,7 @@ for learning_rate in ${learning_rates[@]}; do
         
         python $HOME/HT-vs-MT/classifier_trf_hf.py \
         --root_dir $root_dir \
-        --output_dir $logdir
+        --output_dir $logdir \
         --arch $arch \
         --learning_rate $learning_rate \
         --batch_size $bsz \
@@ -74,7 +74,7 @@ for learning_rate in ${learning_rates[@]}; do
         --label_smoothing $label_smoothing \
         --dropout $dropout \
         --seed $seed \
-        --load_sentence_pairs \
+        --load_sentence_pairs "mean_embeddings" \
         --wandb \
         --exp_no $EXP_ID \
         $flags \
