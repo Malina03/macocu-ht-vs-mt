@@ -72,6 +72,7 @@ def main():
         )
     else:
         output_dir = args.output_dir
+        
     if args.eval:
         output_dir = Path(output_dir.parent) / (output_dir.name + "_eval")
     elif args.test:
