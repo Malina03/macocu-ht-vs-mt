@@ -7,6 +7,8 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 import torch
 from transformers import TrainingArguments, EvalPrediction
 
+import yaml
+
 
 class HFDataset(torch.utils.data.Dataset):
     """Dataset for using HuggingFace Transformers."""
@@ -79,13 +81,26 @@ def get_training_arguments(args):
         save_strategy=args.strategy,
         save_steps=args.save_steps,
         seed=args.seed,
-        load_best_model_at_end=True,
+        load_best_model_at_end=(True if args.save_strategy != 'no' else False),
         label_smoothing_factor=args.label_smoothing,
         log_level="debug",
         metric_for_best_model="accuracy",
-        save_total_limit=2,
-        report_to= ("wandb" if (args.wandb) else None)
+        save_total_limit= (2 if args.save_strategy != 'no' else None),
+        report_to= ("wandb" if args.wandb else None)
     )
+
+
+
+def _parse_args(parser, config_parser):
+    args_config, remaining = config_parser.parse_known_args()
+    if args_config.config:
+        with open(args_config.config, "r") as f:
+            cfg = yaml.safe_load(f)
+            parser.set_defaults(**cfg)
+
+    args = parser.parse_args(remaining)
+
+    return args
 
 
 def parse_args_hf():
@@ -93,6 +108,19 @@ def parse_args_hf():
     Parse CLI arguments for the script and return them.
     :return: Namespace of parsed CLI arguments.
     """
+
+    config_parser = argparse.ArgumentParser(
+        description="Training Configuration", add_help=False
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        type=str,
+        metavar="FILE",
+        default="",
+        help="Path to the YAML config file specifying the default parameters.",
+    )
+
     parser = argparse.ArgumentParser(
         description="Arguments for running the classifier."
     )
@@ -249,4 +277,6 @@ def parse_args_hf():
         "--seed", type=int, default=1, help="Random number generator seed."
     )
 
-    return parser.parse_args()
+    args = _parse_args(parser, config_parser)
+
+    return args

@@ -16,8 +16,6 @@ from data import load_corpus, load_corpus_sentence_pairs, load_language_tests
 from models import BilingualSentenceClassifier
 from util import get_training_arguments, compute_metrics, parse_args_hf
 
-import wandb
-
 
 
 
@@ -29,18 +27,21 @@ def main():
     args = parse_args_hf()
 
     if args.wandb:
+        import wandb
+
         wandb.init(project=str("HT-vs-MT-"+ str(args.exp_no)), entity="malina03")
-        if args.load_sentence_pairs:
-            task = 'bilingual_' + str(args.load_sentence_pairs) 
-        else:
-            task = 'monolingual'
+
+        # if args.load_sentence_pairs:
+        #     task = 'bilingual_' + str(args.load_sentence_pairs) 
+        # else:
+        #     task = 'monolingual'
 
         wandb.config = {
         "learning_rate": args.learning_rate,
         # "epochs": args.num_epochs,
         "batch_size": args.batch_size,
         "architecture": args.arch,
-        "task": task,
+        # "task": task,
         }
 
     # Set random seed.
