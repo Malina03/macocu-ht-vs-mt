@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='7_tobias'
 #SBATCH --partition=gpu
-#SBATCH --time=02:00:00
+#SBATCH --time=06:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -25,7 +25,7 @@ source /data/$USER/.envs/macocu/bin/activate
 
 # Default Hyper-parameters
 arch="xlm-roberta-base"
-mt="deepl"
+mt="google"
 
 num_epochs=10
 weight_decay=0
@@ -41,8 +41,7 @@ else
     flags=""
 fi
 
-# learning_rates=( 1e-03 1e-05 1e-04 )
-learning_rates=( 1e-06 )
+learning_rates=( 1e-06 1e-05 1e-04 )
 batch_sizes=( 16 32 64 )
 
 for learning_rate in ${learning_rates[@]}; do

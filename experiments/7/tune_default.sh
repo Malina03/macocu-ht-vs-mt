@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='7_default'
 #SBATCH --partition=gpu
-#SBATCH --time=07:00:00
+#SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -40,7 +40,8 @@ else
     flags=""
 fi
 
-learning_rates=( 1e-03 1e-05 1e-04 )
+# learning_rates=( 1e-03 1e-05 1e-04 )
+learning_rates=( 1e-06 )
 batch_sizes=( 16 32 64 )
 
 for learning_rate in ${learning_rates[@]}; do
