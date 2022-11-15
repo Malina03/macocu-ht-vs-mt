@@ -187,7 +187,7 @@ def load_corpus_sentence_pairs(args, phase):
 
     print("=> Loading {} corpus...".format(phase))
 
-    _mt_suffixes = [".deepl.en", ".en.google", ".wmt"]
+    _mt_suffixes = [".deepl.en", ".txt.en.google", ".wmt"]
 
     corpus_data = []
     root_dir = Path(args.root_dir).resolve()
@@ -215,14 +215,14 @@ def load_corpus_sentence_pairs(args, phase):
             if path_B.name in [
                 f"trans_en_wmt{wmt_year}.txt",
                 f"org_de_wmt{wmt_year}.deepl.en",
-                f"org_de_wmt{wmt_year}.en.google",
+                f"org_de_wmt{wmt_year}.txt.en.google",
                 f"org_de_wmt{wmt_year}.wmt",
             ]:
                 # Translation from original text.
                 path_A = root_dir / f"data/{mt}/{phase}/org_de_wmt{wmt_year}.txt"
             elif path_B.name in [
                 f"trans_de_wmt{wmt_year}.deepl.en",
-                f"trans_de_wmt{wmt_year}.en.google",
+                f"trans_de_wmt{wmt_year}.txt.en.google",
                 f"trans_de_wmt{wmt_year}.wmt",
             ]:
                 # Translation from Translationese.

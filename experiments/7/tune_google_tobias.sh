@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='7_tobias'
+#SBATCH --job-name='7_g_tobias'
 #SBATCH --partition=gpu
 #SBATCH --time=06:00:00
 #SBATCH --gres=gpu:v100:1
