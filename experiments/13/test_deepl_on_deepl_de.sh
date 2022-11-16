@@ -19,12 +19,22 @@ source /data/$USER/.envs/macocu/bin/activate
 EXP_ID=13
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
-lang="de"
-test_set="deepl"
-checkpoint=${ROOT_DIR}/models/deepl/microsoft-deberta-v3-large_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-1800
+
+trained_on="deepl"
+# trained_on="google"
 arch="microsoft/deberta-v3-large"
-logdir="${ROOT_DIR}/results/${lang}/${test_set}/"
-logfile="${logdir}/eval_seed=${SLURM_ARRAY_TASK_ID}.out"
+arch_folder="microsoft-deberta-v3-large"
+
+if [ $trained_on == "google" ]; then
+    ckpt="1600"
+else
+    ckpt="1800"
+fi
+checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-${ckpt}
+
+
+logdir="${ROOT_DIR}/results/${trained_on}/${lang}/${test_set}/"
+logfile="${logdir}/eval.out"
 mkdir -p $logdir
 
 if [ $mt == "google" ]; then
