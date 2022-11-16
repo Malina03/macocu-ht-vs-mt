@@ -15,7 +15,7 @@
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
 export WANDB_DISABLED=true  # for some reason this is necessary
 
-EXP_ID=7
+EXP_ID=8
 root_dir=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 seed=${SLURM_ARRAY_TASK_ID}
 
@@ -45,7 +45,8 @@ fi
 log_model_name="xlm-roberta-monolingual"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
-logdir="${root_dir}/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}_seed=${seed}/"
+#LOG IN EXP 7
+logdir="/data/pg-macocu/MT_vs_HT/experiments/7/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}_seed=${seed}/"
 logfile="${logdir}/train.out"
 mkdir -p $logdir
 
