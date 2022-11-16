@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name='7_deepl_no-pairs'
-#SBATCH --partition=gpu
+#SBATCH --partition=gpushort
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
