@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='7_deepl_mono'
+#SBATCH --job-name='7_g_default'
 #SBATCH --partition=gpu
 #SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
@@ -14,7 +14,7 @@
 # export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
 # export WANDB_DISABLED=true  # for some reason this is necessary
 
-EXP_ID=8
+EXP_ID=7
 root_dir=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 seed=1
 
@@ -24,14 +24,13 @@ source /data/$USER/.envs/macocu/bin/activate
 
 # Default Hyper-parameters
 arch="xlm-roberta-base"
-mt="deepl"
+mt="google"
 
 num_epochs=10
-weight_decay=0
-max_grad_norm=1
+# weight_decay=0
+# max_grad_norm=1
 warmup_steps=400
-label_smoothing=0.0
-dropout=0.1
+label_smoothing=0.0 #probably not useful for only 2 classes
 
 
 if [ $mt == "google" ]; then
@@ -40,18 +39,19 @@ else
     flags=""
 fi
 
-# learning_rates=( 1e-03 1e-05 1e-04 )
-learning_rates=( 1e-06 1e-05 5e-05 )
-batch_sizes=( 16 32 64 )
+learning_rate=1e-05
+bsz=16
 
-log_model_name="xlm-roberta-monolingual"
+weight_decay_values=( 0 0.01 0.001 )
+max_grad_norm_values=( 0.5 1 2 )
 
-for learning_rate in ${learning_rates[@]}; do
-    for bsz in ${batch_sizes[@]}; do
+for weight_decay in ${weight_decay_values[@]}; do
+    for max_grad_norm in ${max_grad_norm_values[@]}; do
 
+        log_model_name="${arch}-default"
         # Make sure the logdir specified below corresponds to the directory defined in the
         # main() function of the `classifier_trf_hf.py` script!
-        logdir="/data/pg-macocu/MT_vs_HT/experiments/7/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/"
+        logdir="${root_dir}/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/wd=${weight_decay}_mgn=${max_grad_norm}/"
         logfile="${logdir}/train.out"
         mkdir -p $logdir
 
@@ -73,10 +73,10 @@ for learning_rate in ${learning_rates[@]}; do
         --max_grad_norm $max_grad_norm \
         --warmup_steps $warmup_steps \
         --label_smoothing $label_smoothing \
-        --dropout $dropout \
         --seed $seed \
-        --strategy "epoch" \
+        --load_sentence_pairs "default" \
         $flags \
         &> $logfile
     done
+    
 done

@@ -41,14 +41,18 @@ else
 fi
 
 # learning_rates=( 1e-03 1e-05 1e-04 )
-learning_rates=( 1e-06 1e-05 5e-05)
+learning_rates=( 1e-06 1e-05 5e-05 )
 batch_sizes=( 16 32 64 )
 
 log_model_name="xlm-roberta-monolingual"
+
 for learning_rate in ${learning_rates[@]}; do
     for bsz in ${batch_sizes[@]}; do
 
-        log_model_name="${arch}-default"
+        if [ $learning_rate == 1e-0.5 && $bsz == 32 ]; then
+            continue
+        fi
+
         # Make sure the logdir specified below corresponds to the directory defined in the
         # main() function of the `classifier_trf_hf.py` script!
         logdir="/data/pg-macocu/MT_vs_HT/experiments/7/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/"
