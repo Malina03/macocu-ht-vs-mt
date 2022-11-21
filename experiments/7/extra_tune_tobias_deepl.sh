@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name='7_g_default'
+#SBATCH --job-name='7_d_tobias'
 #SBATCH --partition=gpu
-#SBATCH --time=04:00:00
+#SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -24,7 +24,7 @@ source /data/$USER/.envs/macocu/bin/activate
 
 # Default Hyper-parameters
 arch="xlm-roberta-base"
-mt="google"
+mt="deepl"
 
 num_epochs=10
 # weight_decay=0
@@ -40,15 +40,16 @@ else
 fi
 
 learning_rate=1e-05
-bsz=16
+bsz=32
 
-weight_decay_values=( 0.001 )
-max_grad_norm_values=( 1 2 )
+weight_decay_values=( 0 0.01 0.001 )
+max_grad_norm_values=( 0.5 1 2 )
+
 
 for weight_decay in ${weight_decay_values[@]}; do
     for max_grad_norm in ${max_grad_norm_values[@]}; do
 
-        log_model_name="${arch}-default"
+        log_model_name="${arch}-embeddings"
         # Make sure the logdir specified below corresponds to the directory defined in the
         # main() function of the `classifier_trf_hf.py` script!
         logdir="${root_dir}/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/wd=${weight_decay}_mgn=${max_grad_norm}/"
@@ -74,7 +75,7 @@ for weight_decay in ${weight_decay_values[@]}; do
         --warmup_steps $warmup_steps \
         --label_smoothing $label_smoothing \
         --seed $seed \
-        --load_sentence_pairs "default" \
+        --load_sentence_pairs "mean_embeddings" \
         $flags \
         &> $logfile
     done
