@@ -70,6 +70,6 @@ python classifier_trf_hf.py \
 --label_smoothing $label_smoothing \
 --dropout $dropout \
 --seed $seed \
---load_sentence_pairs \
+--load_sentence_pairs "mean_embeddings"\
 $flags \
 &> $logfile
