@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='7_d_default'
 #SBATCH --partition=gpu
-#SBATCH --time=07:00:00
+#SBATCH --time=01:30:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -42,8 +42,10 @@ fi
 learning_rate=1e-05
 bsz=16
 
-weight_decay_values=( 0 0.01 0.001 )
-max_grad_norm_values=( 0.5 1 2 )
+# weight_decay_values=( 0 0.01 0.001 )
+# max_grad_norm_values=( 0.5 1 2 )
+weight_decay_values=( 0.001 )
+max_grad_norm_values=( 2 )
 
 for weight_decay in ${weight_decay_values[@]}; do
     for max_grad_norm in ${max_grad_norm_values[@]}; do
