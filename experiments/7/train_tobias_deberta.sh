@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name='7_d_tob'
-#SBATCH --partition=gpushort
+#SBATCH --partition=gpu
 #SBATCH --time=01:30:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
