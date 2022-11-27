@@ -77,4 +77,5 @@ for learning_rate in ${learning_rates[@]}; do
         $flags \
         &> $logfile
     done
+done
     
