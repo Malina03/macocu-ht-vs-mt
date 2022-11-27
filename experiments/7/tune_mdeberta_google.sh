@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='7_deepl_mono'
+#SBATCH --job-name='7_g_bil'
 #SBATCH --partition=gpu
 #SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
@@ -14,7 +14,7 @@
 # export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
 # export WANDB_DISABLED=true  # for some reason this is necessary
 
-EXP_ID=8
+EXP_ID=7
 root_dir=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 seed=1
 
@@ -23,9 +23,8 @@ module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
 # Default Hyper-parameters
-# arch="xlm-roberta-base"
 arch="microsoft/mdeberta-v3-base"
-mt="deepl"
+mt="google"
 
 num_epochs=10
 weight_decay=0
@@ -41,21 +40,15 @@ else
     flags=""
 fi
 
-# learning_rates=( 1e-03 1e-05 1e-04 )
 learning_rates=( 1e-06 1e-05 5e-05 )
 batch_sizes=( 16 32 64 )
-
-log_model_name="mdeberta-monolingual"
+log_model_name="mdeberta-default"
 
 for learning_rate in ${learning_rates[@]}; do
     for bsz in ${batch_sizes[@]}; do
-
-        if [ $learning_rate == 1e-0.5 && $bsz == 32 ]; then
-            continue
-        fi
         # Make sure the logdir specified below corresponds to the directory defined in the
         # main() function of the `classifier_trf_hf.py` script!
-        logdir="/data/pg-macocu/MT_vs_HT/experiments/7/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/"
+        logdir="${root_dir}/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/"
         logfile="${logdir}/train.out"
         mkdir -p $logdir
 
@@ -79,8 +72,10 @@ for learning_rate in ${learning_rates[@]}; do
         --label_smoothing $label_smoothing \
         --dropout $dropout \
         --seed $seed \
+        --load_sentence_pairs "default" \
         --strategy "epoch" \
         $flags \
         &> $logfile
     done
+    
 done

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='7_google_mono'
+#SBATCH --job-name='7_g_mono'
 #SBATCH --partition=gpu
 #SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
@@ -23,7 +23,8 @@ module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
 # Default Hyper-parameters
-arch="xlm-roberta-base"
+# arch="xlm-roberta-base"
+arch="microsoft/mdeberta-v3-base"
 mt="google"
 
 num_epochs=10
@@ -44,7 +45,7 @@ fi
 learning_rates=( 1e-06 1e-05 5e-05 )
 batch_sizes=( 16 32 64 )
 
-log_model_name="xlm-roberta-monolingual"
+log_model_name="mdeberta-monolingual"
 
 for learning_rate in ${learning_rates[@]}; do
     for bsz in ${batch_sizes[@]}; do
