@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name='7_train'
+#SBATCH --job-name='7_d_rev'
 #SBATCH --partition=gpushort
-#SBATCH --time=01:00:00
+#SBATCH --time=01:30:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -27,15 +27,17 @@ source /data/$USER/.envs/macocu/bin/activate
 # Hyper-parameters
 arch="xlm-roberta-base"
 mt="deepl"
+# BEST PARAMS
 learning_rate=1e-05
-bsz=32
-num_epochs=10
+bsz=15
 weight_decay=0
 max_grad_norm=1
+
+num_epochs=10
 warmup_steps=400
 label_smoothing=0.0
 dropout=0.1
-load_sentence_pairs=default
+
 seed=${SLURM_ARRAY_TASK_ID}
 
 if [ $mt == "google" ]; then
@@ -45,7 +47,7 @@ else
 fi
 
 # log_model_name=$(echo $arch | sed 's/\//-/g')
-log_model_name="xlm-roberta-base(default)"
+log_model_name="xlm-roberta-base(reverse)"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}_lr=${learning_rate}_bsz=${bsz}_seed=${seed}/"
@@ -73,6 +75,6 @@ python classifier_trf_hf.py \
 --label_smoothing $label_smoothing \
 --dropout $dropout \
 --seed $seed \
---load_sentence_pairs $load_sentence_pairs \
+--load_sentence_pairs "reverse" \
 $flags \
 &> $logfile

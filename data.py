@@ -209,6 +209,7 @@ def load_corpus_sentence_pairs(args, phase):
     assert len(paths[0]) != 0 and len(paths[1]) != 0
 
     # Match source files with files containing translations.
+    # path_A = original, path_B = translation
     for label, path_lst in paths.items():
         for path_B in path_lst:
             wmt_year = re.search(r"[0-9]{2}", path_B.name).group(0)
@@ -250,5 +251,10 @@ def load_corpus_sentence_pairs(args, phase):
     tokenizer = AutoTokenizer.from_pretrained(
         args.arch, model_max_length=args.max_length
     )
-    sents_enc = tokenizer(sentsA, sentsB, padding=True, truncation=True)
+    # encode input as translated + original
+    if args.load_sentence_pairs == 'reverse':
+        sents_enc = tokenizer(sentsB, sentsA, padding=True, truncation=True)
+    else:
+    # encode input as original + translated
+        sents_enc = tokenizer(sentsA, sentsB, padding=True, truncation=True)
     return HFDataset(sents_enc, labels)

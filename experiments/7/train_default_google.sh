@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='7_g_default'
+#SBATCH --job-name='7_g_rev'
 #SBATCH --partition=gpushort
 #SBATCH --time=01:30:00
 #SBATCH --gres=gpu:v100:1
@@ -22,13 +22,15 @@ module purge
 module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
-# Default Hyper-parameters
+# Best Hyper-parameters
 arch="xlm-roberta-base"
 mt="google"
-
-num_epochs=10
+learning_rate=1e-05
+bsz=16
 weight_decay=0
 max_grad_norm=1
+
+num_epochs=10
 warmup_steps=400
 label_smoothing=0.0
 dropout=0.1
@@ -40,9 +42,8 @@ else
     flags=""
 fi
 
-learning_rate=1e-05
-bsz=32
-log_model_name="${arch}-default"
+
+log_model_name="xlm-roberta-base(reverse)"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/"
@@ -69,6 +70,6 @@ python $HOME/HT-vs-MT/classifier_trf_hf.py \
 --label_smoothing $label_smoothing \
 --dropout $dropout \
 --seed $seed \
---load_sentence_pairs "default" \
+--load_sentence_pairs "reverse" \
 $flags \
 &> $logfile

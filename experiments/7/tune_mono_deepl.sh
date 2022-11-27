@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='7_deepl_mono'
+#SBATCH --job-name='7_d_mono'
 #SBATCH --partition=gpu
 #SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1

@@ -114,22 +114,17 @@ def main():
         config = AutoConfig.from_pretrained(
             model_name, num_labels=2, classifier_dropout=args.dropout
         )
-        if args.load_sentence_pairs:
-            if args.load_sentence_pairs == 'mean_embeddings':
-                model = BilingualSentenceClassifier(
-                    XLMRobertaModel.from_pretrained(
-                        model_name,
-                        config=config,
-                        local_files_only=False,
-                        add_pooling_layer=False,
-                    ),
-                    config.hidden_size,
-                    dropout=args.dropout,
-                )
-            elif args.load_sentence_pairs == 'default':
-                model = AutoModelForSequenceClassification.from_pretrained(
-                    model_name, config=config, local_files_only=False
-                )
+        if args.load_sentence_pairs == "mean_embeddings":
+            model = BilingualSentenceClassifier(
+                XLMRobertaModel.from_pretrained(
+                    model_name,
+                    config=config,
+                    local_files_only=False,
+                    add_pooling_layer=False,
+                ),
+                config.hidden_size,
+                dropout=args.dropout,
+            )          
         else:
             model = AutoModelForSequenceClassification.from_pretrained(
                 model_name, config=config, local_files_only=False
