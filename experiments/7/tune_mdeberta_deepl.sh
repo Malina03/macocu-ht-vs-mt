@@ -41,7 +41,7 @@ else
 fi
 
 learning_rates=( 1e-06 1e-05 5e-05 )
-batch_sizes=( 16 32 64 )
+batch_sizes=( 16 32)
 log_model_name="mdeberta-default"
 
 for learning_rate in ${learning_rates[@]}; do

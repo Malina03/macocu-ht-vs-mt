@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='7_g_bil'
 #SBATCH --partition=gpu
-#SBATCH --time=07:00:00
+#SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -40,8 +40,9 @@ else
     flags=""
 fi
 
-learning_rates=( 1e-06 1e-05 5e-05 )
-batch_sizes=( 16 32 64 )
+# learning_rates=( 1e-06 1e-05 5e-05 )
+learning_rates=( 5e-05 )
+batch_sizes=( 16 32 )
 log_model_name="mdeberta-default"
 
 for learning_rate in ${learning_rates[@]}; do
@@ -58,6 +59,8 @@ for learning_rate in ${learning_rates[@]}; do
 
         # # Copy this script
         # cp $(realpath $0) $logdir
+
+       
         
         python $HOME/HT-vs-MT/classifier_trf_hf.py \
         --root_dir $root_dir \
