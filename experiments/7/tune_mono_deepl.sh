@@ -42,8 +42,10 @@ else
 fi
 
 # learning_rates=( 1e-03 1e-05 1e-04 )
-learning_rates=( 1e-06 1e-05 5e-05 )
-batch_sizes=( 16 32 64 )
+# learning_rates=( 1e-06 1e-05 5e-05 )
+# batch_sizes=( 16 32 64 )
+learning_rates=( 5e-05 )
+batch_sizes=( 64 )
 
 log_model_name="mdeberta-monolingual"
 
