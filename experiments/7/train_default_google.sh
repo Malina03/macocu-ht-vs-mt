@@ -23,10 +23,11 @@ module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
 # Best Hyper-parameters
-arch="xlm-roberta-base"
+# arch="xlm-roberta-base"
+arch="microsoft/mdeberta-v3-base"
 mt="google"
-learning_rate=1e-05
-bsz=16
+learning_rate=5e-05
+bsz=32
 weight_decay=0
 max_grad_norm=1
 
@@ -43,7 +44,7 @@ else
 fi
 
 
-log_model_name="xlm-roberta-base(reverse)"
+log_model_name="mdeberta-reverse"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/"

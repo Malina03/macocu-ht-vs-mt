@@ -25,7 +25,8 @@ source /data/$USER/.envs/macocu/bin/activate
 
 
 # Hyper-parameters
-arch="xlm-roberta-base"
+# arch="xlm-roberta-base"
+arch="microsoft/mdeberta-v3-base"
 mt="deepl"
 # BEST PARAMS
 learning_rate=1e-05
@@ -47,7 +48,7 @@ else
 fi
 
 # log_model_name=$(echo $arch | sed 's/\//-/g')
-log_model_name="xlm-roberta-base(reverse)"
+log_model_name="mdeberta-reverse"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}_seed=${seed}/"
