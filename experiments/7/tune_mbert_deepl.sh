@@ -23,7 +23,8 @@ module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
 # Default Hyper-parameters
-arch="microsoft/mdeberta-v3-base"
+# arch="microsoft/mdeberta-v3-base"
+arch="bert-base-multilingual-cased"
 mt="deepl"
 
 num_epochs=10
@@ -40,9 +41,9 @@ else
     flags=""
 fi
 
-learning_rates=( 1e-06 1e-05 5e-05 )
+learning_rates=( 1e-06 5e-06 1e-05 5e-05 )
 batch_sizes=( 16 32)
-log_model_name="mdeberta-default"
+log_model_name="mbert"
 
 for learning_rate in ${learning_rates[@]}; do
     for bsz in ${batch_sizes[@]}; do

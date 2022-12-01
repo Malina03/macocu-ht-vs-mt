@@ -24,7 +24,7 @@ source /data/$USER/.envs/macocu/bin/activate
 
 # Default Hyper-parameters
 # arch="xlm-roberta-base"
-arch="microsoft/mdeberta-v3-base"
+arch="bert-base-multilingual-cased"
 mt="google"
 
 num_epochs=10
@@ -42,18 +42,12 @@ else
 fi
 
 # learning_rates=( 1e-03 1e-05 1e-04 )
-learning_rates=(  5e-05 )
-batch_sizes=( 32 64 )
-
-log_model_name="mdeberta-monolingual"
+learning_rates=( 1e-06 5e-06 1e-05 5e-05 )
+batch_sizes=( 16 32)
+log_model_name="mbert-monolingual"
 
 for learning_rate in ${learning_rates[@]}; do
     for bsz in ${batch_sizes[@]}; do
-
-        if [ $learning_rate == 1e-0.5 && $bsz == 32 ]; then
-            continue
-        fi
-
         # Make sure the logdir specified below corresponds to the directory defined in the
         # main() function of the `classifier_trf_hf.py` script!
         logdir="/data/pg-macocu/MT_vs_HT/experiments/7/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/"
