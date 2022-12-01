@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='7_g_bil'
 #SBATCH --partition=gpu
-#SBATCH --time=03:00:00
+#SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
