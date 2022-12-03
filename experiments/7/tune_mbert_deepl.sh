@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='7_d_bil'
 #SBATCH --partition=gpu
-#SBATCH --time=07:00:00
+#SBATCH --time=10:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -53,6 +53,12 @@ for learning_rate in ${learning_rates[@]}; do
         logdir="${root_dir}/models/${mt}/${log_model_name}/lr=${learning_rate}_bsz=${bsz}/"
         logfile="${logdir}/train.out"
         mkdir -p $logdir
+
+        if [ $learning_rate == 1e-06 && $bsz == 16 ]; then
+            continue
+        elif [ $learning_rate == 5e-06 && $bsz == 16 ]; then
+            continue
+        fi
 
         # # Copy source code
         # mkdir -p $logdir/src
