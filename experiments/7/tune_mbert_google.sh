@@ -44,7 +44,7 @@ fi
 
 # learning_rates=( 1e-06 1e-05 5e-05 )
 learning_rates=( 1e-06 5e-06 1e-05 5e-05 )
-batch_sizes=( 32)
+batch_sizes=( 32 )
 log_model_name="mbart-large-cc25"
 
 for learning_rate in ${learning_rates[@]}; do
