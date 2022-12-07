@@ -100,13 +100,13 @@ def main():
     # Load the model.
     if args.load_model is not None:  # start from a trained model
         print(f"Loading model at {args.load_model}")
-        if args.load_sentence_pairs:
-            model = XLMRobertaForSequenceClassification.from_pretrained(
-                args.load_model, local_files_only=True
-            )
-        else:
-            model = AutoModelForSequenceClassification.from_pretrained(
-                args.load_model, local_files_only=True
+        # if args.load_sentence_pairs:
+        #     model = XLMRobertaForSequenceClassification.from_pretrained(
+        #         args.load_model, local_files_only=True
+        #     )
+        # else:
+        model = AutoModelForSequenceClassification.from_pretrained(
+            args.load_model, local_files_only=True
             )
     else:
         model_name = args.arch
