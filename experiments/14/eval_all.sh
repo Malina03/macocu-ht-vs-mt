@@ -59,7 +59,6 @@ for trained_on in ${models[@]}; do
             python classifier_trf_hf.py \
             --root_dir $ROOT_DIR \
             --arch $arch \
-            --test $test \
             --load_model $checkpoint \
             $flags \
             $test_flags \
