@@ -20,7 +20,7 @@ source /data/$USER/.envs/macocu/bin/activate
 EXP_ID=14
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
-arch="microsoft/deberta-v3-large"
+arch="microsoft/mdeberta-v3-base"
 arch_folder="mdeberta"
 
 models=("google" "deepl")
@@ -49,12 +49,17 @@ for trained_on in ${models[@]}; do
             else
                 flags=""
             fi
+
+            if [ $test_set == "dev" ]; then
+                test=""
+            else
+                test=$eval_on
+            fi
             
             python classifier_trf_hf.py \
             --root_dir $ROOT_DIR \
             --arch $arch \
-            --test $test_set \
-            --eval_on $eval_set \
+            --test $test \
             --load_model $checkpoint \
             &> $logfile
         done
