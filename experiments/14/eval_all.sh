@@ -60,6 +60,7 @@ for trained_on in ${models[@]}; do
             --root_dir $ROOT_DIR \
             --arch $arch \
             --load_model $checkpoint \
+            --load_sentence_pairs "default" \
             $flags \
             $test_flags \
             &> $logfile
