@@ -51,9 +51,9 @@ for trained_on in ${models[@]}; do
             fi
 
             if [ $test_set == "dev" ]; then
-                test=""
+                test_flags=""
             else
-                test=$eval_on
+                test_flags="--test $eval_on"
             fi
             
             python classifier_trf_hf.py \
@@ -61,6 +61,8 @@ for trained_on in ${models[@]}; do
             --arch $arch \
             --test $test \
             --load_model $checkpoint \
+            $flags \
+            $test_flags \
             &> $logfile
         done
     done
