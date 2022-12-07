@@ -58,6 +58,7 @@ for trained_on in ${models[@]}; do
             
             python classifier_trf_hf.py \
             --root_dir $ROOT_DIR \
+            --batch_size 16 \
             --arch $arch \
             --load_model $checkpoint \
             --load_sentence_pairs "default" \
