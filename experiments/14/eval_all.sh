@@ -51,7 +51,7 @@ for trained_on in ${models[@]}; do
             fi
 
             if [ $test_set == "dev" ]; then
-                test_flags=""
+                test_flags="--eval"
             else
                 test_flags="--test $eval_on"
             fi
