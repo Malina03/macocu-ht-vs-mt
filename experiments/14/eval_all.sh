@@ -36,15 +36,19 @@ for trained_on in ${models[@]}; do
     for test_set in ${sets[@]}; do
         for eval_on in ${eval_sets[@]}; do
 
-            if [ $trained_on == "google" && $arch_folder == "mdeberta" ]; then
+            if [[ $trained_on = "google" && $arch_folder = "mdeberta" ]]; then
                 ckpt="2580"
-            elif [ $trained_on == "deepl" && $arch_folder == "mdeberta" ]; then
+            elif [[ $trained_on = "deepl" && $arch_folder = "mdeberta" ]]; then
                 ckpt="5155"
-            elif [ $trained_on == "google" && $arch_folder == "deberta" ]; then
+            elif [[ $trained_on = "google" && $arch_folder = "deberta" ]]; then
                 ckpt="1032"
-            elif [ $trained_on == "deepl" && $arch_folder == "deberta" ]; then
+            elif [[ $trained_on = "deepl" && $arch_folder = "deberta" ]]; then
                 ckpt="1548"
+            else
+                echo "Invalid combination of trained_on and arch_folder"
+                exit 1
             fi
+
             
             checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}/checkpoint-${ckpt}"
 

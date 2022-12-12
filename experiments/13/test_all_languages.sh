@@ -32,8 +32,8 @@ else
 fi
 checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-${ckpt}
 
-languages=("de" "fi" "gu" "kk" "lt" "ru" "zh")
-sets=("google" "wmt1" "wmt2" "wmt3" "wmt4")
+languages=("de" "fi" "gu" "kk" "lt" "ru" "zh" "dv")
+sets=("deepl" "google" "wmt1" "wmt2" "wmt3" "wmt4")
 
 # i=0
 # j=0
@@ -47,6 +47,31 @@ sets=("google" "wmt1" "wmt2" "wmt3" "wmt4")
 cd $HOME/HT-vs-MT/
 for lang in ${languages[@]}; do
     for test_set in ${sets[@]}; do
+
+        if [ $test_set == "deepl" && lang == 'fi' ]; then
+            continue
+        fi
+
+        if [ $test_set == "deepl" && lang != 'gu' ]; then
+            continue
+        fi  
+
+        if [ $test_set == "deepl" && lang != 'kk' ]; then
+            continue
+        fi  
+
+        if [ $test_set == "deepl" && lang != 'lt' ]; then
+            continue
+        fi 
+
+        if [ $test_set == "deepl" && lang != 'ru' ]; then
+            continue
+        fi  
+
+        if [ $test_set == "deepl" && lang != 'zh' ]; then
+            continue
+        fi 
+
         logdir="${ROOT_DIR}/results/${trained_on}/${lang}/${test_set}/"
         logfile="${logdir}/eval.out"
         mkdir -p $logdir
