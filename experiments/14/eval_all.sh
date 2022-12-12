@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='14_eval_all'
 #SBATCH --partition=gpushort
-#SBATCH --time=02:00:00
+#SBATCH --time=01:30:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -20,8 +20,11 @@ source /data/$USER/.envs/macocu/bin/activate
 EXP_ID=14
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
-arch="microsoft/mdeberta-v3-base"
-arch_folder="mdeberta"
+# arch="microsoft/mdeberta-v3-base"
+# arch_folder="mdeberta"
+
+arch="microsoft/deberta-v3-large"
+arch_folder="deberta"
 
 models=("google" "deepl")
 sets=("dev" "test")
@@ -33,14 +36,18 @@ for trained_on in ${models[@]}; do
     for test_set in ${sets[@]}; do
         for eval_on in ${eval_sets[@]}; do
 
-            if [ $trained_on == "google" ]; then
+            if [ $trained_on == "google" && $arch_folder == "mdeberta"]; then
                 ckpt="2580"
-            else
+            elif [$trained_on == "deepl" && $arch_folder == "mdeberta"]; then
                 ckpt="5155"
+            elif [ $trained_on == "google" && $arch_folder == "deberta"]; then
+                ckpt="1032"
+            elif [$trained_on == "deepl" && $arch_folder == "deberta"]; then
+                ckpt="1548"
             fi
             checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}/checkpoint-${ckpt}
 
-            logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
+            logdir="${ROOT_DIR}/results/${arch_folder}/${trained_on}/${test_set}/${eval_on}/"
             logfile="${logdir}/eval.out"
             mkdir -p $logdir
 

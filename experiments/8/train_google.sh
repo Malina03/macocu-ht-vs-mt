@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='8_d_train'
+#SBATCH --job-name='8_g_train'
 #SBATCH --partition=gpu
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
