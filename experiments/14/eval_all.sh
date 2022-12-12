@@ -38,11 +38,11 @@ for trained_on in ${models[@]}; do
 
             if [ $trained_on == "google" && $arch_folder == "mdeberta"]; then
                 ckpt=2580
-            elif [$trained_on == "deepl" && $arch_folder == "mdeberta"]; then
+            else if [$trained_on == "deepl" && $arch_folder == "mdeberta"]; then
                 ckpt=5155
-            elif [ $trained_on == "google" && $arch_folder == "deberta"]; then
+            else if [ $trained_on == "google" && $arch_folder == "deberta"]; then
                 ckpt=1032
-            elif [ $trained_on == "deepl" && $arch_folder == "deberta"]; then
+            else if [ $trained_on == "deepl" && $arch_folder == "deberta"]; then
                 ckpt=1548
             fi
             checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}/checkpoint-${ckpt}/
