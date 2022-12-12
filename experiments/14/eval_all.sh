@@ -37,15 +37,15 @@ for trained_on in ${models[@]}; do
         for eval_on in ${eval_sets[@]}; do
 
             if [ $trained_on == "google" && $arch_folder == "mdeberta"]; then
-                ckpt="2580"
+                ckpt=2580
             elif [$trained_on == "deepl" && $arch_folder == "mdeberta"]; then
-                ckpt="5155"
+                ckpt=5155
             elif [ $trained_on == "google" && $arch_folder == "deberta"]; then
-                ckpt="1032"
-            elif [$trained_on == "deepl" && $arch_folder == "deberta"]; then
-                ckpt="1548"
+                ckpt=1032
+            elif [ $trained_on == "deepl" && $arch_folder == "deberta"]; then
+                ckpt=1548
             fi
-            checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}/checkpoint-${ckpt}
+            checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}/checkpoint-${ckpt}/
 
             logdir="${ROOT_DIR}/results/${arch_folder}/${trained_on}/${test_set}/${eval_on}/"
             logfile="${logdir}/eval.out"
