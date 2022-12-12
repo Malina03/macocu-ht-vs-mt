@@ -36,13 +36,13 @@ for trained_on in ${models[@]}; do
     for test_set in ${sets[@]}; do
         for eval_on in ${eval_sets[@]}; do
 
-            if [ $trained_on == "google" && $arch_folder == "mdeberta"]; then
+            if [ $trained_on == "google" && $arch_folder == "mdeberta" ]; then
                 ckpt="2580"
-            elif [ $trained_on == "deepl" && $arch_folder == "mdeberta"]; then
+            elif [ $trained_on == "deepl" && $arch_folder == "mdeberta" ]; then
                 ckpt="5155"
-            elif [ $trained_on == "google" && $arch_folder == "deberta"]; then
+            elif [ $trained_on == "google" && $arch_folder == "deberta" ]; then
                 ckpt="1032"
-            elif [ $trained_on == "deepl" && $arch_folder == "deberta"]; then
+            elif [ $trained_on == "deepl" && $arch_folder == "deberta" ]; then
                 ckpt="1548"
             fi
             
