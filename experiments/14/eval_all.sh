@@ -36,16 +36,16 @@ for trained_on in ${models[@]}; do
     for test_set in ${sets[@]}; do
         for eval_on in ${eval_sets[@]}; do
 
-            if [ $trained_on == "google" && $arch_folder == "mdeberta"]; then
+            if [ "$trained_on" == "google" && "$arch_folder" == "mdeberta"]; then
                 ckpt=2580
-            else if [$trained_on == "deepl" && $arch_folder == "mdeberta"]; then
+            else if [ "$trained_on" == "deepl" && "$arch_folder" == "mdeberta"]; then
                 ckpt=5155
-            else if [ $trained_on == "google" && $arch_folder == "deberta"]; then
+            else if [ "$trained_on" == "google" && "$arch_folder" == "deberta"]; then
                 ckpt=1032
-            else if [ $trained_on == "deepl" && $arch_folder == "deberta"]; then
+            else if [ "$trained_on" == "deepl" && "$arch_folder" == "deberta"]; then
                 ckpt=1548
             fi
-            checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}/checkpoint-${ckpt}/
+            checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}/checkpoint-${ckpt}
 
             logdir="${ROOT_DIR}/results/${arch_folder}/${trained_on}/${test_set}/${eval_on}/"
             logfile="${logdir}/eval.out"
