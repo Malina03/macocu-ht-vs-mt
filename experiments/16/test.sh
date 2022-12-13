@@ -41,7 +41,7 @@ for eval_on in ${eval_sets[@]}; do
     logfile="${logdir}/eval.out"
     mkdir -p $logdir
 
-    if [ $eval_on == "google" ]; then
+    if [ $trained_on == "google" ]; then
         flags="--use_google_data"
     else
         flags=""
