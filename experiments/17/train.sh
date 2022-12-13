@@ -27,7 +27,7 @@ arch="microsoft/deberta-v3-large"
 mt="google"
 learning_rate=1e-05
 bsz=32
-num_epochs=5
+num_epochs=10
 weight_decay=0
 max_grad_norm=1
 warmup_steps=200
@@ -61,7 +61,7 @@ mkdir -p $logdir
 cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
---output_dir $outputdir \
+--output_dir $logdir \
 --arch $arch \
 --learning_rate $learning_rate \
 --batch_size $bsz \
@@ -72,5 +72,6 @@ python classifier_trf_hf.py \
 --label_smoothing $label_smoothing \
 --dropout $dropout \
 --seed $seed \
+--strategy "epoch" \
 $flags \
 &> $logfile
