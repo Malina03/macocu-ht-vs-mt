@@ -32,3 +32,5 @@ for lang in ${languages[@]}; do
         cat $dir/org_*.txt >> $src
         comet-score -s $src -t $out -r $ref > /data/pg-macocu/MT_vs_HT/experiments/comet/results/${test_set}.${lang}.comet
         rm -r $TMPDIR/*
+    done
+done
