@@ -255,7 +255,7 @@ def parse_args_hf():
         type=str,
         nargs = '?',
         choices = ["de", "fi", "gu", "kk", "lt", "ru", "zh", "dv"],
-        help="Test a classifier on test sets from different lanuages"
+        help="Test a classifier on bilingual test sets from different lanuages"
         "from the WMT 19 news dataset.",
     )
     parser.add_argument(
@@ -269,7 +269,7 @@ def parse_args_hf():
     parser.add_argument(
         "--test",
         type=str,
-        choices=["deepl", "google", "wmt1", "wmt2", "wmt3", "wmt4"],
+        choices=["deepl", "google", "wmt1", "wmt2", "wmt3", "wmt4", "zh", "de", "ru"],
         help="Test a classifier on one of the test sets. For WMT "
         "submissions there are 4 options, originating from the "
         "WMT 19 test sets, for each language."
