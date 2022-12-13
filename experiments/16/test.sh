@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name='15_eval'
+#SBATCH --job-name='16_eval'
 #SBATCH --partition=gpushort
-#SBATCH --time=01:30:00
+#SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -17,7 +17,7 @@ module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
 
-EXP_ID=15
+EXP_ID=16
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
 # arch="microsoft/mdeberta-v3-base"
