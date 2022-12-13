@@ -45,8 +45,11 @@ log_model_name="deberta"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}_lr=${learning_rate}_bsz=${bsz}/"
-logfile="${root_dir}/results/${mt}/dev/train.out"
+outputdir="${root_dir}/results/${mt}/dev"
+logfile="${outputdir}/train.out"
+mkdir -p $outputdir
 mkdir -p $logdir
+
 
 # Copy source code
 # mkdir -p $logdir/src
@@ -59,6 +62,7 @@ mkdir -p $logdir
 cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
+--output_dir $outputdir \
 --arch $arch \
 --learning_rate $learning_rate \
 --batch_size $bsz \
