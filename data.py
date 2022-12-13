@@ -119,6 +119,7 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
         1: (
             list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.deepl.en"))
             + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.en.google"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.txt.google"))
         ),
     }  # all the text files per class
     if mt_name == "wmt1":
