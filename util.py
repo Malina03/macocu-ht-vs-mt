@@ -254,7 +254,7 @@ def parse_args_hf():
         "--test_on_language",
         type=str,
         nargs = '?',
-        choices = ["de", "fi", "gu", "kk", "lt", "ru", "zh"],
+        choices = ["de", "fi", "gu", "kk", "lt", "ru", "zh", "dv"],
         help="Test a classifier on test sets from different lanuages"
         "from the WMT 19 news dataset.",
     )

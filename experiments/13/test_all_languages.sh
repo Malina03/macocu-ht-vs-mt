@@ -52,23 +52,23 @@ for lang in ${languages[@]}; do
             continue
         fi
 
-        if [ $test_set == "deepl" && lang != 'gu' ]; then
+        if [ $test_set == "deepl" && lang == 'gu' ]; then
             continue
         fi  
 
-        if [ $test_set == "deepl" && lang != 'kk' ]; then
+        if [ $test_set == "deepl" && lang == 'kk' ]; then
             continue
         fi  
 
-        if [ $test_set == "deepl" && lang != 'lt' ]; then
+        if [ $test_set == "deepl" && lang == 'lt' ]; then
             continue
         fi 
 
-        if [ $test_set == "deepl" && lang != 'ru' ]; then
+        if [ $test_set == "deepl" && lang == 'ru' ]; then
             continue
         fi  
 
-        if [ $test_set == "deepl" && lang != 'zh' ]; then
+        if [ $test_set == "deepl" && lang == 'zh' ]; then
             continue
         fi 
 
