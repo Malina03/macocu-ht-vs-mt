@@ -8,34 +8,27 @@
 
 set -euxo pipefail
 
-lang=en
-mt=google-bad-api
+# languages=("de" "fi" "gu" "kk" "lt" "ru" "zh" "dv")
+languages=("de")
+sets=("deepl" "google" "wmt1" "wmt2" "wmt3" "wmt4")
 
-# DeepL
-if [[ $mt = "deepl" ]]; then
-    out_dir=/data/pg-macocu/MT_vs_HT/wmt_data/deepL/deepl_20211101/  # Files produced by model
-    ref_dir=/data/pg-macocu/MT_vs_HT/wmt_data/deepL/WMT08-20_for_deepl/  # Gold standard files
-    src_dir=/data/pg-macocu/MT_vs_HT/wmt_data/deepL/WMT08-20_for_deepl/ # Source files for translation
-elif [[ $mt = "google" ]]; then
-    out_dir=/data/pg-macocu/MT_vs_HT/wmt_data/google/  # Files produced by model
-    ref_dir=/data/pg-macocu/MT_vs_HT/wmt_data/deepL/WMT08-20_for_deepl/  # Gold standard files
-    src_dir=/data/pg-macocu/MT_vs_HT/wmt_data/deepL/WMT08-20_for_deepl/ # Source files for translation
-elif [[ $mt = "google-bad-api" ]]; then
-    out_dir=/data/pg-macocu/MT_vs_HT/wmt_data/google_bad_api/  # Files produced by model
-    ref_dir=/data/pg-macocu/MT_vs_HT/wmt_data/deepL/WMT08-20_for_deepl/  # Gold standard files
-    src_dir=/data/pg-macocu/MT_vs_HT/wmt_data/deepL/WMT08-20_for_deepl/ # Source files for translation
-else
-    echo "$mt is not a valid mt."
-    exit 1
-fi
-
-out=$TMPDIR/out.txt
-ref=$TMPDIR/ref.txt
-src=$TMPDIR/src.txt
-
-# Concatentate all files within each category (org, ref, src).
-cat $out_dir/org_de_wmt{08..19}* >> $out
-cat $ref_dir/trans_en_wmt{08..19}.txt >> $ref
-cat $src_dir/org_de_wmt{08..19}.txt >> $src
-
-comet-score -s $src -t $out -r $ref > ${mt}.eval.comet
+for lang in ${languages[@]}; do
+    for test_set in ${sets[@]}; do
+        out=$TMPDIR/out.txt
+        ref=$TMPDIR/ref.txt
+        src=$TMPDIR/src.txt
+        dir=/data/pg-macocu/MT_vs_HT/experiments/comet/data/${lang}-en/${test_set}/
+        if [[ $test_set = "deepl" ]]; then
+            cat $dir/*.deepl.en >> $out
+        elif [[ $test_set = "google" ]]; then
+            cat $dir/*.en.google >> $out
+        elif [[ $test_set =  wmt{1..4} ]]; then
+            cat $dir/*.wmt >> $out
+        else
+            echo "$test_set and $lang combination is not a valid."
+            exit 1
+        fi
+        cat $dir/trans_*.txt >> $ref
+        cat $dir/org_*.txt >> $src
+        comet-score -s $src -t $out -r $ref > /data/pg-macocu/MT_vs_HT/experiments/comet/results/${test_set}.${lang}.comet
+        rm -r $TMPDIR/*
