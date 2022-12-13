@@ -37,7 +37,7 @@ cd $HOME/HT-vs-MT/
 
 for eval_on in ${eval_sets[@]}; do
 
-    logdir="${ROOT_DIR}/results/${arch_folder}/${trained_on}/${test_set}/${eval_on}/"
+    logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
     logfile="${logdir}/eval.out"
     mkdir -p $logdir
 
@@ -57,6 +57,7 @@ for eval_on in ${eval_sets[@]}; do
     --root_dir $ROOT_DIR \
     --batch_size 16 \
     --arch $arch \
+    --test_on_language ${eval_on} \
     --load_model $checkpoint \
     $flags \
     $test_flags \

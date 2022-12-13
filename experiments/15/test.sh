@@ -37,7 +37,7 @@ cd $HOME/HT-vs-MT/
 
 for eval_on in ${eval_sets[@]}; do
 
-    logdir="${ROOT_DIR}/results/${arch_folder}/${trained_on}/${test_set}/${eval_on}/"
+    logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
     logfile="${logdir}/eval.out"
     mkdir -p $logdir
 
