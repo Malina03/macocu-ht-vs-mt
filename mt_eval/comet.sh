@@ -8,6 +8,10 @@
 
 set -euxo pipefail
 
+module purge
+module load Python/3.8.6-GCCcore-10.2.0
+source /data/$USER/.envs/macocu/bin/activate
+
 # languages=("de" "fi" "gu" "kk" "lt" "ru" "zh" "dv")
 languages=("de")
 sets=("deepl" "google" "wmt1" "wmt2" "wmt3" "wmt4")
