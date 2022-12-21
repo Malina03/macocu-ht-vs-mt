@@ -50,7 +50,7 @@ for eval_on in ${eval_sets[@]}; do
     if [ $test_set == "dev" ]; then
         test_flags="--eval"
     else
-        test_flags="--test $eval_on"
+        test_flags="--test $trained_on"
     fi
     
     python classifier_trf_hf.py \
