@@ -30,19 +30,21 @@ bsz=32
 trained_on="google"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3)
-
+seeds=("1" "2" "3")
 
 cd $HOME/HT-vs-MT/
+
 for seed in ${seeds[@]}; do
-    if [ $seed == 1 ]; then 
+    if [ $seed == "1" ]; then 
         ckpt=2064
-    else if [ $seed == 2 ]; then
+    fi
+    if [ $seed == "2" ]; then
         ckpt=1548
-    else
+    fi
+    if [ $seed == "3" ]; then
         ckpt=1548 ## it's the same as for seed 2, checked this
     fi
-
+    
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-${ckpt}"
     for eval_on in ${eval_sets[@]}; do
 

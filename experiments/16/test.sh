@@ -27,7 +27,6 @@ arch="microsoft/deberta-v3-large"
 arch_folder="deberta"
 learning_rate=1e-05
 bsz=32
-ckpt=189
 trained_on="google"
 test_set="test"
 eval_sets=("zh" "de" "ru")
