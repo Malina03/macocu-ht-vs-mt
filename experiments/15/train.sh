@@ -10,6 +10,7 @@
 #SBATCH --array=1
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
+#SBATCH --ARRAY=1-3
 
 
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
@@ -35,6 +36,7 @@ label_smoothing=0.0
 dropout=0.1
 seed=${SLURM_ARRAY_TASK_ID}
 
+
 if [ $mt == "google" ]; then
     flags="--use_google_data"
 else
@@ -44,9 +46,9 @@ fi
 log_model_name="deberta"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
-logdir="${root_dir}/models/${mt}/${log_model_name}_lr=${learning_rate}_bsz=${bsz}/"
+logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${mt}/dev"
-logfile="${outputdir}/train.out"
+logfile="${outputdir}/train_${seed}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 
