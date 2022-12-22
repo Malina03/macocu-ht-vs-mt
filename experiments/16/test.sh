@@ -31,35 +31,45 @@ ckpt=189
 trained_on="google"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_lr=${learning_rate}_bsz=${bsz}/checkpoint-${ckpt}"
+seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
-
-for eval_on in ${eval_sets[@]}; do
-
-    logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
-    logfile="${logdir}/eval.out"
-    mkdir -p $logdir
-
-    if [ $trained_on == "google" ]; then
-        flags="--use_google_data"
+for seed in ${seeds[@]}; do
+    if [ $seed == 1 ]; then 
+        ckpt=315
+    else if [ $seed == 2 ]; then
+        ckpt=504 
     else
-        flags=""
+        ckpt=315
     fi
+    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-${ckpt}"
 
-    if [ $test_set == "dev" ]; then
-        test_flags="--eval"
-    else
-        test_flags="--test $trained_on"
-    fi
-    
-    python classifier_trf_hf.py \
-    --root_dir $ROOT_DIR \
-    --batch_size 16 \
-    --arch $arch \
-    --test_on_language ${eval_on} \
-    --load_model $checkpoint \
-    $flags \
-    $test_flags \
-    &> $logfile
+    for eval_on in ${eval_sets[@]}; do
+
+        logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
+        logfile="${logdir}/eval_${seed}.out"
+        mkdir -p $logdir
+
+        if [ $trained_on == "google" ]; then
+            flags="--use_google_data"
+        else
+            flags=""
+        fi
+
+        if [ $test_set == "dev" ]; then
+            test_flags="--eval"
+        else
+            test_flags="--test $trained_on"
+        fi
+        
+        python classifier_trf_hf.py \
+        --root_dir $ROOT_DIR \
+        --batch_size 16 \
+        --arch $arch \
+        --test_on_language ${eval_on} \
+        --load_model $checkpoint \
+        $flags \
+        $test_flags \
+        &> $logfile
+    done
 done
