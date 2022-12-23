@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='17_eval'
+#SBATCH --job-name='18_eval'
 #SBATCH --partition=gpushort
 #SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
@@ -17,7 +17,7 @@ module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
 
-EXP_ID=17
+EXP_ID=18
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
 # arch="microsoft/mdeberta-v3-base"
@@ -35,13 +35,13 @@ seeds=(1 2 3)
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
     if [ $seed == 1 ]; then 
-        ckpt=2192
+        ckpt=1734
     fi
     if [ $seed == 2 ]; then
-        ckpt=822
+        ckpt=1734
     fi
     if [ $seed == 3 ]; then
-        ckpt=822
+        ckpt=2890
     fi
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-${ckpt}"
 
