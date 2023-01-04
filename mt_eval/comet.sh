@@ -27,11 +27,12 @@ for lang in ${languages[@]}; do
         elif [[ $test_set = "google" ]]; then
             out=$dir/*.en.google
         elif [[ $test_set =  wmt{1..4} ]]; then
-            cat $dir/*.wmt >> $out
+            out=$dir/*.wmt
         else
             echo "$test_set and $lang combination is not a valid."
             exit 1
         fi
+        
         ref=$dir/trans_*.txt
         src=$dir/org_*.txt
         echo "${ref} ${src} ${out}"
