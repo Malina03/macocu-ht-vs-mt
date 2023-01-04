@@ -17,7 +17,6 @@ export WANDB_DISABLED=true  # for some reason this is necessary
 
 exp_id=8
 root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
-seed=1
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
@@ -34,7 +33,7 @@ max_grad_norm=1
 warmup_steps=200
 label_smoothing=0.0
 dropout=0.1
-# seed=${SLURM_ARRAY_TASK_ID}
+seed=${SLURM_ARRAY_TASK_ID}
 
 if [ $mt == "google" ]; then
     flags="--use_google_data"
