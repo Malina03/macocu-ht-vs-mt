@@ -45,8 +45,8 @@ fi
 log_model_name="deberta"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
-logdir="${rootdir}/models/${mt}/${log_model_name}_${seed}/"
-res_dir="${rootdir}/results/${mt}/dev/${mt}/"
+logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
+res_dir="${root_dir}/results/${log_model_name}/${mt}/dev/${mt}/"
 logfile="${res_dir}/train_${seed}.out"
 mkdir -p $res_dir
 mkdir -p $logdir

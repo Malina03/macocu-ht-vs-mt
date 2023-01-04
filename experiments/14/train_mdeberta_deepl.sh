@@ -47,7 +47,7 @@ log_model_name="mdeberta"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="/data/pg-macocu/MT_vs_HT/experiments/14/models/${mt}/${log_model_name}_${seed}/"
-logfile="/data/pg-macocu/MT_vs_HT/experiments/14/results/${mt}/dev/${mt}/train_${seed}.out"
+logfile="/data/pg-macocu/MT_vs_HT/experiments/14/results/${log_model_name}/${mt}/dev/${mt}/train_${seed}.out"
 mkdir -p $logdir
 
 # # Copy source code
