@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='14_eval_all'
+#SBATCH --job-name='8_eval_all'
 #SBATCH --partition=gpushort
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
@@ -17,14 +17,11 @@ module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
 
-EXP_ID=14
+EXP_ID=8
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
-arch="microsoft/mdeberta-v3-base"
-arch_folder="mdeberta"
-
-# arch="microsoft/deberta-v3-large"
-# arch_folder="deberta"
+arch="microsoft/deberta-v3-large"
+arch_folder="deberta"
 
 models=("google" "deepl")
 sets=("dev" "test")
@@ -38,17 +35,19 @@ for trained_on in ${models[@]}; do
         for eval_on in ${eval_sets[@]}; do
             for seed in ${seeds[@]}; do
                 if [[ $trained_on = "google" && $seed = 1 ]]; then
-                    ckpt="2580"
+                    ckpt="3612"
                 elif [[ $trained_on = "google" && $seed = 2 ]]; then
-                    ckpt="5160"
+                    # ckpt="5160"
+                    continue
                 elif [[ $trained_on = "google" && $seed = 3 ]]; then
-                    ckpt="4128"
+                    # ckpt="4128'
+                    continue
                 elif [[ $trained_on = "deepl" && $seed = 1 ]]; then
-                    ckpt="5155"
+                    ckpt="2580"
                 elif [[ $trained_on = "deepl" && $seed = 2 ]]; then
-                    ckpt="5155" #same as seed 1 because of early stopping
+                    ckpt="2064"
                 elif [[ $trained_on = "deepl" && $seed = 3 ]]; then
-                    ckpt="9279"
+                    ckpt="2580" #same as seed 1 because of early stopping
                 else
                     echo "Invalid combination of trained_on and seed"
                     exit 1
@@ -78,7 +77,6 @@ for trained_on in ${models[@]}; do
                 --batch_size 16 \
                 --arch $arch \
                 --load_model $checkpoint \
-                --load_sentence_pairs "default" \
                 $flags \
                 $test_flags \
                 &> $logfile
