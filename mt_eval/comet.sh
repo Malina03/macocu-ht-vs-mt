@@ -23,18 +23,18 @@ for lang in ${languages[@]}; do
         # src=$TMPDIR/src.txt
         dir=/data/pg-macocu/MT_vs_HT/experiments/comet/data/${lang}-en/${test_set}/
         if [[ $test_set = "deepl" ]]; then
-            out=$dir/*.deepl.en
+            out="${dir}/*.deepl.en"
         elif [[ $test_set = "google" ]]; then
-            out=$dir/*.en.google
+            out="${dir}/*.en.google"
         elif [[ $test_set =  wmt{1..4} ]]; then
-            out=$dir/*.wmt
+            out="${dir}/*.wmt"
         else
             echo "$test_set and $lang combination is not a valid."
             exit 1
         fi
-        
-        ref=$dir/trans_*.txt
-        src=$dir/org_*.txt
+
+        ref="${dir}/trans_*.txt"
+        src="${dir}/org_*.txt"
         echo "${ref} ${src} ${out}"
         comet-score -s $src -t $out -r $ref > /data/pg-macocu/MT_vs_HT/experiments/comet/results/${test_set}.${lang}.comet
         # rm -r $TMPDIR/*
