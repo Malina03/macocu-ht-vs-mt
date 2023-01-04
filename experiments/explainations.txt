@@ -1,0 +1,8 @@
+New experiments:
+- tg-only vs src + tg 
+    - exp 8 for tg-only
+    - exp 14 for src + tg
+- source languages exp-13
+- diff src language in training
+    - 15-21 tg only
+    - 22-28 src+tg

@@ -2,12 +2,14 @@
 
 #SBATCH --job-name='8_g_train'
 #SBATCH --partition=gpu
-#SBATCH --time=02:00:00
+#SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
-
+#SBATCH --array=1-3
+#SBATCH --mail-type=BEGIN,FAIL,END
+#SBATCH --mail-user=m.chichirau@student.rug.nl
 
 
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
@@ -43,8 +45,10 @@ fi
 log_model_name="deberta"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
-logdir="/data/pg-macocu/MT_vs_HT/experiments/14/models/${mt}/${log_model_name}/"
-logfile="/data/pg-macocu/MT_vs_HT/experiments/14/results/${mt}/dev/${mt}/train.out"
+logdir="${rootdir}/models/${mt}/${log_model_name}_${seed}/"
+res_dir="${rootdir}/results/${mt}/dev/${mt}/"
+logfile="${res_dir}/train_${seed}.out"
+mkdir -p $res_dir
 mkdir -p $logdir
 
 

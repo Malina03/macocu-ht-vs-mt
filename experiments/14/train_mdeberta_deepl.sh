@@ -1,14 +1,15 @@
 #!/bin/bash
 
 #SBATCH --job-name='14_d'
-#SBATCH --partition=gpushort
-#SBATCH --time=01:30:00
+#SBATCH --partition=gpu
+#SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
+#SBATCH --array=1-3
 
 
 # export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
@@ -16,7 +17,7 @@
 
 EXP_ID=7
 root_dir=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
-seed=1
+seed=${SLURM_ARRAY_TASK_ID}
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
@@ -45,8 +46,8 @@ bsz=16
 log_model_name="mdeberta"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
-logdir="/data/pg-macocu/MT_vs_HT/experiments/14/models/${mt}/${log_model_name}/"
-logfile="/data/pg-macocu/MT_vs_HT/experiments/14/results/${mt}/dev/${mt}/train.out"
+logdir="/data/pg-macocu/MT_vs_HT/experiments/14/models/${mt}/${log_model_name}_${seed}/"
+logfile="/data/pg-macocu/MT_vs_HT/experiments/14/results/${mt}/dev/${mt}/train_${seed}.out"
 mkdir -p $logdir
 
 # # Copy source code
