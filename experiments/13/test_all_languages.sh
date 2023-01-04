@@ -21,76 +21,70 @@ EXP_ID=13
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
 # trained_on="google"
-trained_on="deepl"
+# trained_on="deepl"
 arch="microsoft/deberta-v3-large"
 arch_folder="microsoft-deberta-v3-large"
 
-if [ $trained_on == "google" ]; then
-    ckpt="1600"
-else
-    ckpt="1800"
-fi
-checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-${ckpt}
-
 languages=("de" "fi" "gu" "kk" "lt" "ru" "zh" "dv")
 sets=("deepl" "google" "wmt1" "wmt2" "wmt3" "wmt4")
-
-# i=0
-# j=0
-# len_i=${#languages[@]}
-# len_j=${#sets[@]}
-# while [ $i -lt $len_i ]; do 
-#     lang=${languages[$i]}
-#     while [ $j -lt $len_j ]; do
-#         test_set=${sets[$j]}
+models=("google" "deepl")
 
 cd $HOME/HT-vs-MT/
-for lang in ${languages[@]}; do
-    for test_set in ${sets[@]}; do
+for trained_on in ${models[@]}; do
+    if [ $trained_on == "google" ]; then
+        ckpt="1600"
+    else
+        ckpt="1800"
+    fi
+    checkpoint=${ROOT_DIR}/models/${trained_on}/${arch_folder}_lr=1e-05_bsz=32_epochs=5_seed=1/checkpoint-${ckpt}
 
-        if [ $test_set == "deepl" && lang == 'fi' ]; then
-            continue
-        fi
+    for lang in ${languages[@]}; do
+        for test_set in ${sets[@]}; do
 
-        if [ $test_set == "deepl" && lang == 'gu' ]; then
-            continue
-        fi  
+            # if [ $test_set == "deepl" && lang == 'fi' ]; then
+            #     continue
+            # fi
 
-        if [ $test_set == "deepl" && lang == 'kk' ]; then
-            continue
-        fi  
+            if [ $test_set == "deepl" && lang == 'gu' ]; then
+                continue
+            fi  
 
-        if [ $test_set == "deepl" && lang == 'lt' ]; then
-            continue
-        fi 
+            if [ $test_set == "deepl" && lang == 'kk' ]; then
+                continue
+            fi  
 
-        if [ $test_set == "deepl" && lang == 'ru' ]; then
-            continue
-        fi  
+            # if [ $test_set == "deepl" && lang == 'lt' ]; then
+            #     continue
+            # fi 
 
-        if [ $test_set == "deepl" && lang == 'zh' ]; then
-            continue
-        fi 
+            # if [ $test_set == "deepl" && lang == 'ru' ]; then
+            #     continue
+            # fi  
 
-        logdir="${ROOT_DIR}/results/${trained_on}/${lang}/${test_set}/"
-        logfile="${logdir}/eval.out"
-        mkdir -p $logdir
+            # if [ $test_set == "deepl" && lang == 'zh' ]; then
+            #     continue
+            # fi 
 
-        if [ $mt == "google" ]; then
-            flags="--use_google_data"
-        else
-            flags=""
-        fi
-        
-        python classifier_trf_hf.py \
-        --root_dir $ROOT_DIR \
-        --arch $arch \
-        --test $test_set \
-        --test_on_language $lang \
-        --load_model $checkpoint \
-        &> $logfile
+            logdir="${ROOT_DIR}/results/${trained_on}/${lang}/${test_set}/"
+            logfile="${logdir}/eval.out"
+            mkdir -p $logdir
 
-        # let i++
-        # let j++
+            if [ $mt == "google" ]; then
+                flags="--use_google_data"
+            else
+                flags=""
+            fi
+            
+            python classifier_trf_hf.py \
+            --root_dir $ROOT_DIR \
+            --arch $arch \
+            --test $test_set \
+            --test_on_language $lang \
+            --load_model $checkpoint \
+            &> $logfile
+
+            # let i++
+            # let j++
+        done
     done
 done
