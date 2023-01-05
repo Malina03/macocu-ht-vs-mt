@@ -28,11 +28,8 @@ for lang in ${languages[@]}; do
             out="${dir}/*.deepl.en"
         elif [[ $test_set = "google" ]]; then
             out="${dir}/*.en.google"
-        elif [[ $test_set =  "wmt{1..4}" ]]; then
+        else # wmt1, wmt2, wmt3, wmt4
             out="${dir}/*.wmt"
-        else
-            echo "$test_set and $lang combination is not a valid."
-            exit 1
         fi
 
         ref="${dir}/trans_*.txt"
