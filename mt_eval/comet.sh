@@ -28,7 +28,7 @@ for lang in ${languages[@]}; do
             out="${dir}/*.deepl.en"
         elif [[ $test_set = "google" ]]; then
             out="${dir}/*.en.google"
-        elif [[ $test_set =  wmt{1..4} ]]; then
+        elif [[ $test_set =  "wmt{1..4}" ]]; then
             out="${dir}/*.wmt"
         else
             echo "$test_set and $lang combination is not a valid."
