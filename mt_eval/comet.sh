@@ -3,6 +3,8 @@
 #SBATCH --partition=gpushort
 #SBATCH --gres=gpu:v100:1
 #SBATCH --mem=50G
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=m.chichirau@student.rug.nl
 
 # Evaluate COMET on WMT08-19.
 
