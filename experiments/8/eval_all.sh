@@ -35,19 +35,21 @@ for trained_on in ${models[@]}; do
         for eval_on in ${eval_sets[@]}; do
             for seed in ${seeds[@]}; do
                 if [[ $trained_on = "google" && $seed = 1 ]]; then
-                    ckpt="3612"
+                    # ckpt="3612"
+                    continue
                 elif [[ $trained_on = "google" && $seed = 2 ]]; then
-                    # ckpt="5160"
-                    continue
+                    ckpt="1548"
                 elif [[ $trained_on = "google" && $seed = 3 ]]; then
-                    # ckpt="4128'
-                    continue
+                    ckpt="1548" #same as seed 2 because of early stopping
                 elif [[ $trained_on = "deepl" && $seed = 1 ]]; then
-                    ckpt="2580"
+                    # ckpt="2580"
+                    continue
                 elif [[ $trained_on = "deepl" && $seed = 2 ]]; then
-                    ckpt="2064"
+                    # ckpt="2064"
+                    continue
                 elif [[ $trained_on = "deepl" && $seed = 3 ]]; then
                     ckpt="2580" #same as seed 1 because of early stopping
+                    continue
                 else
                     echo "Invalid combination of trained_on and seed"
                     exit 1
