@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=00:14:59
+#SBATCH --time=00:20:00
 #SBATCH --partition=gpushort
 #SBATCH --gres=gpu:v100:1
 #SBATCH --mem=50G
@@ -23,7 +23,7 @@ for lang in ${languages[@]}; do
         # out=$TMPDIR/out.txt
         # ref=$TMPDIR/ref.txt
         # src=$TMPDIR/src.txt
-        dir=/data/pg-macocu/MT_vs_HT/experiments/comet/data/${lang}-en/${test_set}/
+        dir=/data/pg-macocu/MT_vs_HT/experiments/comet/data/${lang}-en/${test_set}
         if [[ $test_set = "deepl" ]]; then
             out="${dir}/*.deepl.en"
         elif [[ $test_set = "google" ]]; then
@@ -37,7 +37,7 @@ for lang in ${languages[@]}; do
 
         ref="${dir}/trans_*.txt"
         src="${dir}/org_*.txt"
-        echo "${ref} ${src} ${out}"
+        # echo ${ref} ${src} ${out}
         comet-score -s $src -t $out -r $ref > /data/pg-macocu/MT_vs_HT/experiments/comet/results/${test_set}.${lang}.comet
         # rm -r $TMPDIR/*
     done
