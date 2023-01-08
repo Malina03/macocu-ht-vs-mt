@@ -67,6 +67,7 @@ for seed in ${seeds[@]}; do
         --root_dir $ROOT_DIR \
         --batch_size 16 \
         --arch $arch \
+        --load_sentence_pairs 'multilingual' \
         --test_on_language ${eval_on} \
         --load_model $checkpoint \
         $flags \
