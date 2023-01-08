@@ -1,13 +1,13 @@
 #!/bin/bash
 
-#SBATCH --job-name='22_train'
+#SBATCH --job-name='27_train'
 #SBATCH --partition=gpu
 #SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
-#SBATCH --array=2-3
+#SBATCH --array=1-3
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
@@ -15,7 +15,7 @@
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
 export WANDB_DISABLED=true  # for some reason this is necessary
 
-exp_id=22
+exp_id=27
 root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
 
 module purge
