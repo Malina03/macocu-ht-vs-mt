@@ -221,7 +221,7 @@ def parse_args_hf():
         "--load_sentence_pairs",
         type=str,
         nargs = '?',
-        choices = ["default", "mean_embeddings", "reverse"],
+        choices = ["default", "mean_embeddings", "reverse", "multilingual"],
         help="Set this flag to classify HT vs. MT for "
         "source/translation pairs, rather than just "
         "translations.",

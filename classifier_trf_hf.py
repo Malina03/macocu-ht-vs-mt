@@ -12,7 +12,7 @@ from transformers import (
     XLMRobertaModel,
 )
 
-from data import load_corpus, load_corpus_sentence_pairs, load_language_tests
+from data import load_corpus, load_corpus_sentence_pairs, load_language_tests, load_corpus_multilingual_sentence_pairs
 from models import BilingualSentenceClassifier
 from util import get_training_arguments, compute_metrics, parse_args_hf
 
@@ -82,10 +82,12 @@ def main():
     # Load the data.
     idx_to_docid = None
     test_or_dev = "test" if args.test else "dev"
-    if args.load_sentence_pairs:  # load both source and translations (bilingual)
+    if args.load_sentence_pairs == "multilingual":
+        train_data = load_corpus_multilingual_sentence_pairs(args, "train")
+        eval_data = load_corpus_multilingual_sentence_pairs(args, test_or_dev)
+    elif args.load_sentence_pairs:  # load both source and translations (bilingual)
         train_data = load_corpus_sentence_pairs(args, "train")
         eval_data = load_corpus_sentence_pairs(args, test_or_dev)
-
     elif args.test_on_language:
         train_data, _ = load_corpus(args, "train")
         eval_data, idx_to_docid = load_language_tests(
