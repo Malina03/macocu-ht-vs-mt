@@ -65,6 +65,6 @@ python classifier_trf_hf.py \
 --dropout $dropout \
 --seed $seed \
 --strategy "epoch" \
---load_multilingual_sentence_pairs "multilingual"\
+--load_sentence_pairs "multilingual"\
 $flags \
 &> $logfile
