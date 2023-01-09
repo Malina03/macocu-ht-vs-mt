@@ -10,9 +10,6 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
-# export WANDB_DISABLED=true  # for some reason this is necessary
-
-
 exp_id=22
 root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
 
@@ -22,7 +19,7 @@ source /data/$USER/.envs/macocu/bin/activate
 
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
-arch_folder='mdeberta'
+arch_folder="mdeberta"
 trained_on="google"
 eval_sets=("zh" "de" "ru")
 seeds=(1 2 3)
@@ -38,7 +35,7 @@ for seed in ${seeds[@]}; do
     # if [ $seed == 3 ]; then
     #     ckpt=4128
     # fi
-    checkpoint="${root_dir}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-[0-9]{4}/"
+    checkpoint="${root_dir}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*/"
 
     for eval_on in ${eval_sets[@]}; do
 
