@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name='22_eval'
+#SBATCH --job-name='21_eval'
 #SBATCH --partition=gpushort
-#SBATCH --time=00:30:00
+#SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -10,12 +10,15 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
+# export WANDB_DISABLED=true  # for some reason this is necessary
+
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
-exp_id=22
-root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
+EXP_ID=22
+ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+
 
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
@@ -35,7 +38,7 @@ for seed in ${seeds[@]}; do
     if [ $seed == 3 ]; then
         ckpt=4128
     fi
-    checkpoint="${root_dir}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-${ckpt}"
+    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-${ckpt}"
 
     for eval_on in ${eval_sets[@]}; do
 
@@ -50,7 +53,7 @@ for seed in ${seeds[@]}; do
         fi
         
         python classifier_trf_hf.py \
-        --root_dir $root_dir \
+        --root_dir $ROOT_DIR \
         --batch_size 16 \
         --arch $arch \
         --load_model $checkpoint \
