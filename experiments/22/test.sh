@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name='21_eval'
+#SBATCH --job-name='22_eval'
 #SBATCH --partition=gpushort
-#SBATCH --time=02:00:00
+#SBATCH --time=00:30:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -48,7 +48,7 @@ for seed in ${seeds[@]}; do
     # if [ $seed == 3 ]; then
     #     ckpt=4128
     # fi
-    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+    checkpoint="${root_dir}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
 
     for eval_on in ${eval_sets[@]}; do
 
