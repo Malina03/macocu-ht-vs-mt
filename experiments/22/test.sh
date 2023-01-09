@@ -22,16 +22,6 @@ source /data/$USER/.envs/macocu/bin/activate
 
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
-
-learning_rate=5e-05
-bsz=32
-num_epochs=10
-weight_decay=0
-max_grad_norm=1
-warmup_steps=400
-label_smoothing=0.0
-dropout=0.1
-
 arch_folder='mdeberta'
 trained_on="google"
 eval_sets=("zh" "de" "ru")
@@ -48,7 +38,7 @@ for seed in ${seeds[@]}; do
     # if [ $seed == 3 ]; then
     #     ckpt=4128
     # fi
-    checkpoint="${root_dir}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+    checkpoint="${root_dir}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-[0-9]{4}/"
 
     for eval_on in ${eval_sets[@]}; do
 
