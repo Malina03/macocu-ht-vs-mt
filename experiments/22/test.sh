@@ -10,12 +10,12 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
-exp_id=22
-root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
-
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
+
+exp_id=22
+root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
 
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
@@ -50,14 +50,13 @@ for seed in ${seeds[@]}; do
         fi
         
         python classifier_trf_hf.py \
-        --root_dir $ROOT_DIR \
+        --root_dir $root_dir \
         --batch_size 16 \
         --arch $arch \
         --load_model $checkpoint \
         --load_sentence_pairs "multilingual" \
         --test $eval_on \
         $flags \
-        $test_flags \
         &> $logfile
     done
 done
