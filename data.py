@@ -186,14 +186,14 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
         
     print("=> Loading {} corpus...".format(phase))
 
-    _mt_suffixes = [".txt.en.google"]
+    _mt_suffixes = [".txt.en.google", '.deepl.en']
 
     corpus_data = []
     root_dir = Path(args.root_dir).resolve()
     
     mt = "google" if args.use_google_data else "deepl"
-    if mt != "google":
-        raise NotImplementedError("Only Google data is supported for now.")
+    # if mt != "google":
+    #     raise NotImplementedError("Only Google data is supported for now.")
     
     if phase == "test":
         lang_apdx = args.test
@@ -229,7 +229,7 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
             lang = re.search(r"_(de|ru|zh)", path_B.name).group(1)
             if path_B.name in [
                 f"trans_{lang}en_en_wmt{wmt_year}.txt",
-                # f"org_{lang_pair}_de_wmt{wmt_year}.deepl.en",
+                f"org_{lang}en_{lang}_wmt{wmt_year}.deepl.en",
                 f"org_{lang}en_{lang}_wmt{wmt_year}.txt.en.google"
             ]:
                 # Translation from original text.

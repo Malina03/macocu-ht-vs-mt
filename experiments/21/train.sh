@@ -24,7 +24,8 @@ source /data/$USER/.envs/macocu/bin/activate
 
 # Hyper-parameters
 arch="microsoft/deberta-v3-large"
-mt="google"
+# mt="google"
+mt="deepl"
 learning_rate=1e-05
 bsz=32
 num_epochs=10
