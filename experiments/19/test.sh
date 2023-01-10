@@ -34,16 +34,16 @@ seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
-    if [ $seed == 1 ]; then 
-        ckpt=1644
-    fi
-    if [ $seed == 2 ]; then
-        ckpt=1644
-    fi
-    if [ $seed == 3 ]; then
-        ckpt=1096
-    fi
-    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-${ckpt}"
+    # if [ $seed == 1 ]; then 
+    #     ckpt=1644
+    # fi
+    # if [ $seed == 2 ]; then
+    #     ckpt=1644
+    # fi
+    # if [ $seed == 3 ]; then
+    #     ckpt=1096
+    # fi
+    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
 
     for eval_on in ${eval_sets[@]}; do
 
