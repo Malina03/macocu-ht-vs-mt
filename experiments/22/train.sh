@@ -7,7 +7,7 @@
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
-#SBATCH --array=2-3
+#SBATCH --array=1-3
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
@@ -24,9 +24,12 @@ source /data/$USER/.envs/macocu/bin/activate
 
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
-mt="google"
-learning_rate=5e-05
-bsz=32
+# mt="google"
+mt="deepl"
+# learning_rate=5e-05
+# bsz=32
+learning_rate=1e-05
+bsz=16
 num_epochs=10
 weight_decay=0
 max_grad_norm=1

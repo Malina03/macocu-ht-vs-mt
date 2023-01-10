@@ -23,7 +23,8 @@ ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
 arch_folder="mdeberta"
-trained_on="google"
+# trained_on="google"
+trained_on="deepl"
 eval_sets=("zh" "de" "ru")
 seeds=(1 2 3)
 
