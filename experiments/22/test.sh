@@ -39,7 +39,7 @@ for seed in ${seeds[@]}; do
     # if [ $seed == 3 ]; then
     #     ckpt=4128
     # fi
-    # checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
 
     for eval_on in ${eval_sets[@]}; do
 

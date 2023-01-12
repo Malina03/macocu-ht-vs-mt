@@ -23,8 +23,8 @@ source /data/$USER/.envs/macocu/bin/activate
 
 # Hyper-parameters
 arch="microsoft/deberta-v3-large"
-# mt="google"
-mt="deepl"
+mt="google"
+# mt="deepl"
 learning_rate=1e-05
 bsz=32
 num_epochs=10
@@ -41,14 +41,24 @@ else
     flags=""
 fi
 
-log_model_name="deberta"
+arch="microsoft/mdeberta-v3-base"
+log_model_name="mdeberta"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
-outputdir="${root_dir}/results/${mt}/dev"
+outputdir="${root_dir}/results/${log_model_name}/${mt}/dev"
 logfile="${outputdir}/train_${seed}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
+
+# log_model_name="deberta"
+# # Make sure the logdir specified below corresponds to the directory defined in the
+# # main() function of the `classifier_trf_hf.py` script!
+# logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
+# outputdir="${root_dir}/results/${mt}/dev"
+# logfile="${outputdir}/train_${seed}.out"
+# mkdir -p $outputdir
+# mkdir -p $logdir
 
 
 # Copy source code
