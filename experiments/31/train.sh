@@ -1,4 +1,4 @@
-/bash
+#!/bin/bash
 
 #SBATCH --job-name='31_train'
 #SBATCH --partition=gpu
