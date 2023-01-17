@@ -26,6 +26,7 @@ source /data/$USER/.envs/macocu/bin/activate
 arch="microsoft/deberta-v3-large"
 mt="google"
 # mt="deepl"
+max_length=512
 learning_rate=1e-05
 bsz=8
 num_epochs=10
