@@ -20,11 +20,11 @@ source /data/$USER/.envs/macocu/bin/activate
 EXP_ID=32
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
-arch="microsoft/mdeberta-v3-base"
-arch_folder="deberta"
+# arch="microsoft/mdeberta-v3-base"
+# arch_folder="mdeberta"
 
-# arch="microsoft/deberta-v3-large"
-# arch_folder="deberta"
+arch="microsoft/deberta-v3-large"
+arch_folder="deberta"
 learning_rate=1e-05
 bsz=8
 trained_on="google"
