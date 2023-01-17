@@ -21,7 +21,7 @@ EXP_ID=32
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
 arch="microsoft/mdeberta-v3-base"
-arch_folder="mdeberta"
+arch_folder="deberta"
 
 # arch="microsoft/deberta-v3-large"
 # arch_folder="deberta"
