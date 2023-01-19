@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='30_eval'
 #SBATCH --partition=gpushort
-#SBATCH --time=00:45:00
+#SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -26,7 +26,7 @@ arch_folder="mdeberta"
 trained_on="google"
 # trained_on="deepl"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3)
+seeds=(1 2 3 4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
