@@ -23,7 +23,7 @@ module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
 # Hyper-parameters
-# arch="microsoft/deberta-v3-large"
+arch="microsoft/deberta-v3-large"
 mt="google"
 # mt="deepl"
 learning_rate=1e-05
@@ -42,8 +42,8 @@ else
     flags=""
 fi
 
-arch="microsoft/mdeberta-v3-base"
-log_model_name="mdeberta"
+# arch="microsoft/mdeberta-v3-base"
+log_model_name="deberta"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
