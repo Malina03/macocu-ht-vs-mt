@@ -26,7 +26,7 @@ source /data/$USER/.envs/macocu/bin/activate
 arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=5e-05
-# bsz=32
+bsz=32
 # mt="deepl"
 # learning_rate=1e-05
 # bsz=16
