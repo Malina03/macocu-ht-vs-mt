@@ -48,7 +48,7 @@ fi
 
 log_model_name="deberta_ft"
 arch_folder="deberta"
-checkpoint="/data/pg-macocu/MT_vs_HT/experiments/15/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+checkpoint="/data/pg-macocu/MT_vs_HT/experiments/15/models/${mt}/${arch_folder}_${seed}/checkpoint-*"
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${mt}/dev"
