@@ -9,7 +9,7 @@
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
-#SBATCH --array=4-10
+#SBATCH --array=1-3
 
 
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
@@ -46,8 +46,10 @@ else
 fi
 
 
-# Make sure the logdir specified below corresponds to the directory defined in the
-# main() function of the `classifier_trf_hf.py` script!
+log_model_name="deberta_ft"
+arch_folder="deberta"
+checkpoint="/data/pg-macocu/MT_vs_HT/experiments/15/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${mt}/dev"
 logfile="${outputdir}/train_${seed}.out"
@@ -67,6 +69,7 @@ cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
 --output_dir $logdir \
+--load_model $checkpoint \
 --arch $arch \
 --learning_rate $learning_rate \
 --batch_size $bsz \

@@ -7,7 +7,7 @@
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
-#SBATCH --array=4-10
+#SBATCH --array=1-3
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
@@ -44,7 +44,10 @@ else
     flags=""
 fi
 
-log_model_name="mdeberta"
+log_model_name="mdeberta_ft"
+arch_folder="mdeberta"
+checkpoint="/data/pg-macocu/MT_vs_HT/experiments/22/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${mt}/dev"
 logfile="${outputdir}/train_${seed}.out"
@@ -56,6 +59,7 @@ cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
 --output_dir $logdir \
+--load_model $checkpoint \
 --arch $arch \
 --learning_rate $learning_rate \
 --batch_size $bsz \
