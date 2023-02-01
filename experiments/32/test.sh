@@ -50,7 +50,7 @@ for seed in ${seeds[@]}; do
     for eval_on in ${eval_sets[@]}; do
 
         logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
-        logfile="${logdir}/eval_ft_${seed}.out"
+        logfile="${logdir}/eval_tf_${seed}.out"
         mkdir -p $logdir
 
         if [ $trained_on == "google" ]; then

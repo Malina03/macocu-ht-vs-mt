@@ -9,7 +9,7 @@
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
-#SBATCH --array=1-3
+#SBATCH --array=4-7
 
 
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
