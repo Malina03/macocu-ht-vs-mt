@@ -210,7 +210,7 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
     else:
         paths = {
            # adapted for translationese
-            0: list((root_dir / f"data/{mt}/{phase}/").glob("trans_??en_en_wmt??.txt") + (root_dir / f"data/{mt}/{phase}/").glob("org_en??_en_wmt??.txt")),
+            0: (list((root_dir / f"data/{mt}/{phase}/").glob("trans_??en_en_wmt??.txt")) + list((root_dir / f"data/{mt}/{phase}/").glob("org_en??_en_wmt??.txt"))),
             1: list(
                 itertools.chain.from_iterable(
                     (root_dir / f"data/{mt}/{phase}/").glob(f"*{sfx}")
