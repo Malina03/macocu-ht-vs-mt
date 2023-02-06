@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #SBATCH --job-name='33_train'
 #SBATCH --partition=gpu
 #SBATCH --time=07:00:00
