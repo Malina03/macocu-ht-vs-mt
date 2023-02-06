@@ -198,8 +198,8 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
     if phase == "test":
         lang_apdx = args.test
         paths = {
-            # No translationsese data => trans_*.txt only matches ht sentences from original data
-            0: list((root_dir / f"data/{mt}/{phase}/{lang_apdx}-en/").glob("trans*.txt")),
+            # No translationsese data for testing => trans_*.txt only matches ht sentences from original data
+            0: list((root_dir / f"data/{mt}/{phase}/{lang_apdx}-en/").glob(f"trans*.txt")),
             1: list(
                 itertools.chain.from_iterable(
                     (root_dir / f"data/{mt}/{phase}/{lang_apdx}-en/").glob(f"*{sfx}")
@@ -209,8 +209,8 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
         }
     else:
         paths = {
-            # No translationsese data => trans_*.txt only matches ht sentences from original data
-            0: list((root_dir / f"data/{mt}/{phase}/").glob("trans*.txt")),
+           # adapted for translationese
+            0: list((root_dir / f"data/{mt}/{phase}/").glob("trans_??en_en_wmt??.txt") + (root_dir / f"data/{mt}/{phase}/").glob("org_en??_en_wmt??.txt")),
             1: list(
                 itertools.chain.from_iterable(
                     (root_dir / f"data/{mt}/{phase}/").glob(f"*{sfx}")
@@ -237,6 +237,13 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
                     path_A = root_dir / f"data/{mt}/{phase}/{lang}-en/org_{lang}en_{lang}_wmt{wmt_year}.txt"
                 else:
                     path_A = root_dir / f"data/{mt}/{phase}/org_{lang}en_{lang}_wmt{wmt_year}.txt"
+            elif path_B.name in [
+                f"org_en{lang}_en_wmt{wmt_year}.txt",
+                f"trans_en{lang}_{lang}_wmt{wmt_year}.deepl.en",
+                f"trans_en{lang}_{lang}_wmt{wmt_year}.txt.en.google"
+            ]:
+                # Translation from translatinese -> not in test data
+                path_A = root_dir / f"data/{mt}/{phase}/trans_en{lang}_en_wmt{wmt_year}.txt"
             else:  # fail
                 raise RuntimeError(
                     f"Unrecognized file name: {path_B.name}. Take a look "
