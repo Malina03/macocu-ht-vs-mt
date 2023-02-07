@@ -31,7 +31,7 @@ trained_on="google"
 # trained_on="deepl"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3)
+seeds=(1 2 3 4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 
@@ -49,8 +49,10 @@ for seed in ${seeds[@]}; do
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
     for eval_on in ${eval_sets[@]}; do
 
-        logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
-        logfile="${logdir}/eval_tf_${seed}.out"
+        # logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
+        # logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
+        logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
+        logfile="${logdir}/eval_ft_${seed}.out"
         mkdir -p $logdir
 
         if [ $trained_on == "google" ]; then

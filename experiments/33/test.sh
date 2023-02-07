@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name='33_eval'
-#SBATCH --partition=gpu
+#SBATCH --partition=gpushort
 #SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
@@ -25,7 +25,7 @@ ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 # arch_folder="mdeberta"
 
 arch="microsoft/deberta-v3-large"
-arch_folder="deberta_ft"
+arch_folder="deberta"
 learning_rate=1e-05
 bsz=8
 trained_on="google"
@@ -50,8 +50,9 @@ for seed in ${seeds[@]}; do
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
     for eval_on in ${eval_sets[@]}; do
 
-        logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
-        logfile="${logdir}/eval_ft_${seed}.out"
+        # logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
+        logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
+        logfile="${logdir}/eval_${seed}.out"
         mkdir -p $logdir
 
         if [ $trained_on == "google" ]; then

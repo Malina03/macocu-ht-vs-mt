@@ -26,7 +26,7 @@ arch_folder="mdeberta_ft"
 trained_on="google"
 # trained_on="deepl"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3)
+seeds=(1 2 3 4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
@@ -43,8 +43,9 @@ for seed in ${seeds[@]}; do
 
     for eval_on in ${eval_sets[@]}; do
 
-        logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
-        logfile="${logdir}/eval_tf_${seed}.out"
+        # logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
+        logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
+        logfile="${logdir}/eval_ft_${seed}.out"
         mkdir -p $logdir
 
         if [ $trained_on == "google" ]; then
