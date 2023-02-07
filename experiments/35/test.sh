@@ -68,6 +68,7 @@ for seed in ${seeds[@]}; do
         --load_model $checkpoint \
         --load_sentence_pairs "multilingual" \
         --max_length 512 \
+        $flags \
         &> $logfile
     done
 done
