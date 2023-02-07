@@ -243,7 +243,7 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
                 f"trans_en{lang}_{lang}_wmt{wmt_year}.txt.en.google"
             ]:
                 # Translation from translatinese -> not in test data
-                path_A = root_dir / f"data/{mt}/{phase}/trans_en{lang}_en_wmt{wmt_year}.txt"
+                path_A = root_dir / f"data/{mt}/{phase}/trans_en{lang}_{lang}_wmt{wmt_year}.txt"
             else:  # fail
                 raise RuntimeError(
                     f"Unrecognized file name: {path_B.name}. Take a look "
