@@ -70,7 +70,7 @@ for seed in ${seeds[@]}; do
         --root_dir $ROOT_DIR \
         --batch_size 8 \
         --arch $arch \
-        --test_on_language ${eval_on} \
+        --test ${eval_on} \
         --load_model $checkpoint \
         --load_sentence_pairs "multilingual" \
         --max_length 512 \
