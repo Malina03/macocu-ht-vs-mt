@@ -45,7 +45,7 @@ for seed in ${seeds[@]}; do
 
         # logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
         logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
-        logfile="${logdir}/eval_ft_${seed}.out"
+        logfile="${logdir}/eval_majority_${seed}.out"
         mkdir -p $logdir
 
         if [ $trained_on == "google" ]; then

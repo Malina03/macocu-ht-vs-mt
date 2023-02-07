@@ -170,7 +170,7 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
     sents_enc = tokenizer(sents, padding=True, truncation=True)
     return HFDataset(sents_enc, labels), idx_to_docid
 
-def load_corpus_multilingual_sentence_pairs(args, phase):
+def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=False):
     """
     Loads data from disk, where instead of individual sentences, bilingual sentence
     pairs are loaded (German-English/Russian-English/Chinese-English).
@@ -223,6 +223,8 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
 
     # Match source files with files containing translations.
     # path_A = original, path_B = translation
+    idx_to_docid = dict() if split_docs_by_sentence else None
+    doc_id = 0
     for label, path_lst in paths.items():
         for path_B in path_lst:
             wmt_year = re.search(r"[0-9]{2}", path_B.name).group(0)
@@ -258,8 +260,18 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
             )
             with open(path_A, encoding="utf-8") as sents_A:
                 with open(path_B, encoding="utf-8") as sents_B:
-                    for line_A, line_B in zip(sents_A, sents_B):
-                        corpus_data.append([line_A.rstrip(), line_B.rstrip(), label])
+                    if split_docs_by_sentence:
+                        # In this case, a single line contains a full document.
+                        for line_A, line_B in zip(sents_A, sents_B):
+                            for seg_A, seg_B in zip(line_A.split(". "), line_B.split(". ")):
+                                corpus_data.append(
+                                    [f"{seg_A.rstrip()}.", f"{seg_B.rstrip()}.", label]
+                                )
+                                idx_to_docid[len(corpus_data) - 1] = doc_id
+                    else:
+                        for line_A, line_B in zip(sents_A, sents_B):
+                            corpus_data.append([line_A.rstrip(), line_B.rstrip(), label])
+
 
     # Encode the sentences using the HuggingFace tokenizer.
     sentsA, sentsB, labels = zip(*corpus_data)

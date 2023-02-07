@@ -84,7 +84,7 @@ def main():
     test_or_dev = "test" if args.test else "dev"
     if args.load_sentence_pairs == "multilingual":
         train_data = load_corpus_multilingual_sentence_pairs(args, "train")
-        eval_data = load_corpus_multilingual_sentence_pairs(args, test_or_dev)
+        eval_data = load_corpus_multilingual_sentence_pairs(args, test_or_dev, split_docs_by_sentence=args.use_majority_classification)
     elif args.load_sentence_pairs:  # load both source and translations (bilingual)
         train_data = load_corpus_sentence_pairs(args, "train")
         eval_data = load_corpus_sentence_pairs(args, test_or_dev)
