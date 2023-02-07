@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name='32_eval'
+#SBATCH --job-name='32_maj'
 #SBATCH --partition=gpu
-#SBATCH --time=02:00:00
+#SBATCH --time=10:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -61,7 +61,6 @@ for seed in ${seeds[@]}; do
         --batch_size 8 \
         --arch $arch \
         --load_model $checkpoint \
-        --load_sentence_pairs "multilingual" \
         --use_majority_classification \
         --test $eval_on \
         --max_length 512 \

@@ -285,7 +285,7 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
     else:
     # encode input as original + translated
         sents_enc = tokenizer(sentsA, sentsB, padding=True, truncation=True)
-    return HFDataset(sents_enc, labels)
+    return HFDataset(sents_enc, labels), idx_to_docid
 
 
 def load_corpus_sentence_pairs(args, phase):
