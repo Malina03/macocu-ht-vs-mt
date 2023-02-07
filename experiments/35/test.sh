@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='35_eval'
 #SBATCH --partition=regular
-#SBATCH --time=05:00:00
+#SBATCH --time=10:00:00
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
@@ -31,22 +31,12 @@ trained_on="google"
 # trained_on="deepl"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-# seeds=(1 2 3 4 5 6 7 8 9 10)
-seeds=(1)
+seeds=(2 3 4 5 6 7 8 9 10)
+# seeds=(1)
 
 cd $HOME/HT-vs-MT/
 
 for seed in ${seeds[@]}; do
-    # if [ $seed == "1" ]; then 
-    #     ckpt=2064
-    # fi
-    # if [ $seed == "2" ]; then
-    #     ckpt=1548
-    # fi
-    # if [ $seed == "3" ]; then
-    #     ckpt=1548 ## it's the same as for seed 2, checked this
-    # fi
-    
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
     for eval_on in ${eval_sets[@]}; do
 
