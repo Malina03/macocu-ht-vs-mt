@@ -55,6 +55,7 @@ for seed in ${seeds[@]}; do
         
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
+        --output_dir $logdir \
         --batch_size 16 \
         --arch $arch \
         --load_model $checkpoint \

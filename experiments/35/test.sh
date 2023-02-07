@@ -24,7 +24,7 @@ ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 # arch="microsoft/mdeberta-v3-base"
 # arch_folder="mdeberta"
 
-arch="microsoft/deberta-v3-large"
+arch="microsoft/mdeberta-v3-base"
 arch_folder="mdeberta"
 learning_rate=1e-05
 bsz=8
