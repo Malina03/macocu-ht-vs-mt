@@ -31,7 +31,8 @@ trained_on="google"
 # trained_on="deepl"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3 4 5 6 7 8 9 10)
+# seeds=(1 2 3 4 5 6 7 8 9 10)
+seeds=(1)
 
 cd $HOME/HT-vs-MT/
 
@@ -59,12 +60,6 @@ for seed in ${seeds[@]}; do
             flags=""
         fi
 
-        if [ $test_set == "dev" ]; then
-            test_flags="--eval"
-        else
-            test_flags="--test $trained_on"
-        fi
-        
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
         --batch_size 8 \
@@ -73,8 +68,6 @@ for seed in ${seeds[@]}; do
         --load_model $checkpoint \
         --load_sentence_pairs "multilingual" \
         --max_length 512 \
-        $flags \
-        $test_flags \
         &> $logfile
     done
 done

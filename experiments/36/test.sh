@@ -58,12 +58,6 @@ for seed in ${seeds[@]}; do
         else
             flags=""
         fi
-
-        if [ $test_set == "dev" ]; then
-            test_flags="--eval"
-        else
-            test_flags="--test $trained_on"
-        fi
         
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
@@ -74,7 +68,6 @@ for seed in ${seeds[@]}; do
         --load_sentence_pairs "multilingual" \
         --max_length 512 \
         $flags \
-        $test_flags \
         &> $logfile
     done
 done
