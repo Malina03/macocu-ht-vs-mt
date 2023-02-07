@@ -1,4 +1,3 @@
-#SBATCH --gres=gpu:v100:1
 #!/bin/bash
 
 #SBATCH --job-name='30_eval'
