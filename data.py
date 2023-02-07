@@ -226,7 +226,7 @@ def load_corpus_multilingual_sentence_pairs(args, phase):
     for label, path_lst in paths.items():
         for path_B in path_lst:
             wmt_year = re.search(r"[0-9]{2}", path_B.name).group(0)
-            lang = re.search(r"_(de|ru|zh)", path_B.name).group(1)
+            lang = re.search(r"(de|ru|zh)", path_B.name).group(1)
             if path_B.name in [
                 f"trans_{lang}en_en_wmt{wmt_year}.txt",
                 f"org_{lang}en_{lang}_wmt{wmt_year}.deepl.en",
