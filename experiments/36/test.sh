@@ -2,9 +2,9 @@
 
 #SBATCH --job-name='36_eval'
 #SBATCH --partition=gpu
-#SBATCH --time=03:00:00
+#SBATCH --time=05:00:00
+#SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
-#SBATCH --mem=16GB
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
