@@ -268,6 +268,7 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
                                     [f"{seg_A.rstrip()}.", f"{seg_B.rstrip()}.", label]
                                 )
                                 idx_to_docid[len(corpus_data) - 1] = doc_id
+                            doc_id += 1
                     else:
                         for line_A, line_B in zip(sents_A, sents_B):
                             corpus_data.append([line_A.rstrip(), line_B.rstrip(), label])
