@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='31_eval'
 # SBATCH --partition=regular
-#SBATCH --time=05:00:00
+#SBATCH --time=07:00:00
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
@@ -17,7 +17,7 @@ source /data/$USER/.envs/macocu/bin/activate
 
 
 EXP_ID=31
-ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 
 # arch="microsoft/mdeberta-v3-base"
 # arch_folder="mdeberta"
@@ -49,7 +49,7 @@ for seed in ${seeds[@]}; do
     for eval_on in ${eval_sets[@]}; do
 
         # logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
-        logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
+        logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
         logfile="${logdir}/eval_ft_${seed}.out"
         mkdir -p $logdir
 

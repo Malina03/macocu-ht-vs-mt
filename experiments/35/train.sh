@@ -12,8 +12,8 @@
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
 
-export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
-export WANDB_DISABLED=true  # for some reason this is necessary
+# export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
+# export WANDB_DISABLED=true  # for some reason this is necessary
 
 exp_id=35
 # root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
