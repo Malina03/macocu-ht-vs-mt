@@ -63,6 +63,9 @@ def load_language_tests(args, phase, split_docs_by_sentence=False):
         len(paths[0]) != 0 and len(paths[1]) != 0
     ), f"{len(paths[0])}, {len(paths[1])}"
 
+    print(paths[0])
+    print(paths[1])
+    
     idx_to_docid = dict() if split_docs_by_sentence else None
     doc_id = 0
     for label, path_lst in paths.items():
