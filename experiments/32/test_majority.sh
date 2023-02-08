@@ -69,7 +69,7 @@ for seed in ${seeds[@]}; do
         --load_model $checkpoint \
         --use_majority_classification \
         --test_on_language ${eval_on} \
-        --max_length 512 \
+        # --max_length 512 \
         $flags \
         $test_flags \
         &> $logfile
