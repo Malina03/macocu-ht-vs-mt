@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name='36_train'
-#SBATCH --partition=gpushort
+#SBATCH --partition=gpu
 #SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
