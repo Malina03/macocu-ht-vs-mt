@@ -5,7 +5,7 @@
 #SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
-#SBATCH --mem=16GB
+#SBATCH --mem=24GB
 #SBATCH --output=/dev/null
 #SBATCH --array=1-10
 #SBATCH --mail-type=BEGIN,FAIL,END
