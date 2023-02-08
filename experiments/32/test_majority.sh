@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name='32_maj'
-#SBATCH --partition=gpu
-#SBATCH --time=10:00:00
+#SBATCH --partition=gpushort
+#SBATCH --time=01:30:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -21,27 +21,18 @@ ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
 
 # Hyper-parameters
-# arch="microsoft/mdeberta-v3-base"
-# arch_folder="mdeberta"
 arch="microsoft/deberta-v3-large"
 arch_folder="deberta"
 trained_on="google"
 # trained_on="deepl"
 test_set="test"
-eval_sets=("zh" "de" "ru")
+# eval_sets=("zh" "de" "ru")
+eval_sets=("de" "ru")
 seeds=(1 2 3 4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
-    # if [ $seed == 1 ]; then 
-    #     ckpt=1032
-    # fi
-    # if [ $seed == 2 ]; then
-    #     ckpt=2064
-    # fi
-    # if [ $seed == 3 ]; then
-    #     ckpt=4128
-    # fi
+
     checkpoint="/data/pg-macocu/MT_vs_HT/experiments/21/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
 
     for eval_on in ${eval_sets[@]}; do
@@ -56,7 +47,7 @@ for seed in ${seeds[@]}; do
         else
             flags=""
         fi
-        
+
         if [ $test_set == "dev" ]; then
             test_flags="--eval"
         else
