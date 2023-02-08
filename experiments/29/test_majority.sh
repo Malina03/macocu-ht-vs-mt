@@ -63,7 +63,6 @@ for seed in ${seeds[@]}; do
         --load_sentence_pairs "multilingual" \
         --use_majority_classification \
         --test $eval_on \
-        # --max_length 512 \
         $flags \
         &> $logfile
     done
