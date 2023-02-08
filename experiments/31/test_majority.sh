@@ -25,6 +25,7 @@ arch="microsoft/deberta-v3-large"
 arch_folder="deberta"
 trained_on="google"
 # trained_on="deepl"
+test_set="test"
 eval_sets=("zh" "de" "ru")
 seeds=(1 2 3 4 5 6 7 8 9 10)
 
@@ -43,8 +44,8 @@ for seed in ${seeds[@]}; do
 
     for eval_on in ${eval_sets[@]}; do
 
-        # logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
-        logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
+        logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
+        # logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
         logfile="${logdir}/eval_majority_${seed}.out"
         mkdir -p $logdir
 
@@ -67,7 +68,7 @@ for seed in ${seeds[@]}; do
         --load_model $checkpoint \
         --use_majority_classification \
         --test_on_language ${eval_on} \
-        --max_length 512 \
+        # --max_length 512 \
         $flags \
         $test_flags \
         &> $logfile
