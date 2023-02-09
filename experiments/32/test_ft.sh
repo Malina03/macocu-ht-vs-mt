@@ -1,8 +1,9 @@
 #!/bin/bash
 
 #SBATCH --job-name='32_eval'
-#SBATCH --partition=regular
-#SBATCH --time=07:00:00
+#SBATCH --partition=gpu
+#SBATCH --time=02:00:00
+#SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
