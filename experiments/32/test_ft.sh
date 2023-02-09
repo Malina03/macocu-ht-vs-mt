@@ -18,8 +18,8 @@ source /data/$USER/.envs/macocu/bin/activate
 
 
 EXP_ID=32
-# ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
-ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
+ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+# ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 
 # arch="microsoft/mdeberta-v3-base"
 # arch_folder="mdeberta"

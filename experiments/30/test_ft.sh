@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='30_eval'
 #SBATCH --partition=gpu
-#SBATCH --time=10:00:00
+#SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -42,8 +42,8 @@ for seed in ${seeds[@]}; do
 
     for eval_on in ${eval_sets[@]}; do
 
-        # logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
-        logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
+        logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
+        # logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
         logfile="${logdir}/eval_ft_${seed}.out"
         mkdir -p $logdir
 
