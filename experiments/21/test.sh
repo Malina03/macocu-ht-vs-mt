@@ -20,11 +20,11 @@ source /data/$USER/.envs/macocu/bin/activate
 EXP_ID=21
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
-arch="microsoft/mdeberta-v3-base"
-arch_folder="mdeberta"
+# arch="microsoft/mdeberta-v3-base"
+# arch_folder="mdeberta"
 
-# arch="microsoft/deberta-v3-large"
-# arch_folder="deberta"
+arch="microsoft/deberta-v3-large"
+arch_folder="deberta"
 learning_rate=1e-05
 bsz=32
 trained_on="google"
@@ -35,15 +35,6 @@ seeds=(1 2 3 4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
-    # if [ $seed == 1 ]; then 
-    #     ckpt=4260
-    # fi
-    # if [ $seed == 2 ]; then
-    #     ckpt=8520
-    # fi
-    # if [ $seed == 3 ]; then
-    #     ckpt=3408
-    # fi
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
     for eval_on in ${eval_sets[@]}; do
 
