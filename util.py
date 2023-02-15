@@ -143,7 +143,12 @@ def parse_args_hf():
     parser.add_argument(
         "--predict",
         action="store_true",
-        help="Whether to save predictions instead of metrics.",
+        help="Whether to save predictions.",
+    )
+    parser.add_argument(
+        "--prediction_file",
+        type=str,
+        help="Location of the predictions file.",
     )
 
     parser.add_argument(

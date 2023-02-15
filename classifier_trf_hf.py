@@ -1,6 +1,7 @@
 from functools import partial
 import sys
 from pathlib import Path
+import csv
 
 import numpy as np
 from transformers import (
@@ -25,24 +26,6 @@ def main():
     """
     # Get arguments.
     args = parse_args_hf()
-
-    # if args.wandb:
-    #     import wandb
-
-    #     wandb.init(project=str("HT-vs-MT-"+ str(args.exp_no)), entity="malina03")
-
-    #     # if args.load_sentence_pairs:
-    #     #     task = 'bilingual_' + str(args.load_sentence_pairs) 
-    #     # else:
-    #     #     task = 'monolingual'
-
-    #     wandb.config = {
-    #     "learning_rate": args.learning_rate,
-    #     # "epochs": args.num_epochs,
-    #     "batch_size": args.batch_size,
-    #     "architecture": args.arch,
-    #     # "task": task,
-    #     }
 
     # Set random seed.
     np.random.seed(args.seed)
@@ -154,7 +137,13 @@ def main():
     # Start training/evaluation.
     if args.predict:
         predictions = trainer.predict(test_dataset=eval_data)
-        print("\n Predictions: \n", predictions, "\n")
+        predicted_labels = list(np.argmax(predictions.predictions, axis=1))
+        true_labels = list(eval_data.labels)
+        with open(args.prediction_file, "w+") as f:
+            f.write("predicted_label\ttrue_label")
+            for pred, true in zip(predicted_labels, true_labels):
+                    f.write(f"{pred}\t{true}")
+        
 
     if args.test or args.eval or args.use_majority_classification:
         mets = trainer.evaluate()

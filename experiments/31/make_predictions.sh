@@ -43,7 +43,8 @@ for seed in ${seeds[@]}; do
 
         # logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
         logdir="${ROOT_DIR}/results/${trained_on}/${test_set}/${eval_on}/"
-        logfile="${logdir}/pred_${seed}.out"
+        logfile="${logdir}/eval_${seed}.out"
+        pred_file="${logdir}/predictions_${seed}.txt"
         mkdir -p $logdir
 
         if [ $trained_on == "google" ]; then
@@ -61,6 +62,7 @@ for seed in ${seeds[@]}; do
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
         --predict \
+        --prediction_file $pred_file \
         --batch_size 8 \
         --arch $arch \
         --test_on_language ${eval_on} \
