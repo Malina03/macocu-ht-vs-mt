@@ -141,6 +141,12 @@ def parse_args_hf():
     )
 
     parser.add_argument(
+        "--predict",
+        type="store_true",
+        help="Whether to save predictions instead of metrics.",
+    )
+
+    parser.add_argument(
         "--load_model",
         type=str,
         help="Initialize training from the model specified at this " "path location.",

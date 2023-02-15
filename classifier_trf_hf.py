@@ -152,6 +152,10 @@ def main():
     )
 
     # Start training/evaluation.
+    if args.predict:
+        predictions = trainer.predict(test_dataset=eval_data)
+        print("\n Predictions: \n", predictions, "\n")
+
     if args.test or args.eval or args.use_majority_classification:
         mets = trainer.evaluate()
     else:
