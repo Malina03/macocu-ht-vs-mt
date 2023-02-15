@@ -143,7 +143,7 @@ def main():
             f.write("predicted_label\ttrue_label\n")
             for pred, true in zip(predicted_labels, true_labels):
                     f.write(f"{pred}\t{true}\n")
-            f.write("\nInfo:\n", predictions.metrics, "\n")
+            # f.write("\nInfo:\n", predictions.metrics, "\n")
         print("\nInfo:\n", predictions.metrics, "\n")
         print(predictions)
         
