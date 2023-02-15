@@ -143,6 +143,7 @@ def main():
             f.write("predicted_label\ttrue_label")
             for pred, true in zip(predicted_labels, true_labels):
                     f.write(f"{pred}\t{true}")
+        exit()
         
 
     if args.test or args.eval or args.use_majority_classification:
