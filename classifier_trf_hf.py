@@ -138,19 +138,20 @@ def main():
     if args.predict:
         predictions = trainer.predict(test_dataset=eval_data)
         predicted_labels = list(np.argmax(predictions.predictions, axis=1))
-        true_labels = list(eval_data.labels)
+        true_labels = list(predictions.label_ids)
         with open(args.prediction_file, "w+") as f:
-            f.write("predicted_label\ttrue_label")
+            f.write("predicted_label\ttrue_label\n")
             for pred, true in zip(predicted_labels, true_labels):
-                    f.write(f"{pred}\t{true}")
-        exit()
+                    f.write(f"{pred}\t{true}\n")
+            f.write("\nInfo:\n", predictions.metrics, "\n")
+        print("\nInfo:\n", predictions.metrics, "\n")
         
-
-    if args.test or args.eval or args.use_majority_classification:
+    elif args.test or args.eval or args.use_majority_classification:
         mets = trainer.evaluate()
+        print("\nInfo:\n", mets, "\n")  
     else:
         mets = trainer.train()
-    print("\nInfo:\n", mets, "\n")
+        print("\nInfo:\n", mets, "\n")
 
 
 if __name__ == "__main__":
