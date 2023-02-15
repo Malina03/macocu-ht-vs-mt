@@ -145,6 +145,7 @@ def main():
                     f.write(f"{pred}\t{true}\n")
             f.write("\nInfo:\n", predictions.metrics, "\n")
         print("\nInfo:\n", predictions.metrics, "\n")
+        print(predictions)
         
     elif args.test or args.eval or args.use_majority_classification:
         mets = trainer.evaluate()
