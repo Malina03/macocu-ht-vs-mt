@@ -35,12 +35,13 @@ seeds=(1 2 3 4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
-    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+       checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+
     for eval_on in ${eval_sets[@]}; do
 
-        logdir="${ROOT_DIR}/results/${trained_on}/${arch_folder}/${test_set}/${eval_on}/"
+        logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
         logfile="${logdir}/eval_${seed}.out"
-        mkdir -p $logdir
+        mkdir -p $logdir    
 
         if [ $trained_on == "google" ]; then
             flags="--use_google_data"

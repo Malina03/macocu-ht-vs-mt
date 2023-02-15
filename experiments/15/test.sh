@@ -35,22 +35,12 @@ seeds=(1 2 3 4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 
-for seed in ${seeds[@]}; do
-    # if [ $seed == "1" ]; then 
-    #     ckpt=2064
-    # fi
-    # if [ $seed == "2" ]; then
-    #     ckpt=1548
-    # fi
-    # if [ $seed == "3" ]; then
-    #     ckpt=1548 ## it's the same as for seed 2, checked this
-    # fi
-    
+for seed in ${seeds[@]}; do    
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+
     for eval_on in ${eval_sets[@]}; do
 
-        # logdir="${ROOT_DIR}/results/${trained_on}/${arch_folder}/${test_set}/${eval_on}/"
-        logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
+        logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
         logfile="${logdir}/eval_${seed}.out"
         mkdir -p $logdir
 
