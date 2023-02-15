@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='35_train'
 #SBATCH --partition=gpu
-#SBATCH --time=03:00:00
+#SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -16,8 +16,8 @@
 # export WANDB_DISABLED=true  # for some reason this is necessary
 
 exp_id=35
-# root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
-root_dir=/data/$USER/MT_vs_HT/experiments/${exp_id}
+root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
+# root_dir=/data/$USER/MT_vs_HT/experiments/${exp_id}
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
@@ -47,7 +47,7 @@ fi
 
 log_model_name="mdeberta_ft"
 arch_folder="mdeberta"
-checkpoint="/data/pg-macocu/MT_vs_HT/experiments/21/models/${mt}/${arch_folder}_${seed}/checkpoint-*"
+checkpoint="/data/pg-macocu/MT_vs_HT/experiments/22/models/${mt}/${arch_folder}_${seed}/checkpoint-*"
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${mt}/dev"
