@@ -45,6 +45,12 @@ def main():
 
     model_name = args.arch.replace("/", "-")
     mt = "google" if args.use_google_data else "deepl"
+
+    if args.max_length == 1e30: # default value for tokenization -> use default value for model as well
+        max_embeddings_length = 512
+    else:
+        max_embeddings_length = args.max_length # else match the tokenization length to the model length
+    
     eff_bsz = args.gradient_accumulation_steps * args.batch_size
     if args.test:
         mt = args.test
@@ -85,19 +91,14 @@ def main():
     # Load the model.
     if args.load_model is not None:  # start from a trained model
         print(f"Loading model at {args.load_model}")
-        # if args.load_sentence_pairs:
-        #     model = XLMRobertaForSequenceClassification.from_pretrained(
-        #         args.load_model, local_files_only=True
-        #     )
-        # else:
         model = AutoModelForSequenceClassification.from_pretrained(
-            args.load_model, local_files_only=True
+            args.load_model, local_files_only=True, max_position_embeddings=max_embeddings_length
             )
     else:
         model_name = args.arch
         print(f"Loading LM: {model_name}")
         config = AutoConfig.from_pretrained(
-            model_name, num_labels=2, classifier_dropout=args.dropout
+            model_name, num_labels=2, classifier_dropout=args.dropout, max_position_embeddings=max_embeddings_length
         )
         if args.load_sentence_pairs == "mean_embeddings":
             model = BilingualSentenceClassifier(
