@@ -80,7 +80,6 @@ def truncation_monolingual_train(phase, root_dir, use_google_data, split_docs_by
     pecentage_truncated = truncated_inputs/len(input_lengths)
     longest_seq = max(input_lengths)
     top_10 = input_lengths[-10:]
-    print("Monolingual training data for experiment {}".format(root_dir.split("/")[1]))
     print("Number of truncated docs: {} out of {}, which is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated))
     if len(truncation_percentage) > 0:
         print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
@@ -317,11 +316,11 @@ def main():
             for phase in phases:
                 if phase == "test":
                     for language in languages:
-                        print("Bilingual {} {} {} {}".format(phase, language, arch, max_length))
+                        print("Monolingual {} {} {} {}".format(phase, language, arch, max_length))
                         truncation_monolingual_testing(phase, root_dir, language, "google", arch, max_length, split_docs_by_sentence=False)
                         print("\n\n")
                 else:
-                    print("Bilingual {} {} {} {}".format(phase, "None", arch, max_length))
+                    print("Monolingual {} {} {} {}".format(phase, "None", arch, max_length))
                     truncation_monolingual_train(phase, root_dir, True, False, arch, max_length, False)
                     print("\n\n")
                 
