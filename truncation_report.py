@@ -290,7 +290,7 @@ def truncation_bilingual(phase, root_dir, use_google_data, test, arch, max_lengt
 def main():
     languages = ["de", "ru", "zh"]
     phases = ["train", "dev", "test"]
-    models = ['bilingual-de', 'bilingual-all' 'monolingual-de', 'monolingual-all']
+    models = ['bilingual-de', 'bilingual-all', 'monolingual-de', 'monolingual-all']
     truncation_vals = [768, 1024, 2048]
     root_dir_bilingual = Path("/data/pg-macocu/MT_vs_HT/experiments/29/")
     root_dir_bilingual_all = Path("/data/pg-macocu/MT_vs_HT/experiments/30/")
