@@ -19,10 +19,10 @@ def truncation_monolingual_train(phase, root_dir, use_google_data, split_docs_by
         mt = "wmt_submissions"
     apdx = "normalized" if use_normalized_data else ""
     paths = {
-        0: list((root_dir / f"{mt}/{phase}/{apdx}").glob("*.txt")),
+        0: list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.txt")),
         1: (
-            list((root_dir / f"{mt}/{phase}/{apdx}").glob("*.deepl.en"))
-            + list((root_dir / f"{mt}/{phase}/{apdx}").glob("*.en.google"))
+            list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.deepl.en"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.en.google"))
         ),
     }  # all the text files per class
     if mt_name == "wmt1":
@@ -107,18 +107,18 @@ def truncation_monolingual_testing(phase, root_dir, test_on_language, test, arch
     if mt_name.startswith("wmt"):
         mt = "wmt_submissions"
         paths = {
-            0: list((root_dir / f"{mt}/{phase}/{apdx_name}/{mt_name}/").glob("*.txt")),
+            0: list((root_dir / f"data/{mt}/{phase}/{apdx_name}/{mt_name}/").glob("*.txt")),
             1: (
-                list((root_dir / f"{mt}/{phase}/{apdx_name}/{mt_name}/").glob("*.wmt"))
+                list((root_dir / f"data/{mt}/{phase}/{apdx_name}/{mt_name}/").glob("*.wmt"))
             ),
         }  # all the text files per class
     else:
         mt = mt_name
         paths = {
-            0: list((root_dir / f"{mt}/{phase}/{apdx_name}/").glob("*.txt")),
+            0: list((root_dir / f"data/{mt}/{phase}/{apdx_name}/").glob("*.txt")),
             1: (
-            list((root_dir / f"{mt}/{phase}/{apdx_name}").glob("*.deepl.en"))
-            + list((root_dir / f"{mt}/{phase}/{apdx_name}").glob("*.en.google"))
+            list((root_dir / f"data/{mt}/{phase}/{apdx_name}").glob("*.deepl.en"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx_name}").glob("*.en.google"))
             ),
         }  # all the text files per class
     
@@ -186,10 +186,10 @@ def truncation_bilingual(phase, root_dir, use_google_data, test, arch, max_lengt
         lang_apdx = test
         paths = {
             # No translationsese data for testing => trans_*.txt only matches ht sentences from original data
-            0: list((root_dir / f"{mt}/{phase}/{lang_apdx}-en/").glob(f"trans*.txt")),
+            0: list((root_dir / f"data/{mt}/{phase}/{lang_apdx}-en/").glob(f"trans*.txt")),
             1: list(
                 itertools.chain.from_iterable(
-                    (root_dir / f"{mt}/{phase}/{lang_apdx}-en/").glob(f"*{sfx}")
+                    (root_dir / f"data/{mt}/{phase}/{lang_apdx}-en/").glob(f"*{sfx}")
                     for sfx in _mt_suffixes
                 )
             ),
@@ -225,9 +225,9 @@ def truncation_bilingual(phase, root_dir, use_google_data, test, arch, max_lengt
             ]:
                 # Translation from original text.
                 if phase == "test":
-                    path_A = root_dir / f"{mt}/{phase}/{lang}-en/org_{lang}en_{lang}_wmt{wmt_year}.txt"
+                    path_A = root_dir / f"data/{mt}/{phase}/{lang}-en/org_{lang}en_{lang}_wmt{wmt_year}.txt"
                 else:
-                    path_A = root_dir / f"{mt}/{phase}/org_{lang}en_{lang}_wmt{wmt_year}.txt"
+                    path_A = root_dir / f"data/{mt}/{phase}/org_{lang}en_{lang}_wmt{wmt_year}.txt"
             elif path_B.name in [
                 f"org_en{lang}_en_wmt{wmt_year}.txt",
                 f"trans_en{lang}_{lang}_wmt{wmt_year}.deepl.en",
