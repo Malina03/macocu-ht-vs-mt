@@ -293,8 +293,8 @@ def main():
     phases = ["train", "dev" "test"]
     models = ['bilingual', 'monolingual']
     truncation_vals = [768, 1024, 2048]
-    root_dir_bilingual = Path("/data/pg-macocu/experiments/29/")
-    root_dir_monolingual = Path("/data/pg-macocu/experiments/31/")
+    root_dir_bilingual = Path("/data/pg-macocu/MT_vs_HT/experiments/29/")
+    root_dir_monolingual = Path("/data/pg-macocu/MT_vs_HT/experiments/31/")
 
     for model in models:
         if model == 'bilingual':
