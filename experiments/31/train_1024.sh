@@ -31,8 +31,8 @@ max_length=1024
 
 mt="google"
 learning_rate=1e-05
-bsz=2
-gradient_accumulation_steps=8
+bsz=8
+gradient_accumulation_steps=2
 num_epochs=10
 weight_decay=0
 max_grad_norm=1
@@ -47,7 +47,7 @@ else
     flags=""
 fi
 
-logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}_${max_length}/"
+logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}_${max_length}_${gradient_accumulation_steps}/"
 outputdir="${root_dir}/results/${mt}/dev"
 logfile="${outputdir}/train_${seed}_${max_length}_${gradient_accumulation_steps}.out"
 mkdir -p $outputdir
