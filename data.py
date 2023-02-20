@@ -98,7 +98,8 @@ def load_language_tests(args, phase, split_docs_by_sentence=False):
         longest_seq = max(input_lengths)
         top_10 = input_lengths[-10:]
         print("Number of truncated docs: {} out of {}, which is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated))
-        print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
+        if len(truncation_percentage) > 0:
+            print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
         print("longest doc: ", longest_seq)
         print("top 10 longest docs: ", top_10)
 
@@ -195,7 +196,8 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
         longest_seq = max(input_lengths)
         top_10 = input_lengths[-10:]
         print("Number of truncated docs: {} out of {}, which is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated))
-        print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
+        if len(truncation_percentage) > 0:
+            print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
         print("longest doc: ", longest_seq)
         print("top 10 longest docs: ", top_10)
 
@@ -327,7 +329,8 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
         longest_seq = max(input_lengths)
         top_10 = input_lengths[-10:]
         print("Number of truncated docs: {} out of {}, which is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated))
-        print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
+        if len(truncation_percentage) > 0:
+            print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
         print("longest doc: ", longest_seq)
         print("top 10 longest docs: ", top_10)
 
@@ -430,7 +433,8 @@ def load_corpus_sentence_pairs(args, phase):
         longest_seq = max(input_lengths)
         top_10 = input_lengths[-10:]
         print("Number of truncated docs: {} out of {}, which is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated))
-        print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
+        if len(truncation_percentage) > 0:
+            print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
         print("longest doc: ", longest_seq)
         print("top 10 longest docs: ", top_10)
 
