@@ -31,7 +31,8 @@ max_length=768
 
 mt="google"
 learning_rate=1e-05
-bsz=8
+gradient_accumulation_steps=2
+bsz=4
 num_epochs=10
 weight_decay=0
 max_grad_norm=1
@@ -60,6 +61,7 @@ python classifier_trf_hf.py \
 --arch $arch \
 --learning_rate $learning_rate \
 --batch_size $bsz \
+--gradient_accumulation_steps $gradient_accumulation_steps \
 --num_epochs $num_epochs \
 --weight_decay $weight_decay \
 --max_grad_norm $max_grad_norm \
