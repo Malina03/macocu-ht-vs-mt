@@ -46,6 +46,8 @@ def truncation_monolingual_train(phase, root_dir, use_google_data, split_docs_by
             / f"data/wmt_submissions/{phase}/{apdx}/newstest2019.PROMT_NMT_DE-EN.6683.wmt"
         ]
 
+    print(f"paths: {paths}")
+
     assert (
         len(paths[0]) != 0 and len(paths[1]) != 0
     ), f"{len(paths[0])}, {len(paths[1])}"
@@ -119,6 +121,9 @@ def truncation_monolingual_testing(phase, root_dir, test_on_language, test, arch
             + list((root_dir / f"{mt}/{phase}/{apdx_name}").glob("*.en.google"))
             ),
         }  # all the text files per class
+    
+    print(f"paths: {paths}")
+
     assert (
         len(paths[0]) != 0 and len(paths[1]) != 0
     ), f"{len(paths[0])}, {len(paths[1])}"
@@ -200,6 +205,8 @@ def truncation_bilingual(phase, root_dir, use_google_data, test, arch, max_lengt
                 )
             ),
         }
+
+    print(f"paths: {paths}")
 
     assert len(paths[0]) != 0 and len(paths[1]) != 0
 
@@ -285,8 +292,8 @@ def main():
     phases = ["train", "dev" "test"]
     models = ['bilingual', 'monolingual']
     truncation_vals = [768, 1024, 2048]
-    root_dir_bilingual = Path("/home/pg-macocu/experiments/29")
-    root_dir_monolingual = Path("/home/pg-macocu/experiments/31")
+    root_dir_bilingual = Path("/home/pg-macocu/experiments/29/")
+    root_dir_monolingual = Path("/home/pg-macocu/experiments/31/")
 
     for model in models:
         if model == 'bilingual':

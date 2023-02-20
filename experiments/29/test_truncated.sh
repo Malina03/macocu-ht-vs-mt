@@ -53,7 +53,7 @@ for truncation in ${truncation_vals[@]}; do
         --load_model $checkpoint \
         --load_sentence_pairs "multilingual" \
         --test $eval_on \
-        --max_length 512 \
+        --max_length ${truncation} \
         $flags \
         &> $logfile
     done
