@@ -303,8 +303,8 @@ def main():
                 for phase in phases:
                     if phase == "test":
                         for language in languages:
-                            truncation_bilingual(phase, root_dir,"True", language,arch, max_length, "False")
-                    truncation_bilingual(phase, root_dir,"True", None, arch, max_length, "False")
+                            truncation_bilingual(phase, root_dir,True, language,arch, max_length, False)
+                    truncation_bilingual(phase, root_dir,True, None, arch, max_length, False)
         else:
             root_dir = root_dir_monolingual
             arch = "microsoft/deberta-v3-large"
