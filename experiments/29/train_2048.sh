@@ -48,7 +48,7 @@ log_model_name="mdeberta"
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}_${max_length}/"
 outputdir="${root_dir}/results/${mt}/dev"
-logfile="${outputdir}/train_${seed}.out"
+logfile="${outputdir}/train_${seed}_${max_length}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 
