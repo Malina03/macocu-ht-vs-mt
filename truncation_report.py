@@ -304,7 +304,9 @@ def main():
                 for phase in phases:
                     if phase == "test":
                         for language in languages:
+                            print("Bilingual {} {} {} {}".format(phase, language, arch, max_length))
                             truncation_bilingual(phase, root_dir,True, language,arch, max_length, False)
+                    print("Bilingual {} {} {} {}".format(phase, "None", arch, max_length))
                     truncation_bilingual(phase, root_dir,True, None, arch, max_length, False)
         else:
             root_dir = root_dir_monolingual
@@ -312,8 +314,10 @@ def main():
             for phase in phases:
                 if phase == "test":
                     for language in languages:
+                        print("Bilingual {} {} {} {}".format(phase, language, arch, max_length))
                         truncation_monolingual_testing(phase, root_dir, language, "google", arch, max_length, split_docs_by_sentence=False)
                 else:
+                    print("Bilingual {} {} {} {}".format(phase, "None", arch, max_length))
                     truncation_monolingual_train(phase, root_dir, True, False, arch, max_length, False)
                 
 
