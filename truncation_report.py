@@ -290,39 +290,49 @@ def truncation_bilingual(phase, root_dir, use_google_data, test, arch, max_lengt
 def main():
     languages = ["de", "ru", "zh"]
     phases = ["train", "dev", "test"]
-    models = ['bilingual', 'monolingual']
+    models = ['bilingual-de', 'bilingual-all' 'monolingual-de', 'monolingual-all']
     truncation_vals = [768, 1024, 2048]
     root_dir_bilingual = Path("/data/pg-macocu/MT_vs_HT/experiments/29/")
+    root_dir_bilingual_all = Path("/data/pg-macocu/MT_vs_HT/experiments/30/")
     root_dir_monolingual = Path("/data/pg-macocu/MT_vs_HT/experiments/31/")
+    root_dir_monolingual_all = Path("/data/pg-macocu/MT_vs_HT/experiments/32/")
+
 
     for model in models:
-        if model == 'bilingual':
-            root_dir = root_dir_bilingual
+        if 'bilingual' in model:
+            if 'all' in model:
+                root_dir = root_dir_bilingual_all
+            else:
+                root_dir = root_dir_bilingual
             arch = "microsoft/mdeberta-v3-base"
             for max_length in truncation_vals:
                 for phase in phases:
                     if phase == "test":
                         for language in languages:
-                            print("Bilingual {} {} {} {}".format(phase, language, arch, max_length))
+                            print("Bilingual {} {} {} {} {}".format(phase, language, arch, max_length, root_dir))
                             truncation_bilingual(phase, root_dir,True, language,arch, max_length, False)
                             print("\n\n")
                     else:
-                        print("Bilingual {} {} {} {}".format(phase, "None", arch, max_length))
+                        print("Bilingual {} {} {} {} {}".format(phase, "None", arch, max_length, root_dir))
                         truncation_bilingual(phase, root_dir,True, None, arch, max_length, False)
                         print("\n\n")
         else:
-            root_dir = root_dir_monolingual
+            if 'all' in model:
+                root_dir = root_dir_monolingual_all
+            else:
+                root_dir = root_dir_monolingual
             arch = "microsoft/deberta-v3-large"
-            for phase in phases:
-                if phase == "test":
-                    for language in languages:
-                        print("Monolingual {} {} {} {}".format(phase, language, arch, max_length))
-                        truncation_monolingual_testing(phase, root_dir, language, "google", arch, max_length, split_docs_by_sentence=False)
+            for max_length in truncation_vals:
+                for phase in phases:
+                    if phase == "test":
+                        for language in languages:
+                            print("Monolingual {} {} {} {} {}".format(phase, language, arch, max_length, root_dir))
+                            truncation_monolingual_testing(phase, root_dir, language, "google", arch, max_length, split_docs_by_sentence=False)
+                            print("\n\n")
+                    else:
+                        print("Monolingual {} {} {} {} {}".format(phase, "None", arch, max_length, root_dir))
+                        truncation_monolingual_train(phase, root_dir, True, False, arch, max_length, False)
                         print("\n\n")
-                else:
-                    print("Monolingual {} {} {} {}".format(phase, "None", arch, max_length))
-                    truncation_monolingual_train(phase, root_dir, True, False, arch, max_length, False)
-                    print("\n\n")
                 
 
 if __name__ == "__main__":
