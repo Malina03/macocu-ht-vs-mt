@@ -27,7 +27,8 @@ arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=1e-05
 max_length=1024
-bsz=8
+bsz=4
+gradient_accumulation_steps=2
 
 num_epochs=10
 weight_decay=0
@@ -48,7 +49,7 @@ log_model_name="mdeberta"
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}_${max_length}/"
 outputdir="${root_dir}/results/${mt}/dev"
-logfile="${outputdir}/train_${seed}_${max_length}.out"
+logfile="${outputdir}/train_${seed}_${max_length}_${bsz}_${gradient_accumulation_steps}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 
@@ -60,6 +61,7 @@ python classifier_trf_hf.py \
 --arch $arch \
 --learning_rate $learning_rate \
 --batch_size $bsz \
+--gradient_accumulation_steps $gradient_accumulation_steps \
 --num_epochs $num_epochs \
 --weight_decay $weight_decay \
 --max_grad_norm $max_grad_norm \

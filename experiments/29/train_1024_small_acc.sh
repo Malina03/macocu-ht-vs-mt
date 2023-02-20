@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='29_768'
+#SBATCH --job-name='29_1024'
 #SBATCH --partition=gpu
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
@@ -26,13 +26,13 @@ source /data/$USER/.envs/macocu/bin/activate
 arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=1e-05
-max_length=768
-bsz=4
+max_length=1024
+bsz=8
 gradient_accumulation_steps=2
 
 num_epochs=10
 weight_decay=0
-max_grad_norm=4
+max_grad_norm=1
 warmup_steps=400
 label_smoothing=0.0
 dropout=0.1
