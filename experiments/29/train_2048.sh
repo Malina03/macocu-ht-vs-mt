@@ -28,7 +28,7 @@ mt="google"
 learning_rate=1e-05
 max_length=2048
 bsz=2
-gradient_accumulation_steps=4
+gradient_accumulation_steps=8
 
 num_epochs=10
 weight_decay=0
@@ -49,7 +49,7 @@ log_model_name="mdeberta"
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}_${max_length}/"
 outputdir="${root_dir}/results/${mt}/dev"
-logfile="${outputdir}/train_${seed}_${max_length}.out"
+logfile="${outputdir}/train_${seed}_${max_length}_${gradient_accumulation_steps}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 
