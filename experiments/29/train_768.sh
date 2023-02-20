@@ -27,11 +27,11 @@ arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=1e-05
 max_length=768
-bsz=8
+bsz=4
 
 num_epochs=10
 weight_decay=0
-max_grad_norm=1
+max_grad_norm=4
 warmup_steps=400
 label_smoothing=0.0
 dropout=0.1
@@ -48,7 +48,7 @@ log_model_name="mdeberta"
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}_${max_length}/"
 outputdir="${root_dir}/results/${mt}/dev"
-logfile="${outputdir}/train_${seed}_${max_length}.out"
+logfile="${outputdir}/train_${seed}_${max_length}_${bsz}_${gradient_accumulation_steps}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 

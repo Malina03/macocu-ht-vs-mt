@@ -31,7 +31,7 @@ max_length=768
 
 mt="google"
 learning_rate=1e-05
-gradient_accumulation_steps=4
+gradient_accumulation_steps=2
 bsz=2
 num_epochs=10
 weight_decay=0
