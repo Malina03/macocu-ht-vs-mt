@@ -206,6 +206,7 @@ def truncation_bilingual(phase, root_dir, use_google_data, test, arch, max_lengt
             ),
         }
 
+    print(root_dir / f"data/{mt}/{phase}/")
     print(f"paths: {paths}")
 
     assert len(paths[0]) != 0 and len(paths[1]) != 0
