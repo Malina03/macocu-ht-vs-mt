@@ -89,20 +89,6 @@ def load_language_tests(args, phase, split_docs_by_sentence=False):
     )
     sents_enc = tokenizer(sents, padding=True, truncation=True)
 
-    if args.max_length != 1e30:
-        # For non-default values, print truncation report
-        input_lengths = sorted([len([i for i in seq if i!=0]) for seq in sents_enc.input_ids])
-        truncation_percentage = [(l - args.max_length)/l for l in input_lengths if l > args.max_length]
-        truncated_inputs = sum(i > args.max_length for i in input_lengths)
-        pecentage_truncated = truncated_inputs/len(input_lengths)
-        longest_seq = max(input_lengths)
-        top_10 = input_lengths[-10:]
-        print("Number of truncated docs: {} out of {}, which is {}. Max length is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated, args.max_length))
-        if len(truncation_percentage) > 0:
-            print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
-        print("longest doc: ", longest_seq)
-        print("top 10 longest docs: ", top_10)
-
     return HFDataset(sents_enc, labels), idx_to_docid
 
 
@@ -186,20 +172,6 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
         args.arch, model_max_length=args.max_length
     )
     sents_enc = tokenizer(sents, padding=True, truncation=True)
-
-    if args.max_length != 1e30:
-        # For non-default values, print truncation report
-        input_lengths = sorted([len([i for i in seq if i!=0]) for seq in sents_enc.input_ids])
-        truncation_percentage = [(l - args.max_length)/l for l in input_lengths if l > args.max_length]
-        truncated_inputs = sum(i > args.max_length for i in input_lengths)
-        pecentage_truncated = truncated_inputs/len(input_lengths)
-        longest_seq = max(input_lengths)
-        top_10 = input_lengths[-10:]
-        print("Number of truncated docs: {} out of {}, which is {}. Max length is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated, args.max_length))
-        if len(truncation_percentage) > 0:
-            print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
-        print("longest doc: ", longest_seq)
-        print("top 10 longest docs: ", top_10)
 
     return HFDataset(sents_enc, labels), idx_to_docid
 
@@ -320,20 +292,6 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
     # encode input as original + translated
         sents_enc = tokenizer(sentsA, sentsB, padding=True, truncation=True)
 
-    if args.max_length != 1e30:
-        # For non-default values, print truncation report
-        input_lengths = sorted([len([i for i in seq if i!=0]) for seq in sents_enc.input_ids])
-        truncation_percentage = [(l - args.max_length)/l for l in input_lengths if l > args.max_length]
-        truncated_inputs = sum(i > args.max_length for i in input_lengths)
-        pecentage_truncated = truncated_inputs/len(input_lengths)
-        longest_seq = max(input_lengths)
-        top_10 = input_lengths[-10:]
-        print("Number of truncated docs: {} out of {}, which is {}. Max length is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated, args.max_length))
-        if len(truncation_percentage) > 0:
-            print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
-        print("longest doc: ", longest_seq)
-        print("top 10 longest docs: ", top_10)
-
     return HFDataset(sents_enc, labels), idx_to_docid
 
 
@@ -423,19 +381,5 @@ def load_corpus_sentence_pairs(args, phase):
     else:
     # encode input as original + translated
         sents_enc = tokenizer(sentsA, sentsB, padding=True, truncation=True)
-    
-    if args.max_length != 1e30:
-        # For non-default values, print truncation report
-        input_lengths = sorted([len([i for i in seq if i!=0]) for seq in sents_enc.input_ids])
-        truncation_percentage = [(l - args.max_length)/l for l in input_lengths if l > args.max_length]
-        truncated_inputs = sum(i > args.max_length for i in input_lengths)
-        pecentage_truncated = truncated_inputs/len(input_lengths)
-        longest_seq = max(input_lengths)
-        top_10 = input_lengths[-10:]
-        print("Number of truncated docs: {} out of {}, which is {}. Max length is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated, args.max_length))
-        if len(truncation_percentage) > 0:
-            print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
-        print("longest doc: ", longest_seq)
-        print("top 10 longest docs: ", top_10)
 
     return HFDataset(sents_enc, labels)
