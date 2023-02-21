@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='29_2048'
+#SBATCH --job-name='29_4096'
 #SBATCH --partition=gpu
 #SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
@@ -25,10 +25,10 @@ source /data/$USER/.envs/macocu/bin/activate
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
 mt="google"
-learning_rate=1e-05
-max_length=2048
-bsz=2
-gradient_accumulation_steps=4
+
+max_length=3073
+bsz=1
+gradient_accumulation_steps=8
 
 num_epochs=10
 weight_decay=0
@@ -45,13 +45,11 @@ else
     flags=""
 fi
 
-
 learning_rates=(1e-05 5e-06 2e-06 1e-06)
 
 log_model_name="mdeberta"
-
+    
 cd $HOME/HT-vs-MT/
-
 for learning_rate in "${learning_rates[@]}"; do
     logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}_${max_length}_${bsz}_${gradient_accumulation_steps}_${learning_rate}/"
     outputdir="${root_dir}/results/${mt}/dev"
