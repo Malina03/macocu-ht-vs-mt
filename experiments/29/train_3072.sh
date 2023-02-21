@@ -78,3 +78,4 @@ for learning_rate in "${learning_rates[@]}"; do
     --max_length $max_length \
     $flags \
     &> $logfile
+done
