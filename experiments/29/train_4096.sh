@@ -28,7 +28,7 @@ mt="google"
 
 max_length=4096
 bsz=1
-gradient_accumulation_steps=8
+gradient_accumulation_steps=4
 
 num_epochs=10
 weight_decay=0
