@@ -1,23 +1,22 @@
 #!/bin/bash
 
-#SBATCH --job-name='36_train'
+#SBATCH --job-name='29_3072'
 #SBATCH --partition=gpu
-#SBATCH --time=05:00:00
+#SBATCH --time=06:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
-#SBATCH --mem=24GB
+#SBATCH --mem=16GB
 #SBATCH --output=/dev/null
 #SBATCH --array=1-3
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
 
-# export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
-# export WANDB_DISABLED=true  # for some reason this is necessary
+export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
+export WANDB_DISABLED=true  # for some reason this is necessary
 
-exp_id=36
+exp_id=29
 root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
-# root_dir=/data/$USER/MT_vs_HT/experiments/${exp_id}
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
@@ -28,8 +27,8 @@ arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=1e-05
 max_length=3072
-bsz=8
-gradient_accumulation_steps=1
+bsz=1
+gradient_accumulation_steps=8
 
 num_epochs=10
 weight_decay=0
@@ -46,24 +45,25 @@ else
     flags=""
 fi
 
-log_model_name="mdeberta"
-# arch_folder="mdeberta"
-# checkpoint="/data/pg-macocu/MT_vs_HT/experiments/28/models/${mt}/${arch_folder}_${seed}/checkpoint-*"
 
-logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
+log_model_name="mdeberta"
+
+cd $HOME/HT-vs-MT/
+
+
+logdir="${root_dir}/models/${mt}/${log_model_name}/"
 outputdir="${root_dir}/results/${mt}/dev"
 logfile="${outputdir}/train_${seed}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 
-
-cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
 --output_dir $logdir \
 --arch $arch \
 --learning_rate $learning_rate \
 --batch_size $bsz \
+--gradient_accumulation_steps $gradient_accumulation_steps \
 --num_epochs $num_epochs \
 --weight_decay $weight_decay \
 --max_grad_norm $max_grad_norm \
@@ -74,6 +74,6 @@ python classifier_trf_hf.py \
 --strategy "epoch" \
 --load_sentence_pairs "multilingual" \
 --max_length $max_length \
---gradient_accumulation_steps $gradient_accumulation_steps \
 $flags \
 &> $logfile
+

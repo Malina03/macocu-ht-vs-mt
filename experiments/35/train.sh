@@ -7,7 +7,7 @@
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
-#SBATCH --array=1-10
+#SBATCH --array=1-3
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
@@ -16,8 +16,8 @@
 # export WANDB_DISABLED=true  # for some reason this is necessary
 
 exp_id=35
-# root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
-root_dir=/data/$USER/MT_vs_HT/experiments/${exp_id}
+root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
+# root_dir=/data/$USER/MT_vs_HT/experiments/${exp_id}
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
@@ -27,8 +27,9 @@ source /data/$USER/.envs/macocu/bin/activate
 arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=1e-05
-max_length=512
+max_length=3072
 bsz=8
+gradient_accumulation_steps=1
 
 num_epochs=10
 weight_decay=0
@@ -72,5 +73,6 @@ python classifier_trf_hf.py \
 --strategy "epoch" \
 --load_sentence_pairs "multilingual" \
 --max_length $max_length \
+--gradient_accumulation_steps $gradient_accumulation_steps \
 $flags \
 &> $logfile
