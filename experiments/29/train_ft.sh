@@ -50,7 +50,7 @@ checkpoint="/data/pg-macocu/MT_vs_HT/experiments/22/models/${mt}/${arch_folder}_
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${mt}/dev"
-logfile="${outputdir}/train_${seed}.out"
+logfile="${outputdir}/train_ft_${seed}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 
