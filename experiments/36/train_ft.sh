@@ -1,13 +1,13 @@
 #!/bin/bash
 
-#SBATCH --job-name='36_train'
+#SBATCH --job-name='36_ft_train'
 #SBATCH --partition=gpu
-#SBATCH --time=03:00:00
+#SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=24GB
 #SBATCH --output=/dev/null
-#SBATCH --array=1-10
+#SBATCH --array=1-3
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
@@ -27,8 +27,9 @@ source /data/$USER/.envs/macocu/bin/activate
 arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=1e-05
-max_length=512
-bsz=8
+max_length=3072
+bsz=1
+gradient_accumulation_steps=8
 
 num_epochs=10
 weight_decay=0
@@ -74,5 +75,6 @@ python classifier_trf_hf.py \
 --strategy "epoch" \
 --load_sentence_pairs "multilingual" \
 --max_length $max_length \
+--gradient_accumulation_steps $gradient_accumulation_steps \
 $flags \
 &> $logfile

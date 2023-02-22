@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name='30_train'
+#SBATCH --job-name='30_ft_train'
 #SBATCH --partition=gpu
-#SBATCH --time=07:00:00
+#SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -26,8 +26,9 @@ source /data/$USER/.envs/macocu/bin/activate
 arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=1e-05
-max_length=512
-bsz=8
+max_length=3072
+bsz=1
+gradient_accumulation_steps=8
 
 num_epochs=10
 weight_decay=0
@@ -50,7 +51,7 @@ checkpoint="/data/pg-macocu/MT_vs_HT/experiments/28/models/${mt}/${arch_folder}_
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${mt}/dev"
-logfile="${outputdir}/train_${seed}.out"
+logfile="${outputdir}/train_ft_${seed}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 
@@ -73,5 +74,6 @@ python classifier_trf_hf.py \
 --strategy "epoch" \
 --load_sentence_pairs "multilingual" \
 --max_length $max_length \
+--gradient_accumulation_steps $gradient_accumulation_steps \
 $flags \
 &> $logfile
