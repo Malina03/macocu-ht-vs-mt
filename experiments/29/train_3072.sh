@@ -26,7 +26,7 @@ source /data/$USER/.envs/macocu/bin/activate
 arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=1e-05
-max_length=3073
+max_length=3072
 bsz=1
 gradient_accumulation_steps=8
 

@@ -7,7 +7,7 @@
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
-#SBATCH --array=8-10
+#SBATCH --array=1-3
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
@@ -28,6 +28,7 @@ mt="google"
 # mt="deepl"
 learning_rate=1e-05
 bsz=32
+max_length=1024
 num_epochs=10
 weight_decay=0
 max_grad_norm=1
@@ -77,6 +78,7 @@ python classifier_trf_hf.py \
 --arch $arch \
 --learning_rate $learning_rate \
 --batch_size $bsz \
+--max_length $max_length \
 --num_epochs $num_epochs \
 --weight_decay $weight_decay \
 --max_grad_norm $max_grad_norm \
