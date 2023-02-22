@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='28_train'
 #SBATCH --partition=gpu
-#SBATCH --time=07:00:00
+#SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -27,10 +27,8 @@ arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=5e-05
 bsz=32
-num_epochs=3072
-# mt="deepl"
-# learning_rate=1e-05
-# bsz=16
+max_length=3072
+
 num_epochs=10
 weight_decay=0
 max_grad_norm=1
