@@ -1,15 +1,15 @@
 #!/bin/bash
 
-#SBATCH --job-name='33_train'
+#SBATCH --job-name='33_ft'
 #SBATCH --partition=gpu
-#SBATCH --time=03:00:00
+#SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
-#SBATCH --array=1-10
+#SBATCH --array=1-3
 
 
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
@@ -30,7 +30,8 @@ mt="google"
 # mt="deepl"
 learning_rate=1e-05
 bsz=8
-max_length=512
+gradient_accumulation_steps=2
+max_length=1024
 num_epochs=10
 weight_decay=0
 max_grad_norm=1
@@ -83,5 +84,6 @@ python classifier_trf_hf.py \
 --seed $seed \
 --strategy "epoch" \
 --max_length $max_length \
+--gradient_accumulation_steps $gradient_accumulation_steps \
 $flags \
 &> $logfile

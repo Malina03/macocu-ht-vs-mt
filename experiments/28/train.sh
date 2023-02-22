@@ -7,7 +7,7 @@
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
-#SBATCH --array=8-10
+#SBATCH --array=1-3
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
@@ -27,6 +27,7 @@ arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=5e-05
 bsz=32
+num_epochs=3072
 # mt="deepl"
 # learning_rate=1e-05
 # bsz=16
@@ -69,5 +70,6 @@ python classifier_trf_hf.py \
 --seed $seed \
 --strategy "epoch" \
 --load_sentence_pairs "multilingual" \
+--max_length $max_length \
 $flags \
 &> $logfile
