@@ -28,8 +28,8 @@ arch="microsoft/mdeberta-v3-base"
 mt="google"
 learning_rate=1e-05
 max_length=3072
-bsz=8
-gradient_accumulation_steps=1
+bsz=1
+gradient_accumulation_steps=8
 
 num_epochs=10
 weight_decay=0

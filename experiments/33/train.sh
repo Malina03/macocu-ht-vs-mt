@@ -16,8 +16,8 @@ export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
 export WANDB_DISABLED=true  # for some reason this is necessary
 
 exp_id=33
-# root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
-root_dir=/data/$USER/MT_vs_HT/experiments/${exp_id}
+root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
+# root_dir=/data/$USER/MT_vs_HT/experiments/${exp_id}
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
@@ -29,8 +29,8 @@ log_model_name="deberta"
 mt="google"
 # mt="deepl"
 learning_rate=1e-05
-bsz=8
-gradient_accumulation_steps=2
+bsz=2
+gradient_accumulation_steps=8
 max_length=1024
 num_epochs=10
 weight_decay=0
