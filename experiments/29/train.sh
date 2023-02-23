@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='29_3072'
 #SBATCH --partition=gpu
-#SBATCH --time=06:00:00
+#SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -51,7 +51,7 @@ log_model_name="mdeberta"
 cd $HOME/HT-vs-MT/
 
 
-logdir="${root_dir}/models/${mt}/${log_model_name}/"
+logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${mt}/dev"
 logfile="${outputdir}/train_${seed}.out"
 mkdir -p $outputdir
