@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='29_eval'
+#SBATCH --job-name='30_eval'
 #SBATCH --partition=gpushort
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
@@ -16,7 +16,7 @@ module purge
 module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
-EXP_ID=29
+EXP_ID=30
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
 
@@ -24,20 +24,20 @@ ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 arch="microsoft/mdeberta-v3-base"
 arch_folder="mdeberta"
 trained_on="google"
-# trained_on="deepl"
 eval_sets=("zh" "de" "ru")
-# seeds=(1 2 3 4 5 6 7 8 9 10)
-seed=1
-truncation_vals=(768 1024 2048)
+bsz=1
+max_length=3072
+seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
-for truncation in ${truncation_vals[@]}; do
-    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}_${truncation}/checkpoint-*"
+for seed in ${seeds[@]}; do
+
+    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
 
     for eval_on in ${eval_sets[@]}; do
 
         logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
-        logfile="${logdir}/eval_${seed}_${truncation}.out"
+        logfile="${logdir}/eval_${seed}.out"
         mkdir -p $logdir
 
         if [ $trained_on == "google" ]; then
@@ -48,12 +48,12 @@ for truncation in ${truncation_vals[@]}; do
         
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
-        --batch_size 8 \
+        --batch_size $bsz \
         --arch $arch \
         --load_model $checkpoint \
         --load_sentence_pairs "multilingual" \
         --test $eval_on \
-        --max_length ${truncation} \
+        --max_length $max_length \
         $flags \
         &> $logfile
     done
