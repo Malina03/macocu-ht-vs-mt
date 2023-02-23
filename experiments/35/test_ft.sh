@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='35_eval'
 #SBATCH --partition=gpushort
-#SBATCH --time=02:00:00
+#SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -18,8 +18,8 @@ source /data/$USER/.envs/macocu/bin/activate
 
 
 EXP_ID=35
-# ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
-ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
+ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+# ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 
 # arch="microsoft/mdeberta-v3-base"
 # arch_folder="mdeberta"

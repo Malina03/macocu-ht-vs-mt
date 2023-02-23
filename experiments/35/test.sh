@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name='35_eval'
-#SBATCH --partition=regular
-#SBATCH --time=10:00:00
+#SBATCH --partition=gpushort
+#SBATCH --time=01:00:00
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
@@ -17,8 +17,8 @@ source /data/$USER/.envs/macocu/bin/activate
 
 
 EXP_ID=35
-# ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
-ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
+ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+# ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 
 # arch="microsoft/mdeberta-v3-base"
 # arch_folder="mdeberta"
@@ -31,7 +31,7 @@ trained_on="google"
 # trained_on="deepl"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-seeds=(2 3 4 5 6 7 8 9 10)
+seeds=(1 2 3)
 # seeds=(1)
 
 cd $HOME/HT-vs-MT/
