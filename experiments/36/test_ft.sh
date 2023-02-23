@@ -33,7 +33,7 @@ trained_on="google"
 # trained_on="deepl"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-seeds=(2 3 4 5 6 7 8 9 10)
+seeds=(1 2 3)
 # seeds=(1)
 
 cd $HOME/HT-vs-MT/

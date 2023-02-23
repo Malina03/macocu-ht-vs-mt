@@ -46,14 +46,14 @@ else
 fi
 
 
-log_model_name="deberta_ft"
+log_model_name="deberta"
 arch_folder="deberta"
 checkpoint="/data/pg-macocu/MT_vs_HT/experiments/21/models/${mt}/${arch_folder}_${seed}/checkpoint-*"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${mt}/dev"
-logfile="${outputdir}/train_ft_${seed}.out"
+logfile="${outputdir}/train_${seed}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 
