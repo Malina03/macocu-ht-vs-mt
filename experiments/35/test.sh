@@ -3,6 +3,7 @@
 #SBATCH --job-name='35_eval'
 #SBATCH --partition=gpushort
 #SBATCH --time=01:00:00
+#SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
