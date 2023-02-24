@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='36_eval'
 #SBATCH --partition=gpu
-#SBATCH --time=05:00:00
+#SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --output=/dev/null
@@ -17,8 +17,8 @@ source /data/$USER/.envs/macocu/bin/activate
 
 
 EXP_ID=36
-# ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
-ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
+ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+# ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 
 # arch="microsoft/mdeberta-v3-base"
 # arch_folder="mdeberta"
@@ -26,12 +26,13 @@ ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 arch="microsoft/mdeberta-v3-base"
 arch_folder="mdeberta"
 learning_rate=1e-05
-bsz=8
+bsz=1
+max_length=3072
 trained_on="google"
 # trained_on="deepl"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3 4 5 6 7 8 9 10)
+seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
 

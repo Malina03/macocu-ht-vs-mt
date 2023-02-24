@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='30_eval'
 #SBATCH --partition=gpu
-#SBATCH --time=02:00:00
+#SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -25,19 +25,12 @@ arch="microsoft/mdeberta-v3-base"
 arch_folder="mdeberta_ft"
 trained_on="google"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3 4 5 6 7 8 9 10)
+bsz=1
+max_length=3072
+seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
-    # if [ $seed == 1 ]; then 
-    #     ckpt=1032
-    # fi
-    # if [ $seed == 2 ]; then
-    #     ckpt=2064
-    # fi
-    # if [ $seed == 3 ]; then
-    #     ckpt=4128
-    # fi
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
 
     for eval_on in ${eval_sets[@]}; do
@@ -55,12 +48,12 @@ for seed in ${seeds[@]}; do
         
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
-        --batch_size 16 \
+        --batch_size $bsz \
         --arch $arch \
         --load_model $checkpoint \
         --load_sentence_pairs "multilingual" \
         --test $eval_on \
-        --max_length 512 \
+        --max_length $max_length \
         $flags \
         &> $logfile
     done

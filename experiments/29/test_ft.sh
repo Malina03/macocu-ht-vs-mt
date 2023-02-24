@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name='29_eval'
-#SBATCH --partition=gpu
-#SBATCH --time=02:00:00
+#SBATCH --partition=gpushort
+#SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -24,9 +24,11 @@ ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 arch="microsoft/mdeberta-v3-base"
 arch_folder="mdeberta_ft"
 trained_on="google"
+bsz=1
+max_length=3072
 # trained_on="deepl"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3 4 5 6 7 8 9 10)
+seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
@@ -47,12 +49,12 @@ for seed in ${seeds[@]}; do
         
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
-        --batch_size 8 \
+        --batch_size $bsz \
         --arch $arch \
         --load_model $checkpoint \
         --load_sentence_pairs "multilingual" \
         --test $eval_on \
-        --max_length 512 \
+        --max_length $max_length \
         $flags \
         &> $logfile
     done

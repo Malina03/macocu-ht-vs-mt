@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name='34_eval'
-#SBATCH --partition=gpu
-#SBATCH --time=10:00:00
+#SBATCH --partition=gpushort
+#SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -18,8 +18,8 @@ source /data/$USER/.envs/macocu/bin/activate
 
 
 EXP_ID=34
-# ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
-ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
+ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+# ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 
 # arch="microsoft/mdeberta-v3-base"
 # arch_folder="mdeberta"
@@ -27,12 +27,13 @@ ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 arch="microsoft/deberta-v3-large"
 arch_folder="deberta"
 learning_rate=1e-05
-bsz=8
+bsz=8=2
+max_length=1024
 trained_on="google"
 # trained_on="deepl"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3 4 5 6 7 8 9 10)
+seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
 
@@ -68,11 +69,11 @@ for seed in ${seeds[@]}; do
         
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
-        --batch_size 8 \
+        --batch_size $bsz \
         --arch $arch \
         --test_on_language ${eval_on} \
         --load_model $checkpoint \
-        --max_length 512 \
+        --max_length $max_length \
         $flags \
         $test_flags \
         &> $logfile
