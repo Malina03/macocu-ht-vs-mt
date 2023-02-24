@@ -27,7 +27,7 @@ ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 arch="microsoft/deberta-v3-large"
 arch_folder="deberta"
 learning_rate=1e-05
-bsz=8=2
+bsz=2
 max_length=1024
 trained_on="google"
 # trained_on="deepl"
