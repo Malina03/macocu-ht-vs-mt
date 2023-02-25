@@ -2,12 +2,12 @@
 
 #SBATCH --job-name='36_ft_train'
 #SBATCH --partition=gpu
-#SBATCH --time=05:00:00
+#SBATCH --time=07:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=24GB
 #SBATCH --output=/dev/null
-#SBATCH --array=1-3
+#SBATCH --array=2
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
