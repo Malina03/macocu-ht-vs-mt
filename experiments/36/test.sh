@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name='36_eval'
-#SBATCH --partition=gpu
+#SBATCH --partition=gpushort
 #SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
@@ -52,12 +52,12 @@ for seed in ${seeds[@]}; do
         
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
-        --batch_size 8 \
+        --batch_size $bsz \
         --arch $arch \
         --test ${eval_on} \
         --load_model $checkpoint \
         --load_sentence_pairs "multilingual" \
-        --max_length 512 \
+        --max_length $max_length \
         $flags \
         &> $logfile
     done
