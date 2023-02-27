@@ -48,7 +48,7 @@ fi
 
 log_model_name="deberta"
 arch_folder="deberta"
-checkpoint="/data/pg-macocu/MT_vs_HT/experiments/21/models/${mt}/${arch_folder}_${seed}/checkpoint-*"
+# checkpoint="/data/pg-macocu/MT_vs_HT/experiments/21/models/${mt}/${arch_folder}_${seed}/checkpoint-*"
 # Make sure the logdir specified below corresponds to the directory defined in the
 # main() function of the `classifier_trf_hf.py` script!
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
@@ -62,7 +62,6 @@ cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
 --output_dir $logdir \
---load_model $checkpoint \
 --arch $arch \
 --learning_rate $learning_rate \
 --batch_size $bsz \
