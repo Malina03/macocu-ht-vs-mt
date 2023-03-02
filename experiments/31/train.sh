@@ -2,14 +2,14 @@
 
 #SBATCH --job-name='31_normal'
 #SBATCH --partition=gpu
-#SBATCH --time=05:00:00
+#SBATCH --time=15:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=BEGIN,FAIL,END
 #SBATCH --mail-user=m.chichirau@student.rug.nl
-#SBATCH --array=1-3
+#SBATCH --array=4-10
 
 
 # export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
