@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='29_3072'
 #SBATCH --partition=gpu
-#SBATCH --time=15:00:00
+#SBATCH --time=20:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -16,7 +16,8 @@ export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
 export WANDB_DISABLED=true  # for some reason this is necessary
 
 exp_id=29
-root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
+# root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
+root_dir=/data/$USER/MT_vs_HT/experiments/${exp_id}
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
