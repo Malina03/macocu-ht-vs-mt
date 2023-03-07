@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='31_ft'
 #SBATCH --partition=gpu
-#SBATCH --time=07:00:00
+#SBATCH --time=20:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
