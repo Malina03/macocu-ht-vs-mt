@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name='32_eval'
-#SBATCH --partition=gpu
+#SBATCH --partition=gpushort
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name='31_eval'
-#SBATCH --partition=gpu
+#SBATCH --partition=gpushort
 #SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
@@ -33,7 +33,8 @@ trained_on="google"
 # trained_on="deepl"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3)
+# seeds=(1 2 3)
+seeds=(4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 

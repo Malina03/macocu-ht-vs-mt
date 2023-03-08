@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='32_eval'
 #SBATCH --partition=gpushort
-#SBATCH --time=01:00:00
+#SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -18,7 +18,8 @@ source /data/$USER/.envs/macocu/bin/activate
 
 
 EXP_ID=32
-ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+# ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 
 # arch="microsoft/mdeberta-v3-base"
 # arch_folder="mdeberta"
@@ -32,21 +33,12 @@ trained_on="google"
 # trained_on="deepl"
 test_set="test"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3)
+# seeds=(1 2 3)
+seeds=(4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 
-for seed in ${seeds[@]}; do
-    # if [ $seed == "1" ]; then 
-    #     ckpt=2064
-    # fi
-    # if [ $seed == "2" ]; then
-    #     ckpt=1548
-    # fi
-    # if [ $seed == "3" ]; then
-    #     ckpt=1548 ## it's the same as for seed 2, checked this
-    # fi
-    
+for seed in ${seeds[@]}; do    
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
     for eval_on in ${eval_sets[@]}; do
 

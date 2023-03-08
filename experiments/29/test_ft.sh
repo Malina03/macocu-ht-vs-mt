@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='29_eval'
 #SBATCH --partition=gpushort
-#SBATCH --time=01:00:00
+#SBATCH --time=02:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -18,6 +18,7 @@ source /data/$USER/.envs/macocu/bin/activate
 
 EXP_ID=29
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
+# ROOT_DIR=/data/$USER/MT_vs_HT/experiments/${EXP_ID}
 
 
 # Hyper-parameters
@@ -28,7 +29,8 @@ bsz=1
 max_length=3072
 # trained_on="deepl"
 eval_sets=("zh" "de" "ru")
-seeds=(1 2 3)
+# seeds=(1 2 3)
+seeds=(4 5 6 7 8 9 10)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
