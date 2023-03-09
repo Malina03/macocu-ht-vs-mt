@@ -76,6 +76,7 @@ def truncation_monolingual_train(phase, root_dir, use_google_data, split_docs_by
     sents_enc = tokenizer(sents, padding=True, truncation=True)
     input_lengths = sorted([len([i for i in seq if i!=0]) for seq in sents_enc.input_ids])
     truncation_percentage = [(l - max_length)/l for l in input_lengths if l > max_length]
+    truncated_tokens = [(l-max_length)/l for l in input_lengths if l > max_length]
     truncated_inputs = sum(i > max_length for i in input_lengths)
     pecentage_truncated = truncated_inputs/len(input_lengths)
     longest_seq = max(input_lengths)
@@ -83,6 +84,8 @@ def truncation_monolingual_train(phase, root_dir, use_google_data, split_docs_by
     print("Number of truncated docs: {} out of {}, which is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated))
     if len(truncation_percentage) > 0:
         print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
+    print("truncated tokens: ", sum(truncated_tokens))
+    print("Average amount of truncated tokens: ", sum(truncated_tokens)/len(input_lengths))
     print("longest doc: ", longest_seq)
     print("top 10 longest docs: ", top_10)
 
@@ -154,6 +157,7 @@ def truncation_monolingual_testing(phase, root_dir, test_on_language, test, arch
     sents_enc = tokenizer(sents, padding=True, truncation=True)
     input_lengths = sorted([len([i for i in seq if i!=0]) for seq in sents_enc.input_ids])
     truncation_percentage = [(l - max_length)/l for l in input_lengths if l > max_length]
+    truncated_tokens = [(l-max_length) for l in input_lengths if l > max_length]
     truncated_inputs = sum(i > max_length for i in input_lengths)
     pecentage_truncated = truncated_inputs/len(input_lengths)
     longest_seq = max(input_lengths)
@@ -162,6 +166,8 @@ def truncation_monolingual_testing(phase, root_dir, test_on_language, test, arch
     print("Number of truncated docs: {} out of {}, which is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated))
     if len(truncation_percentage) > 0:
         print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
+    print("truncated tokens: ", sum(truncated_tokens))
+    print("Average amount of truncated tokens: ", sum(truncated_tokens)/len(input_lengths))
     print("longest doc: ", longest_seq)
     print("top 10 longest docs: ", top_10)
 
@@ -275,6 +281,7 @@ def truncation_bilingual(phase, root_dir, use_google_data, test, arch, max_lengt
 
     input_lengths = sorted([len([i for i in seq if i!=0]) for seq in sents_enc.input_ids])
     truncation_percentage = [(l - max_length)/l for l in input_lengths if l > max_length]
+    truncated_tokens = [(l-max_length) for l in input_lengths if l > max_length]
     truncated_inputs = sum(i > max_length for i in input_lengths)
     pecentage_truncated = truncated_inputs/len(input_lengths)
     longest_seq = max(input_lengths)
@@ -283,6 +290,8 @@ def truncation_bilingual(phase, root_dir, use_google_data, test, arch, max_lengt
     print("Number of truncated docs: {} out of {}, which is {}".format(truncated_inputs, len(input_lengths), pecentage_truncated))
     if len(truncation_percentage) > 0:
         print("truncation percentage: ", sum(truncation_percentage)/len(truncation_percentage))
+    print("truncated tokens: ", sum(truncated_tokens))
+    print("Average amount of truncated tokens: ", sum(truncated_tokens)/len(input_lengths))
     print("longest doc: ", longest_seq)
     print("top 10 longest docs: ", top_10)
 
@@ -295,7 +304,7 @@ def main():
     # models = ['bilingual-de', 'bilingual-all', 'monolingual-de', 'monolingual-all']
     models = ['bilingual-de', 'monolingual-de']
     # truncation_vals = [768, 1024, 2048]
-    truncation_vals = [512]
+    truncation_vals = [512, 768, 1024, 2048, 3072]
     root_dir_bilingual = Path("/data/pg-macocu/MT_vs_HT/experiments/29/")
     root_dir_bilingual_all = Path("/data/pg-macocu/MT_vs_HT/experiments/30/")
     root_dir_monolingual = Path("/data/pg-macocu/MT_vs_HT/experiments/31/")
