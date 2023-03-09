@@ -34,7 +34,7 @@ trained_on="google"
 test_set="test"
 eval_sets=("zh" "de" "ru")
 # seeds=(1 2 3)
-seeds=(4 5 6 7)
+seeds=(8 9 10)
 
 cd $HOME/HT-vs-MT/
 

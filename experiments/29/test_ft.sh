@@ -2,7 +2,7 @@
 
 #SBATCH --job-name='29_eval'
 #SBATCH --partition=gpushort
-#SBATCH --time=01:00:00
+#SBATCH --time=00:30:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -31,7 +31,7 @@ max_length=3072
 eval_sets=("zh" "de" "ru")
 # seeds=(1 2 3)
 # seeds=(4 5 6 7 8 9 10)
-seeds=(4 5 6 7 8)
+seeds=(9 10)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
