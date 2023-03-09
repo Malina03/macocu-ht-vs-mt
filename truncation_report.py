@@ -76,7 +76,7 @@ def truncation_monolingual_train(phase, root_dir, use_google_data, split_docs_by
     sents_enc = tokenizer(sents, padding=True, truncation=True)
     input_lengths = sorted([len([i for i in seq if i!=0]) for seq in sents_enc.input_ids])
     truncation_percentage = [(l - max_length)/l for l in input_lengths if l > max_length]
-    truncated_tokens = [(l-max_length)/l for l in input_lengths if l > max_length]
+    truncated_tokens = [(l-max_length) for l in input_lengths if l > max_length]
     truncated_inputs = sum(i > max_length for i in input_lengths)
     pecentage_truncated = truncated_inputs/len(input_lengths)
     longest_seq = max(input_lengths)
