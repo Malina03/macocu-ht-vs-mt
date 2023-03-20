@@ -70,16 +70,14 @@ print(f"Loading model and tokenizer from {model_name}...")
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
-test()
+# test()
 
 files = []
 for path, subdirs, files in os.walk(helsinki_in_path):
 	for name in files:
 		files.append(os.path.join(path, name))
-# print(only_files)
-for f in files:
-	print(f)
-
+		print(os.path.join(path, name))
+# for f in files:
 #for author in authors:
 # book_en = "/data/p278972/data/alitra/ennl/datasets/220526/test." + author + ".4eval.en"
 # print(author, book_en)
