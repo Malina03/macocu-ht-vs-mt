@@ -73,10 +73,15 @@ model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 # test()
 
 files = []
-for path, files in os.walk(helsinki_in_path):
-	for name in files:
-		files.append(os.path.join(path, name))
-		print(os.path.join(path, name))
+# for path, files in os.walk(helsinki_in_path):
+# 	for name in files:
+# 		files.append(os.path.join(path, name))
+# 		print(os.path.join(path, name))
+
+for f in os.listdir(helsinki_in_path):
+	if os.path.isfile(os.path.join(helsinki_in_path, f)):
+		# files.append(f)
+		print(f)
 # for f in files:
 #for author in authors:
 # book_en = "/data/p278972/data/alitra/ennl/datasets/220526/test." + author + ".4eval.en"
