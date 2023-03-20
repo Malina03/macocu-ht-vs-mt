@@ -42,11 +42,11 @@ def real_thing(file_path, out_file):
 	model.eval().to(device)
 	print(f"Translating...")
 	print(out_file)
-	with open(out_file, 'a') as f:
+	with open(out_file, 'w') as f:
 		for i, batch in enumerate(tqdm(dataloader)):
 			batch = {k: v.to(device) for k, v in batch.items()}
 			out = model.generate(**batch)
-			translations = tokenizer.batch_decode(out.to("cpu"), skip_special_tokens=False)
+			translations = tokenizer.batch_decode(out.to("cpu"), skip_special_tokens=True)
 			if i == 0:
 				print(translations[:2])
 			for trans in translations:
@@ -88,7 +88,7 @@ for f in os.listdir(helsinki_in_path):
 			continue
 		# print(in_fname, out_fname)
 		real_thing(in_fname, out_fname)
-		break
+		# break
 
 # for f in files:
 #for author in authors:
