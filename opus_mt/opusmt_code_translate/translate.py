@@ -82,7 +82,7 @@ for f in os.listdir(helsinki_in_path):
 	if os.path.isfile(os.path.join(helsinki_in_path, f)):
 		# files.append(f)
 		f_type = f.split("_")[0]
-		year = f.split("_")[3]
+		year = f.split("_")[3].split(".")[0]
 		language = f.split("_")[2]
 		lang_pair = f.split("_")[1]
 		in_fname = os.path.join(helsinki_in_path, f)
