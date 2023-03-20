@@ -73,7 +73,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 # test()
 
 files = []
-for path, subdirs, files in os.walk(helsinki_in_path):
+for path, files in os.walk(helsinki_in_path):
 	for name in files:
 		files.append(os.path.join(path, name))
 		print(os.path.join(path, name))
