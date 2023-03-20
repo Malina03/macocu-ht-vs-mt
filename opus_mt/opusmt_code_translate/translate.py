@@ -32,10 +32,10 @@ def encode(examples, tokenizer):
 
 def real_thing(file_path, out_file):
 	dataset = load_dataset("text", data_files={"test": file_path})
-	print(f"Dataset: {dataset['test'][0]}")
+	# print(f"Dataset: {dataset['test'][0]}")
 	print(f"Encoding file...")
 	data = dataset.map(lambda x: encode(x, tokenizer), batched=True)
-	print(f"Example: {data['test'][0]}")
+	# print(f"Example: {data['test'][0]}")
 	data.set_format(type='torch', columns=['input_ids', 'attention_mask'])
 	dataloader = torch.utils.data.DataLoader(data['test'], batch_size=batch_size)
 	device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -46,7 +46,7 @@ def real_thing(file_path, out_file):
 		for i, batch in enumerate(tqdm(dataloader)):
 			batch = {k: v.to(device) for k, v in batch.items()}
 			out = model.generate(**batch)
-			translations = tokenizer.batch_decode(out.to("cpu"), skip_special_tokens=True)
+			translations = tokenizer.batch_decode(out.to("cpu"), skip_special_tokens=False)
 			if i == 0:
 				print(translations[:2])
 			for trans in translations:
