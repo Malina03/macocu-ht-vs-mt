@@ -30,8 +30,8 @@ def encode(examples, tokenizer):
 	return tokenizer(examples["text"], truncation=True, padding='max_length')
 
 
-def real_thing(book_en, author):
-	dataset = load_dataset("text", data_files={"test": book_en})
+def real_thing(file_path, out_file):
+	dataset = load_dataset("text", data_files={"test": file_path})
 	print(f"Dataset: {dataset['test'][0]}")
 	print(f"Encoding file...")
 	data = dataset.map(lambda x: encode(x, tokenizer), batched=True)
@@ -41,7 +41,6 @@ def real_thing(book_en, author):
 	device = 'cuda' if torch.cuda.is_available() else 'cpu'
 	model.eval().to(device)
 	print(f"Translating...")
-	out_file = helsinki_out_path + "/test." + author + ".4eval.helsinki.220904.nl"
 	print(out_file)
 	with open(out_file, 'a') as f:
 		for i, batch in enumerate(tqdm(dataloader)):
@@ -72,12 +71,6 @@ model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
 # test()
 
-files = []
-# for path, files in os.walk(helsinki_in_path):
-# 	for name in files:
-# 		files.append(os.path.join(path, name))
-# 		print(os.path.join(path, name))
-
 for f in os.listdir(helsinki_in_path):
 	if os.path.isfile(os.path.join(helsinki_in_path, f)):
 		# files.append(f)
@@ -90,7 +83,13 @@ for f in os.listdir(helsinki_in_path):
 			out_fname = os.path.join(helsinki_out_path,'trans_'+lang_pair+'_en_'+year+'.txt')
 		elif f_type == 'trans':
 			out_fname = os.path.join(helsinki_out_path, 'org_' + lang_pair + '_en_' + year + '.txt')
-		print(in_fname, out_fname)
+		else:
+			print("Invalid file name: ", f)
+			continue
+		# print(in_fname, out_fname)
+		real_thing(in_fname, out_fname)
+		break
+
 # for f in files:
 #for author in authors:
 # book_en = "/data/p278972/data/alitra/ennl/datasets/220526/test." + author + ".4eval.en"
