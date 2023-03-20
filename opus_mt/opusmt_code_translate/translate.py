@@ -81,7 +81,16 @@ files = []
 for f in os.listdir(helsinki_in_path):
 	if os.path.isfile(os.path.join(helsinki_in_path, f)):
 		# files.append(f)
-		print(f)
+		f_type = f.split("_")[0]
+		year = f.split("_")[3]
+		language = f.split("_")[2]
+		lang_pair = f.split("_")[1]
+		in_fname = os.path.join(helsinki_in_path, f)
+		if f_type == "org":
+			out_fname = os.path.join(helsinki_out_path,'trans_'+lang_pair+'_en_'+year+'.txt')
+		elif f_type == 'trans':
+			out_fname = os.path.join(helsinki_out_path, 'org_' + lang_pair + '_en_' + year + '.txt')
+		print(in_fname, out_fname)
 # for f in files:
 #for author in authors:
 # book_en = "/data/p278972/data/alitra/ennl/datasets/220526/test." + author + ".4eval.en"
