@@ -15,6 +15,8 @@ module purge
 module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
-logfile=/data/$USER/opus_mt/translation.log
+logfile="/data/s3412768/opus_mt/translation.out"
 
-python $HOME/HT-vs-MT/opus_mt/opusmt_code_translate/run_translation.py > $logfile
+cd $HOME/HT-vs-MT/opus_mt/opusmt_code_translate
+
+python -u translate.py > $logfile
