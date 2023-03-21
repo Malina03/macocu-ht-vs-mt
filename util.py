@@ -293,9 +293,9 @@ def parse_args_hf():
 
     parser.add_argument(
         "--mt",
-        action="str",
+        type="str",
         choices=["deepl", "google", "opus"],
-        help="Which translationes to use for training and testing. "
+        help="Which dataset to use for training and testing. "
     )
 
     parser.add_argument(
