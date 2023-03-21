@@ -280,7 +280,7 @@ def parse_args_hf():
     parser.add_argument(
         "--test",
         type=str,
-        choices=["deepl", "google", "wmt1", "wmt2", "wmt3", "wmt4", "zh", "de", "ru"],
+        choices=["deepl", "google", "opus","wmt1", "wmt2", "wmt3", "wmt4", "zh", "de", "ru"],
         help="Test a classifier on one of the test sets. For WMT "
         "submissions there are 4 options, originating from the "
         "WMT 19 test sets, for each language."
@@ -290,6 +290,14 @@ def parse_args_hf():
         "- wmt3: 2nd worst system"
         "- wmt4: worst system",
     )
+
+    parser.add_argument(
+        "--mt",
+        action="str",
+        choices=["deepl", "google", "opus"],
+        help="Which translationes to use for training and testing. "
+    )
+
     parser.add_argument(
         "--eval", action="store_true", help="Evaluate on dev set using a trained model"
     )

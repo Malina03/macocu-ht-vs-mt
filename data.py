@@ -57,6 +57,7 @@ def load_language_tests(args, phase, split_docs_by_sentence=False):
             1: (
             list((root_dir / f"data/{mt}/{phase}/{apdx_name}").glob("*.deepl.en"))
             + list((root_dir / f"data/{mt}/{phase}/{apdx_name}").glob("*.en.google"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx_name}").glob("*.opus.en"))
             ),
         }  # all the text files per class
     assert (
@@ -112,7 +113,8 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
 
     corpus_data = []
     root_dir = Path(args.root_dir).resolve()
-    mt = mt_name = "google" if args.use_google_data else "deepl"
+    # mt = mt_name = "google" if args.use_google_data else "deepl"
+    mt = args.mt if args.mt else "google"
     if phase == "test":
         mt_name = args.test
     if mt_name.startswith("wmt"):
@@ -123,6 +125,7 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
         1: (
             list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.deepl.en"))
             + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.en.google"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.opus.en"))
         ),
     }  # all the text files per class
     if mt_name == "wmt1":
@@ -191,12 +194,13 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
         
     print("=> Loading {} corpus...".format(phase))
 
-    _mt_suffixes = [".txt.en.google", '.deepl.en']
+    _mt_suffixes = [".txt.en.google", '.deepl.en', ".opus.en"]
 
     corpus_data = []
     root_dir = Path(args.root_dir).resolve()
     
-    mt = "google" if args.use_google_data else "deepl"
+    # mt = "google" if args.use_google_data else "deepl"
+    mt = args.mt if args.mt else "google"
     # if mt != "google":
     #     raise NotImplementedError("Only Google data is supported for now.")
     
@@ -237,7 +241,8 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
             if path_B.name in [
                 f"trans_{lang}en_en_wmt{wmt_year}.txt",
                 f"org_{lang}en_{lang}_wmt{wmt_year}.deepl.en",
-                f"org_{lang}en_{lang}_wmt{wmt_year}.txt.en.google"
+                f"org_{lang}en_{lang}_wmt{wmt_year}.txt.en.google",
+                f"org_{lang}en_{lang}_wmt{wmt_year}.opus.en"
             ]:
                 # Translation from original text.
                 if phase == "test":
@@ -247,7 +252,8 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
             elif path_B.name in [
                 f"org_en{lang}_en_wmt{wmt_year}.txt",
                 f"trans_en{lang}_{lang}_wmt{wmt_year}.deepl.en",
-                f"trans_en{lang}_{lang}_wmt{wmt_year}.txt.en.google"
+                f"trans_en{lang}_{lang}_wmt{wmt_year}.txt.en.google",
+                f"trans_en{lang}_{lang}_wmt{wmt_year}.opus.en",
             ]:
                 # Translation from translatinese -> not in test data
                 path_A = root_dir / f"data/{mt}/{phase}/trans_en{lang}_{lang}_wmt{wmt_year}.txt"
@@ -311,11 +317,12 @@ def load_corpus_sentence_pairs(args, phase):
 
     print("=> Loading {} corpus...".format(phase))
 
-    _mt_suffixes = [".deepl.en", ".txt.en.google", ".wmt"]
+    _mt_suffixes = [".deepl.en", ".txt.en.google", ".wmt", ".opus.en"]
 
     corpus_data = []
     root_dir = Path(args.root_dir).resolve()
-    mt = "google" if args.use_google_data else "deepl"
+    # mt = "google" if args.use_google_data else "deepl"
+    mt = args.mt if args.mt else "google"
     if phase == "test":
         mt = args.test
     paths = {
