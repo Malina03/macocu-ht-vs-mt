@@ -294,8 +294,9 @@ def parse_args_hf():
     parser.add_argument(
         "--mt",
         type=str,
+        default="google",
         choices=["deepl", "google", "opus"],
-        help="Which dataset to use for training and testing. "
+        help="Which dataset to use for training and testing.",
     )
 
     parser.add_argument(

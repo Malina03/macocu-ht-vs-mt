@@ -114,7 +114,7 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
     corpus_data = []
     root_dir = Path(args.root_dir).resolve()
     # mt = mt_name = "google" if args.use_google_data else "deepl"
-    mt = args.mt if args.mt else "google"
+    mt = mt.name = args.mt if args.mt else "google"
     if phase == "test":
         mt_name = args.test
     if mt_name.startswith("wmt"):
