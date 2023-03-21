@@ -39,11 +39,11 @@ dropout=0.1
 seed=${SLURM_ARRAY_TASK_ID}
 
 
-if [ $mt == "google" ]; then
-    flags="--use_google_data"
-else
-    flags=""
-fi
+# if [ $mt == "google" ]; then
+#     flags="--use_google_data"
+# else
+#     flags=""
+# fi
 
 # arch="microsoft/mdeberta-v3-base"
 log_model_name="deberta"
