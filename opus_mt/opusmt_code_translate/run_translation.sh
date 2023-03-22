@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name='opus_mt'
-#SBATCH --partition=gpu
-#SBATCH --time=03:00:00
+#SBATCH --partition=gpushort
+#SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB

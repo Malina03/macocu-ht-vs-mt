@@ -80,9 +80,9 @@ for f in os.listdir(helsinki_in_path):
 		lang_pair = f.split("_")[1]
 		in_fname = os.path.join(helsinki_in_path, f)
 		if f_type == "org":
-			out_fname = os.path.join(helsinki_out_path,'trans_'+lang_pair+'_en_'+year+'.txt')
+			out_fname = os.path.join(helsinki_out_path,'org__'+lang_pair+'_en_'+year+'.opus.en')
 		elif f_type == 'trans':
-			out_fname = os.path.join(helsinki_out_path, 'org_' + lang_pair + '_en_' + year + '.txt')
+			out_fname = os.path.join(helsinki_out_path, 'trans__' + lang_pair + '_' + lang_pair[:2] + '_' + year + '.opus.en')
 		else:
 			print("Invalid file name: ", f)
 			continue
