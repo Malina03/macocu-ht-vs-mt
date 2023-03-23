@@ -17,7 +17,7 @@ module load Python/3.8.6-GCCcore-10.2.0
 source /data/$USER/.envs/macocu/bin/activate
 
 
-EXP_ID=14
+EXP_ID=22
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
 arch="microsoft/mdeberta-v3-base"
