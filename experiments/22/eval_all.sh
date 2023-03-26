@@ -28,7 +28,7 @@ arch_folder="mdeberta"
 
 models=("google" "deepl" "opus")
 sets=("dev" "test")
-eval_sets=("google" "deepl" "deepl")
+eval_sets=("google" "deepl" "opus")
 seeds=(1 2 3)
 
 
@@ -44,10 +44,10 @@ for trained_on in ${models[@]}; do
                 mkdir -p $logdir
 
 
-                if [ $test_set == "dev" ]; then
-                    test_flags="--eval"
-                else
+                if [ $test_set == "test" ]; then
                     test_flags="--test de"
+                else
+                    test_flags=""
                 fi
                 
                 python classifier_trf_hf.py \
@@ -57,7 +57,6 @@ for trained_on in ${models[@]}; do
                 --arch $arch \
                 --load_model $checkpoint \
                 --load_sentence_pairs "multilingual" \
-
                 $test_flags \
                 &> $logfile
             done
