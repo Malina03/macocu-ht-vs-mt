@@ -27,8 +27,10 @@ arch_folder="mdeberta"
 # arch_folder="deberta"
 
 models=("google" "deepl" "opus")
-sets=("dev" "test")
-eval_sets=("google" "deepl" "opus")
+# sets=("dev" "test")
+sets=("test")
+# eval_sets=("google" "deepl" "opus")
+eval_sets=("opus")
 seeds=(1 2 3)
 
 
