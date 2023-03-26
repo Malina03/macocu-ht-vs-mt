@@ -47,7 +47,7 @@ for trained_on in ${models[@]}; do
                 if [ $test_set == "test" ]; then
                     test_flags="--test de"
                 else
-                    test_flags=""
+                    test_flags="--eval"
                 fi
                 
                 python classifier_trf_hf.py \
