@@ -167,6 +167,7 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
                     else:
                         corpus_data.append([line.rstrip(), label])
                     doc_id += 1
+            
     sents, labels = zip(*corpus_data)
     sents = list(sents)
 
