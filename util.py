@@ -295,7 +295,7 @@ def parse_args_hf():
         "--mt",
         type=str,
         default="google",
-        choices=["deepl", "google", "opus"],
+        choices=["deepl", "google", "opus","all"],
         help="Which dataset to use for training and testing.",
     )
 
