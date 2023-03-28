@@ -299,6 +299,14 @@ def parse_args_hf():
         help="Which dataset to use for training and testing.",
     )
 
+    
+    parser.add_argument(
+        "--balance_data",
+        type=str,
+        choices=["ht", "mt"],
+        help="When training on 3 mt systems, balance training/dev data. HT means that all mt data is used and ht is added 3x times to compensate.MT means all ht data is used and 1/3 mt is used from each system.",
+    )
+
     parser.add_argument(
         "--eval", action="store_true", help="Evaluate on dev set using a trained model"
     )

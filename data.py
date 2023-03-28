@@ -164,8 +164,14 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
                         for seg in line.split(". "):
                             corpus_data.append([f"{seg.rstrip()}.", label])
                             idx_to_docid[len(corpus_data) - 1] = doc_id
+                            if args.balance_data == 'ht' and label == 0:
+                                # add ht 3 times
+                                corpus_data.extend([[f"{seg.rstrip()}.", label]]*2)
+                                idx_to_docid.extend([doc_id]*2)
                     else:
                         corpus_data.append([line.rstrip(), label])
+                        if args.balance_data == 'ht' and label == 0:
+                            corpus_data.extend([[line.rstrip(), label]]*2)
                     doc_id += 1
             
     sents, labels = zip(*corpus_data)
@@ -280,10 +286,15 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
                                     [f"{seg_A.rstrip()}.", f"{seg_B.rstrip()}.", label]
                                 )
                                 idx_to_docid[len(corpus_data) - 1] = doc_id
+                                if args.balance_data == 'ht' and label == 0:
+                                    corpus_data.extend([[f"{seg_A.rstrip()}.", f"{seg_B.rstrip()}.", label]]*2)
+                                    idx_to_docid.extend([doc_id]*2)
                             doc_id += 1
                     else:
                         for line_A, line_B in zip(sents_A, sents_B):
                             corpus_data.append([line_A.rstrip(), line_B.rstrip(), label])
+                            if args.balance_data == 'ht' and label == 0:
+                                corpus_data.extend([[line_A.rstrip(), line_B.rstrip(), label]]*2)
 
 
     # Encode the sentences using the HuggingFace tokenizer.

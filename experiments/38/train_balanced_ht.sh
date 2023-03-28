@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='38_unb_train'
+#SBATCH --job-name='38_ht_train'
 #SBATCH --partition=gpu
 #SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
@@ -43,7 +43,7 @@ seed=${SLURM_ARRAY_TASK_ID}
 #     flags=""
 # fi
 
-log_model_name="mdeberta_unbalanced"
+log_model_name="mdeberta_balanced_ht"
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${log_model_name}/${mt}/dev"
@@ -70,4 +70,5 @@ python classifier_trf_hf.py \
 --strategy "epoch" \
 --load_sentence_pairs "multilingual" \
 --max_length $max_length \
+--balance_data "ht"\
 &> $logfile
