@@ -303,6 +303,7 @@ def parse_args_hf():
     parser.add_argument(
         "--balance_data",
         type=str,
+        default="None",
         choices=["ht", "mt"],
         help="When training on 3 mt systems, balance training/dev data. HT means that all mt data is used and ht is added 3x times to compensate.MT means all ht data is used and 1/3 mt is used from each system.",
     )

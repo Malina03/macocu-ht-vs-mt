@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='37_ht_train'
+#SBATCH --job-name='37_mt_train'
 #SBATCH --partition=gpu
 #SBATCH --time=05:00:00
 #SBATCH --gres=gpu:v100:1
@@ -39,7 +39,7 @@ label_smoothing=0.0
 dropout=0.1
 seed=${SLURM_ARRAY_TASK_ID}
 
-log_model_name="deberta_balanced_ht"
+log_model_name="deberta_balanced_mt"
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
 outputdir="${root_dir}/results/${log_model_name}/${mt}/dev"
@@ -64,5 +64,5 @@ python classifier_trf_hf.py \
 --dropout $dropout \
 --seed $seed \
 --strategy "epoch" \
---balance_data "ht" \
+--balance_data "mt" \
 &> $logfile

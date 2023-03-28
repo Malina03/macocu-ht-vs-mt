@@ -13,7 +13,7 @@ from transformers import (
     XLMRobertaModel,
 )
 
-from data import load_corpus, load_corpus_sentence_pairs, load_language_tests, load_corpus_multilingual_sentence_pairs
+from data import load_corpus, load_corpus_sentence_pairs, load_language_tests, load_corpus_multilingual_sentence_pairs, load_corpus_multilingual_sentence_pairs_balanced_mt, load_corpus_balanced_mt
 from models import BilingualSentenceClassifier
 from util import get_training_arguments, compute_metrics, parse_args_hf
 
@@ -72,8 +72,12 @@ def main():
     idx_to_docid = None
     test_or_dev = "test" if args.test else "dev"
     if args.load_sentence_pairs == "multilingual":
-        train_data,_ = load_corpus_multilingual_sentence_pairs(args, "train")
-        eval_data, idx_to_docid = load_corpus_multilingual_sentence_pairs(args, test_or_dev, split_docs_by_sentence=args.use_majority_classification)
+        if args.balance_data == 'mt':
+            train_data,_ = load_corpus_multilingual_sentence_pairs_balanced_mt(args, "train")
+            eval_data, idx_to_docid = load_corpus_multilingual_sentence_pairs_balanced_mt(args, test_or_dev, split_docs_by_sentence=args.use_majority_classification)
+        else:
+            train_data,_ = load_corpus_multilingual_sentence_pairs(args, "train")
+            eval_data, idx_to_docid = load_corpus_multilingual_sentence_pairs(args, test_or_dev, split_docs_by_sentence=args.use_majority_classification)
     elif args.load_sentence_pairs:  # load both source and translations (bilingual)
         train_data = load_corpus_sentence_pairs(args, "train")
         eval_data = load_corpus_sentence_pairs(args, test_or_dev)
@@ -83,10 +87,14 @@ def main():
             args, 'test', split_docs_by_sentence=args.use_majority_classification
         )
     else:  # load only translations (monolingual)
-        train_data, _ = load_corpus(args, "train")
-        eval_data, idx_to_docid = load_corpus(
-            args, test_or_dev, split_docs_by_sentence=args.use_majority_classification
-        )
+        if args.balance_data == 'mt':
+            train_data,_ = load_corpus_balanced_mt(args, "train")
+            eval_data, idx_to_docid = load_corpus_balanced_mt(args, test_or_dev, split_docs_by_sentence=args.use_majority_classification)
+        else:
+            train_data, _ = load_corpus(args, "train")
+            eval_data, idx_to_docid = load_corpus(
+                args, test_or_dev, split_docs_by_sentence=args.use_majority_classification
+            )
 
     # Load the model.
     if args.load_model is not None:  # start from a trained model
