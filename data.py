@@ -221,6 +221,10 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
             list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.deepl.en"))
             + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.en.google"))
             + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.opus.en"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.wmt1"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.wmt2"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.wmt3"))
+            + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.wmt4"))
         ),
     }  # all the text files per class
 
@@ -277,7 +281,7 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
         
     print("=> Loading {} corpus...".format(phase))
 
-    _mt_suffixes = [".txt.en.google", '.deepl.en', ".opus.en"]
+    _mt_suffixes = [".txt.en.google", '.deepl.en', ".opus.en", 'wmt1', 'wmt2', 'wmt3','wmt4']
 
     corpus_data = []
     root_dir = Path(args.root_dir).resolve()
@@ -325,7 +329,11 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
                 f"trans_{lang}en_en_wmt{wmt_year}.txt",
                 f"org_{lang}en_{lang}_wmt{wmt_year}.deepl.en",
                 f"org_{lang}en_{lang}_wmt{wmt_year}.txt.en.google",
-                f"org_{lang}en_{lang}_wmt{wmt_year}.opus.en"
+                f"org_{lang}en_{lang}_wmt{wmt_year}.opus.en",
+                f"org_{lang}en_{lang}_wmt{wmt_year}.wmt1",
+                f"org_{lang}en_{lang}_wmt{wmt_year}.wmt2",
+                f"org_{lang}en_{lang}_wmt{wmt_year}.wmt3",
+                f"org_{lang}en_{lang}_wmt{wmt_year}.wmt4"
             ]:
                 # Translation from original text.
                 if phase == "test":
