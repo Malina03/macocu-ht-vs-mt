@@ -211,13 +211,10 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
 
     corpus_data = []
     root_dir = Path(args.root_dir).resolve()
-    # mt = mt_name = "google" if args.use_google_data else "deepl"
-    mt = mt_name = args.mt if args.mt else "google"
-    if phase == "test":
-        mt_name = args.test
-    if mt_name.startswith("wmt"):
-        mt = "wmt_submissions"
-    apdx = "normalized" if args.use_normalized_data else ""
+
+    mt = args.mt if args.mt else "google"
+    apdx = args.test if phase == 'test' else ""
+
     paths = {
         0: list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.txt")),
         1: (
@@ -226,26 +223,7 @@ def load_corpus(args, phase, split_docs_by_sentence=False):
             + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.opus.en"))
         ),
     }  # all the text files per class
-    if mt_name == "wmt1":
-        paths[1] = [
-            root_dir
-            / f"data/wmt_submissions/{phase}/{apdx}/newstest2019.Facebook_FAIR.6750.wmt"
-        ]
-    if mt_name == "wmt2":
-        paths[1] = [
-            root_dir
-            / f"data/wmt_submissions/{phase}/{apdx}/newstest2019.RWTH_Aachen_System.6818.wmt"
-        ]
-    if mt_name == "wmt3":
-        paths[1] = [
-            root_dir
-            / f"data/wmt_submissions/{phase}/{apdx}/newstest2019.online-X.0.wmt"
-        ]
-    if mt_name == "wmt4":
-        paths[1] = [
-            root_dir
-            / f"data/wmt_submissions/{phase}/{apdx}/newstest2019.PROMT_NMT_DE-EN.6683.wmt"
-        ]
+
 
     assert (
         len(paths[0]) != 0 and len(paths[1]) != 0
@@ -310,13 +288,13 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
     #     raise NotImplementedError("Only Google data is supported for now.")
     
     if phase == "test":
-        lang_apdx = args.test
+        test_folder = args.test
         paths = {
             # No translationsese data for testing => trans_*.txt only matches ht sentences from original data
-            0: list((root_dir / f"data/{mt}/{phase}/{lang_apdx}-en/").glob(f"trans*.txt")),
+            0: list((root_dir / f"data/{mt}/{phase}/{test_folder}/").glob(f"trans*.txt")),
             1: list(
                 itertools.chain.from_iterable(
-                    (root_dir / f"data/{mt}/{phase}/{lang_apdx}-en/").glob(f"*{sfx}")
+                    (root_dir / f"data/{mt}/{phase}/{test_folder}/").glob(f"*{sfx}")
                     for sfx in _mt_suffixes
                 )
             ),
@@ -351,7 +329,7 @@ def load_corpus_multilingual_sentence_pairs(args, phase, split_docs_by_sentence=
             ]:
                 # Translation from original text.
                 if phase == "test":
-                    path_A = root_dir / f"data/{mt}/{phase}/{lang}-en/org_{lang}en_{lang}_wmt{wmt_year}.txt"
+                    path_A = root_dir / f"data/{mt}/{phase}/{test_folder}/org_{lang}en_{lang}_wmt{wmt_year}.txt"
                 else:
                     path_A = root_dir / f"data/{mt}/{phase}/org_{lang}en_{lang}_wmt{wmt_year}.txt"
             elif path_B.name in [
