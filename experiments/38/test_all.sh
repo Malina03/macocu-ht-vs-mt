@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name='38_eval'
-#SBATCH --partition=gpu
-#SBATCH --time=03:00:00
+#SBATCH --partition=gpushort
+#SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
@@ -28,7 +28,8 @@ bsz=32
 trained_on="all"
 
 test_set="test"
-eval_sets=("google" "opus" "deepl")
+# eval_sets=("google" "opus" "deepl")
+eval_sets=("wmt1" "wmt2" "wmt3" "wmt4")
 arch_folders=("mdeberta_unbalanced" "mdeberta_balanced_mt" "mdeberta_balanced_ht")
 seeds=(1 2 3)
 
