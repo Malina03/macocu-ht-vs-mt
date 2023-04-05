@@ -85,8 +85,7 @@ def get_training_arguments(args):
         label_smoothing_factor=args.label_smoothing,
         log_level="debug",
         metric_for_best_model="accuracy",
-        save_total_limit= (1 if args.strategy != 'no' else None),
-        report_to= ("wandb" if args.wandb else None)
+        save_total_limit= (1 if args.strategy != 'no' else None)
     )
 
 
