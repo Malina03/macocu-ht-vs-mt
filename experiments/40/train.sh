@@ -12,9 +12,6 @@
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
 
-export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
-export WANDB_DISABLED=true  # for some reason this is necessary
-
 exp_id=40
 root_dir=/scratch/hb-macocu/MT_vs_HT/experiments/${exp_id}
 
@@ -71,6 +68,6 @@ python classifier_trf_hf.py \
 --strategy "epoch" \
 --load_sentence_pairs "multilingual" \
 --max_length $max_length \
---balance_data "ht"\
+--balance_data "ht" \
 --gradient_accumulation_steps $gradient_accumulation_steps \
 &> $logfile
