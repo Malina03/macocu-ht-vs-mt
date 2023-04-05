@@ -3,7 +3,7 @@
 #SBATCH --job-name='opus_mt'
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
-#SBATCH --time=01:30:00
+#SBATCH --time=02:30:00
 #SBATCH --gpus-per-node=a100:1
 #SBATCH --mem=16GB
 #SBATCH --mail-type=ALL
