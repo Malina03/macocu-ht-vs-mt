@@ -59,40 +59,43 @@ def real_thing(file_path, out_file):
 # #authors = ["Boyne"]
 
 
+languages = ['zh', 'ru']
 batch_size = 16
-model_name = "Helsinki-NLP/opus-mt-de-en"
-helsinki_out_path = "/data/s3412768/opus_mt/translated"
-helsinki_in_path = "/data/s3412768/opus_mt/original"
-torch.cuda.is_available()
 
-print(f"Loading model and tokenizer from {model_name}...")
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+for language in languages:
+	model_name = "Helsinki-NLP/opus-mt-" + language + "-en"
+	helsinki_out_path = "/scratch/s3412768/opus_mt/" + language + "/translated"
+	helsinki_in_path = "/scratch/s3412768/opus_mt/" + language + "/original"
+	torch.cuda.is_available()
 
-# test()
+	print(f"Loading model and tokenizer from {model_name}...")
+	tokenizer = AutoTokenizer.from_pretrained(model_name)
+	model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
-for f in os.listdir(helsinki_in_path):
-	if os.path.isfile(os.path.join(helsinki_in_path, f)):
-		# files.append(f)
-		f_type = f.split("_")[0]
-		year = f.split("_")[3].split(".")[0]
-		language = f.split("_")[2]
-		lang_pair = f.split("_")[1]
-		in_fname = os.path.join(helsinki_in_path, f)
-		if f_type == "org":
-			out_fname = os.path.join(helsinki_out_path,'org_'+lang_pair+ "_" + lang_pair[:2] + "_" +year+'.opus.en')
-		elif f_type == 'trans':
-			out_fname = os.path.join(helsinki_out_path, 'trans_' + lang_pair + '_' + lang_pair[:2] + '_' + year + '.opus.en')
-		else:
-			print("Invalid file name: ", f)
-			continue
-		# print(in_fname, out_fname)
-		real_thing(in_fname, out_fname)
-		# break
+	# test()
 
-# for f in files:
-#for author in authors:
-# book_en = "/data/p278972/data/alitra/ennl/datasets/220526/test." + author + ".4eval.en"
-# print(author, book_en)
-# real_thing(book_en, author)
+	for f in os.listdir(helsinki_in_path):
+		if os.path.isfile(os.path.join(helsinki_in_path, f)):
+			# files.append(f)
+			f_type = f.split("_")[0]
+			year = f.split("_")[3].split(".")[0]
+			language = f.split("_")[2]
+			lang_pair = f.split("_")[1]
+			in_fname = os.path.join(helsinki_in_path, f)
+			if f_type == "org":
+				out_fname = os.path.join(helsinki_out_path,'org_'+lang_pair+ "_" + lang_pair[:2] + "_" +year+'.opus.en')
+			elif f_type == 'trans':
+				out_fname = os.path.join(helsinki_out_path, 'trans_' + lang_pair + '_' + lang_pair[:2] + '_' + year + '.opus.en')
+			else:
+				print("Invalid file name: ", f)
+				continue
+			# print(in_fname, out_fname)
+			real_thing(in_fname, out_fname)
+			# break
+
+	# for f in files:
+	#for author in authors:
+	# book_en = "/data/p278972/data/alitra/ennl/datasets/220526/test." + author + ".4eval.en"
+	# print(author, book_en)
+	# real_thing(book_en, author)
 
