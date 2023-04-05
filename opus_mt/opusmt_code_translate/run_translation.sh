@@ -3,8 +3,7 @@
 #SBATCH --job-name='opus_mt'
 #SBATCH --partition=gpu
 #SBATCH --time=01:30:00
-#SBATCH --gres=gpu:v100:1
-#SBATCH --ntasks 1
+#SBATCH --gpus-per-node=a100:1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=ALL
