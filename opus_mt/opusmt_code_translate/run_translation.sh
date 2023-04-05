@@ -16,6 +16,6 @@ source /home1/$USER/.envs/macocu/bin/activate
 
 logfile="/scratch/s3412768/opus_mt/translation.out"
 
-cd $HOME/HT-vs-MT/opus_mt/opusmt_code_translate
+cd /home1/s3412768/HT-vs-MT/opus_mt/opusmt_code_translate
 
 python -u translate.py > $logfile
