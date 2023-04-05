@@ -11,7 +11,7 @@
 
 
 module purge
-module load Python/3.8.6-GCCcore-10.2.0
+module load Python/3.9.6-GCCcore-11.2.0
 source /home1/$USER/.envs/macocu/bin/activate
 
 logfile="/scratch/s3412768/opus_mt/translation.out"
