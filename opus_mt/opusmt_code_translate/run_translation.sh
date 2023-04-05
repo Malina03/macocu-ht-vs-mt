@@ -6,7 +6,6 @@
 #SBATCH --time=01:30:00
 #SBATCH --gpus-per-node=a100:1
 #SBATCH --mem=16GB
-#SBATCH --output=/dev/null
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
@@ -17,6 +16,6 @@ source /home1/$USER/.envs/macocu/bin/activate
 
 logfile="/scratch/s3412768/opus_mt/translation.out"
 
-cd /home1/s3412768/HT-vs-MT/opus_mt/opusmt_code_translate
+cd /home1/s3412768/HT-vs-MT/opus_mt/opusmt_code_translate/
 
-python translate.py > $logfile
+python3 translate.py > $logfile
