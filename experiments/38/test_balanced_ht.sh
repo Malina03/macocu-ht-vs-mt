@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='40_eval'
+#SBATCH --job-name='38_eval'
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
 #SBATCH --time=03:00:00
@@ -12,7 +12,7 @@
 
 # export WANDB_DISABLED=true  # for some reason this is necessary
 
-exp_id=40
+exp_id=38
 root_dir=/scratch/hb-macocu/MT_vs_HT/experiments/${exp_id}
 
 module purge
@@ -22,14 +22,14 @@ source /home1/$USER/.envs/macocu/bin/activate
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
 learning_rate=1e-05
-bsz=1
-max_length=3072
-gradient_accumulation_steps=8
+bsz=16
+# max_length=3072
+max_length=512
+# gradient_accumulation_steps=8
 
 trained_on="all"
 test_set="test"
-eval_sets=("google" "opus" "deepl")
-# eval_sets=("wmt1" "wmt2" "wmt3" "wmt4")
+eval_sets=("wmt1" "wmt2" "wmt3" "wmt4")
 languages=("de" "zh" "ru")
 # arch_folders=("deberta_unbalanced" "deberta_balanced_mt" "deberta_balanced_ht")
 arch_folder="mdeberta_balanced_ht"

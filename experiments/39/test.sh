@@ -58,7 +58,7 @@ for seed in ${seeds[@]}; do
             --batch_size $bsz \
             --arch $arch \
             --mt ${trained_on} \
-            --test ${eval_on} \
+            --test "${language}-${eval_on}" \
             --load_model $checkpoint \
             &> $logfile
         done
