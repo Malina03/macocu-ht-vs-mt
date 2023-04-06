@@ -38,7 +38,7 @@ seed=${SLURM_ARRAY_TASK_ID}
 log_model_name="deberta_balanced_ht_ft"
 arch_folder="deberta_balanced_ht"
 
-checkpoint="/scratch/hb-macocu/MT_vs_HT/experiments/39/models/${mt}/${arch_folder}_${seed}/checkpoint-"
+checkpoint="/scratch/hb-macocu/MT_vs_HT/experiments/39/models/${mt}/${arch_folder}_${seed}/checkpoint-*"
 
 
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
