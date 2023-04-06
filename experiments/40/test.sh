@@ -44,11 +44,6 @@ for seed in ${seeds[@]}; do
             logfile="${logdir}/eval_${seed}.out"
             mkdir -p $logdir
             
-
-            logdir="${ROOT_DIR}/results/${arch_folder}/test/${eval_on}/"
-            logfile="${logdir}/eval_${seed}.out"
-            mkdir -p $logdir
-            
             python classifier_trf_hf.py \
             --root_dir $ROOT_DIR \
             --max_length $max_length \
