@@ -4,7 +4,7 @@
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
 #SBATCH --time=03:00:00
-#SBATCH --gpus-per-node=1
+#SBATCH --gpus-per-node=a100:1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
 #SBATCH --mail-type=ALL
