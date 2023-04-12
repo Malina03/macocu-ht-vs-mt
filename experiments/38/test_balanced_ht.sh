@@ -13,7 +13,7 @@
 # export WANDB_DISABLED=true  # for some reason this is necessary
 
 exp_id=38
-root_dir=/scratch/hb-macocu/MT_vs_HT/experiments/${exp_id}
+ROOT_DIR=/scratch/hb-macocu/MT_vs_HT/experiments/${exp_id}
 
 module purge
 module load Python/3.9.6-GCCcore-11.2.0
