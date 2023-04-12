@@ -279,7 +279,7 @@ def parse_args_hf():
     parser.add_argument(
         "--test",
         type=str,
-        choices=["deepl", "google", "opus","wmt1", "wmt2", "wmt3", "wmt4", "zh", "de", "ru"],
+        # choices=["deepl", "google", "opus","wmt1", "wmt2", "wmt3", "wmt4", "zh", "de", "ru"],
         help="Test a classifier on one of the test sets. For WMT "
         "submissions there are 4 options, originating from the "
         "WMT 19 test sets, for each language."
