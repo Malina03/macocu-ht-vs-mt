@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name='39_eval'
+#SBATCH --job-name='41_eval'
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
 #SBATCH --time=03:00:00
@@ -12,7 +12,7 @@
 
 # export WANDB_DISABLED=true  # for some reason this is necessary
 
-exp_id=39
+exp_id=41
 ROOT_DIR=/scratch/hb-macocu/MT_vs_HT/experiments/${exp_id}
 
 module purge
@@ -33,7 +33,7 @@ eval_sets=("google" "opus" "deepl")
 # eval_sets=("wmt1" "wmt2" "wmt3" "wmt4")
 languages=("de" "zh" "ru")
 # arch_folders=("deberta_unbalanced" "deberta_balanced_mt" "deberta_balanced_ht")
-arch_folder="deberta_balanced_ht"
+arch_folder="deberta_balanced_ht_ft"
 seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/

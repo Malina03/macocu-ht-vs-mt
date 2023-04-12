@@ -6,14 +6,14 @@
 #SBATCH --time=03:00:00
 #SBATCH --gpus-per-node=a100:1
 #SBATCH --mem=16GB
-#SBATCH --output=/dev/null
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
 # export WANDB_DISABLED=true  # for some reason this is necessary
 
+
 exp_id=40
-root_dir=/scratch/hb-macocu/MT_vs_HT/experiments/${exp_id}
+ROOT_DIR=/scratch/hb-macocu/MT_vs_HT/experiments/${exp_id}
 
 module purge
 module load Python/3.9.6-GCCcore-11.2.0
@@ -29,9 +29,7 @@ gradient_accumulation_steps=8
 trained_on="all"
 test_set="test"
 eval_sets=("google" "opus" "deepl")
-# eval_sets=("wmt1" "wmt2" "wmt3" "wmt4")
 languages=("de" "zh" "ru")
-# arch_folders=("deberta_unbalanced" "deberta_balanced_mt" "deberta_balanced_ht")
 arch_folder="mdeberta_balanced_ht"
 seeds=(1 2 3)
 

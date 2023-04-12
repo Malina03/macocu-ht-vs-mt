@@ -1,18 +1,18 @@
 #!/bin/bash
 
-#SBATCH --job-name='39_eval'
+#SBATCH --job-name='42_eval'
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
 #SBATCH --time=03:00:00
 #SBATCH --gpus-per-node=a100:1
 #SBATCH --mem=16GB
-#SBATCH --output=/dev/null
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=m.chichirau@student.rug.nl
 
 # export WANDB_DISABLED=true  # for some reason this is necessary
 
-exp_id=39
+
+exp_id=42
 ROOT_DIR=/scratch/hb-macocu/MT_vs_HT/experiments/${exp_id}
 
 module purge
@@ -20,20 +20,17 @@ module load Python/3.9.6-GCCcore-11.2.0
 source /home1/$USER/.envs/macocu/bin/activate
 
 # Hyper-parameters
-arch="microsoft/deberta-v3-large"
-mt="all"
+arch="microsoft/mdeberta-v3-base"
 learning_rate=1e-05
-bsz=2
-max_length=1024
+bsz=1
+max_length=3072
 gradient_accumulation_steps=8
 
 trained_on="all"
 test_set="test"
 eval_sets=("google" "opus" "deepl")
-# eval_sets=("wmt1" "wmt2" "wmt3" "wmt4")
 languages=("de" "zh" "ru")
-# arch_folders=("deberta_unbalanced" "deberta_balanced_mt" "deberta_balanced_ht")
-arch_folder="deberta_balanced_ht"
+arch_folder="mdeberta_balanced_ht_ft"
 seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
@@ -53,6 +50,7 @@ for seed in ${seeds[@]}; do
             --mt ${trained_on} \
             --test "${language}-${eval_on}" \
             --load_model $checkpoint \
+            --load_sentence_pairs "multilingual" \
             &> $logfile
         done
     done
