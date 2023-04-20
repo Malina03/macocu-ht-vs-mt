@@ -3,7 +3,7 @@
 #SBATCH --job-name='37_eval'
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
-#SBATCH --time=03:00:00
+#SBATCH --time=00:20:00
 #SBATCH --gpus-per-node=a100:1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
@@ -30,8 +30,10 @@ max_length=512
 
 trained_on="all"
 test_set="test"
-eval_sets=("wmt1" "wmt2" "wmt3" "wmt4")
-languages=("de" "zh" "ru" "fi" "gu" "kk" "lt")
+# eval_sets=("wmt1" "wmt2" "wmt3" "wmt4")
+# languages=("de" "zh" "ru" "fi" "gu" "kk" "lt")
+eval_sets=("wmt3")
+languages=("zh")
 # arch_folders=("deberta_unbalanced" "deberta_balanced_mt" "deberta_balanced_ht")
 arch_folder="deberta_balanced_ht"
 seeds=(1 2 3)
