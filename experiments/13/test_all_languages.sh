@@ -45,13 +45,13 @@ for trained_on in ${models[@]}; do
             #     continue
             # fi
 
-            if [ $test_set == "deepl" && lang == 'gu' ]; then
-                continue
-            fi  
+            # if [ $test_set == "deepl" && lang == 'gu' ]; then
+            #     continue
+            # fi  
 
-            if [ $test_set == "deepl" && lang == 'kk' ]; then
-                continue
-            fi  
+            # if [ $test_set == "deepl" && lang == 'kk' ]; then
+            #     continue
+            # fi  
 
             # if [ $test_set == "deepl" && lang == 'lt' ]; then
             #     continue
@@ -69,23 +69,17 @@ for trained_on in ${models[@]}; do
             logfile="${logdir}/eval.out"
             mkdir -p $logdir
 
-            if [ $mt == "google" ]; then
-                flags="--use_google_data"
-            else
-                flags=""
-            fi
+  
             
             python classifier_trf_hf.py \
             --root_dir $ROOT_DIR \
             --arch $arch \
-            --test 
-            --test_folder $test_set \
-            --test_on_language $lang \
+            --test \
+            --mt $test_set \
+            --test_folder $lang \
             --load_model $checkpoint \
             &> $logfile
 
-            # let i++
-            # let j++
         done
     done
 done
