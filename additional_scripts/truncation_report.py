@@ -14,9 +14,8 @@ def truncation_monolingual_train(phase, root_dir, use_google_data, split_docs_by
 
     corpus_data = []
     root_dir = Path(root_dir).resolve()
-    mt = mt_name = "google" if use_google_data else "deepl"
-    if mt_name.startswith("wmt"):
-        mt = "wmt_submissions"
+    mt =  "google" if use_google_data else "deepl"
+
     apdx = "normalized" if use_normalized_data else ""
     paths = {
         0: list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.txt")),
@@ -25,28 +24,6 @@ def truncation_monolingual_train(phase, root_dir, use_google_data, split_docs_by
             + list((root_dir / f"data/{mt}/{phase}/{apdx}").glob("*.en.google"))
         ),
     }  # all the text files per class
-    if mt_name == "wmt1":
-        paths[1] = [
-            root_dir
-            / f"data/wmt_submissions/{phase}/{apdx}/newstest2019.Facebook_FAIR.6750.wmt"
-        ]
-    if mt_name == "wmt2":
-        paths[1] = [
-            root_dir
-            / f"data/wmt_submissions/{phase}/{apdx}/newstest2019.RWTH_Aachen_System.6818.wmt"
-        ]
-    if mt_name == "wmt3":
-        paths[1] = [
-            root_dir
-            / f"data/wmt_submissions/{phase}/{apdx}/newstest2019.online-X.0.wmt"
-        ]
-    if mt_name == "wmt4":
-        paths[1] = [
-            root_dir
-            / f"data/wmt_submissions/{phase}/{apdx}/newstest2019.PROMT_NMT_DE-EN.6683.wmt"
-        ]
-
-    print(f"paths: {paths}")
 
     assert (
         len(paths[0]) != 0 and len(paths[1]) != 0
@@ -297,13 +274,10 @@ def truncation_bilingual(phase, root_dir, use_google_data, test, arch, max_lengt
 
 
 def main():
-    # languages = ["de", "ru", "zh"]
-    languages = ["de"]
-    # phases = ["train", "dev", "test"]
-    phases = ["train"]
-    # models = ['bilingual-de', 'bilingual-all', 'monolingual-de', 'monolingual-all']
+    languages = ["de", "ru", "zh"]
+    phases = ["train", "dev", "test"]
+    models = ['bilingual-de', 'bilingual-all', 'monolingual-de', 'monolingual-all']
     models = ['bilingual-de', 'monolingual-de']
-    # truncation_vals = [768, 1024, 2048]
     truncation_vals = [512, 768, 1024, 2048, 3072]
     root_dir_bilingual = Path("/data/pg-macocu/MT_vs_HT/experiments/29/")
     root_dir_bilingual_all = Path("/data/pg-macocu/MT_vs_HT/experiments/30/")

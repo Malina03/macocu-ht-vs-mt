@@ -1,7 +1,6 @@
 from functools import partial
 import sys
 from pathlib import Path
-import csv
 
 import numpy as np
 from transformers import (
@@ -9,13 +8,10 @@ from transformers import (
     AutoModelForSequenceClassification,
     Trainer,
     EarlyStoppingCallback,
-    XLMRobertaForSequenceClassification,
-    XLMRobertaModel,
 )
 
-from data import load_corpus, load_corpus_sentence_pairs, load_language_tests, load_corpus_multilingual_sentence_pairs, load_corpus_multilingual_sentence_pairs_balanced_mt, load_corpus_balanced_mt
-from models import BilingualSentenceClassifier
-from util import get_training_arguments, compute_metrics, parse_args_hf
+from data import load_corpus, load_sentence_pairs, load_sentence_pairs, load_sentence_pairs_balanced_mt, load_corpus_balanced_mt
+from util import get_training_arguments, compute_metrics, parse_args_hf, check_required_args
 
 
 
@@ -27,6 +23,8 @@ def main():
     # Get arguments.
     args = parse_args_hf()
 
+    check_required_args(args)
+
     # Set random seed.
     np.random.seed(args.seed)
 
@@ -36,32 +34,20 @@ def main():
     else:
         root_dir = Path(args.root_dir)
 
-    if args.load_model is not None:  # initialize a trained model
-        assert Path(
-            args.load_model
-        ).is_dir(), (
-            f"{args.load_model} is not a checkpoint directory, which it should be."
-        )
-
     model_name = args.arch.replace("/", "-")
-    mt = "google" if args.use_google_data else "deepl"
 
-    if args.max_length == 1e30: # default value for tokenization -> use default value for model as well
-        max_embeddings_length = 512
-    else:
-        max_embeddings_length = args.max_length # else match the tokenization length to the model length
     
     eff_bsz = args.gradient_accumulation_steps * args.batch_size
-    if args.test:
-        mt = args.test
+
     if not args.output_dir:
         output_dir = (
             root_dir
-            / f"models/{mt}/{model_name}_lr={args.learning_rate}_bsz={eff_bsz}_epochs={args.num_epochs}_seed={args.seed}/"
+            / f"models/{args.mt}/{model_name}_lr={args.learning_rate}_bsz={eff_bsz}_epochs={args.num_epochs}_seed={args.seed}/"
         )
     else:
         output_dir = args.output_dir
         
+
     if args.eval:
         output_dir = Path(output_dir.parent) / (output_dir.name + "_eval")
     elif args.test:
@@ -71,21 +57,14 @@ def main():
     # Load the data.
     idx_to_docid = None
     test_or_dev = "test" if args.test else "dev"
-    if args.load_sentence_pairs == "multilingual":
+
+    if args.load_sentence_pairs:
         if args.balance_data == 'mt':
-            train_data,_ = load_corpus_multilingual_sentence_pairs_balanced_mt(args, "train")
-            eval_data, idx_to_docid = load_corpus_multilingual_sentence_pairs_balanced_mt(args, test_or_dev, split_docs_by_sentence=args.use_majority_classification)
+            train_data,_ = load_sentence_pairs_balanced_mt(args, "train")
+            eval_data, idx_to_docid = load_sentence_pairs_balanced_mt(args, test_or_dev, split_docs_by_sentence=args.use_majority_classification)
         else:
-            train_data,_ = load_corpus_multilingual_sentence_pairs(args, "train")
-            eval_data, idx_to_docid = load_corpus_multilingual_sentence_pairs(args, test_or_dev, split_docs_by_sentence=args.use_majority_classification)
-    elif args.load_sentence_pairs:  # load both source and translations (bilingual)
-        train_data = load_corpus_sentence_pairs(args, "train")
-        eval_data = load_corpus_sentence_pairs(args, test_or_dev)
-    elif args.test_on_language:
-        train_data, _ = load_corpus(args, "train")
-        eval_data, idx_to_docid = load_language_tests(
-            args, 'test', split_docs_by_sentence=args.use_majority_classification
-        )
+            train_data,_ = load_sentence_pairs(args, "train")
+            eval_data, idx_to_docid = load_sentence_pairs(args, test_or_dev, split_docs_by_sentence=args.use_majority_classification)
     else:  # load only translations (monolingual)
         if args.balance_data == 'mt':
             train_data,_ = load_corpus_balanced_mt(args, "train")
@@ -100,29 +79,17 @@ def main():
     if args.load_model is not None:  # start from a trained model
         print(f"Loading model at {args.load_model}")
         model = AutoModelForSequenceClassification.from_pretrained(
-            args.load_model, local_files_only=True, max_position_embeddings=max_embeddings_length
+            args.load_model, local_files_only=True, max_position_embeddings=args.max_length
             )
     else:
         model_name = args.arch
         print(f"Loading LM: {model_name}")
         config = AutoConfig.from_pretrained(
-            model_name, num_labels=2, classifier_dropout=args.dropout, max_position_embeddings=max_embeddings_length
+            model_name, num_labels=2, classifier_dropout=args.dropout, max_position_embeddings=args.max_length
         )
-        if args.load_sentence_pairs == "mean_embeddings":
-            model = BilingualSentenceClassifier(
-                XLMRobertaModel.from_pretrained(
-                    model_name,
-                    config=config,
-                    local_files_only=False,
-                    add_pooling_layer=False,
-                ),
-                config.hidden_size,
-                dropout=args.dropout,
-            )          
-        else:
-            model = AutoModelForSequenceClassification.from_pretrained(
-                model_name, config=config, local_files_only=False
-            )
+        model = AutoModelForSequenceClassification.from_pretrained(
+            model_name, config=config, local_files_only=False
+        )
 
     # Setup Huggingface training arguments.
     training_args = get_training_arguments(args)
@@ -145,17 +112,19 @@ def main():
 
     # Start training/evaluation.
     if args.predict:
+        if not args.prediction_file:
+            prediction_file = Path(output_dir).joinpath("predictions.tsv")
+        else:
+            prediction_file = Path(args.prediction_file)
         predictions = trainer.predict(test_dataset=eval_data)
         predicted_labels = list(np.argmax(predictions.predictions, axis=1))
         true_labels = list(predictions.label_ids)
-        with open(args.prediction_file, "w+") as f:
+        with open(prediction_file, "w+") as f:
             f.write("predicted_label\ttrue_label\n")
             for pred, true in zip(predicted_labels, true_labels):
                     f.write(f"{pred}\t{true}\n")
-            # f.write("\nInfo:\n", predictions.metrics, "\n")
         print("\nInfo:\n", predictions.metrics, "\n")
-        print(predictions)
-        
+     
     elif args.test or args.eval or args.use_majority_classification:
         mets = trainer.evaluate()
         print("\nInfo:\n", mets, "\n")  

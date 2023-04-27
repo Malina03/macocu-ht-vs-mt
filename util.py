@@ -1,6 +1,7 @@
 import argparse
 from collections import defaultdict
 from typing import Optional, Dict
+from pathlib import Path
 
 import numpy as np
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
@@ -89,18 +90,28 @@ def get_training_arguments(args):
     )
 
 
-
-def _parse_args(parser, config_parser):
-    args_config, remaining = config_parser.parse_known_args()
-    if args_config.config:
-        with open(args_config.config, "r") as f:
-            cfg = yaml.safe_load(f)
-            parser.set_defaults(**cfg)
-
-    args = parser.parse_args(remaining)
-
-    return args
-
+def check_required_args(args):
+    if args.load_model is not None:  # initialize a trained model
+        assert Path(
+            args.load_model
+        ).is_dir(), (
+            f"{args.load_model} is not a checkpoint directory, which it should be."
+        )
+    if args.prediction_file and args.predict is None:
+        raise ValueError(
+            "Use the flag --predict with --prediction_file."
+        )
+    
+    if args.prediction_file and args.load_model is None:
+        raise ValueError(
+            "You need to specify a model to load if you want to save predictions."
+        )
+    if args.test_folder and args.test is None:
+        raise ValueError(
+            "Use the flag --test with --test_folder."
+        )
+    return
+    
 
 def parse_args_hf():
     """
@@ -108,22 +119,9 @@ def parse_args_hf():
     :return: Namespace of parsed CLI arguments.
     """
 
-    # config_parser = argparse.ArgumentParser(
-    #     description="Training Configuration", add_help=False
-    # )
-
     parser = argparse.ArgumentParser(
         description="Arguments for running the classifier."
-    )
-
-    # parser.add_argument(
-    #     "-c",
-    #     "--config",
-    #     type=str,
-    #     metavar="FILE",
-    #     default="",
-    #     help="Path to the YAML config file specifying the default parameters.",
-    # )
+    
 
     parser.add_argument(
         "--root_dir",
@@ -147,7 +145,7 @@ def parse_args_hf():
     parser.add_argument(
         "--prediction_file",
         type=str,
-        help="Location of the predictions file.",
+        help="Location of the predictions file. If not specified, the predictions are saved in the output_dir, as predictions.txt.",
     )
 
     parser.add_argument(
@@ -167,9 +165,7 @@ def parse_args_hf():
     parser.add_argument(
         "-mgn", "--max_grad_norm", default=1, type=float, help="Max grad norm"
     )
-    # parser.add_argument("-wr", "--warmup_ratio", default=0.1, type=float,
-    #                     help="Ratio of total training steps used for a linear warmup "
-    #                          "from 0 to learning_rate.")
+
     parser.add_argument(
         "-wr",
         "--warmup_steps",
@@ -226,21 +222,19 @@ def parse_args_hf():
         "--use_fp16", action="store_true", help="Use mixed 16-bit precision"
     )
     parser.add_argument("--gradient_accumulation_steps", type=int, default=1)
-    parser.add_argument("--max_length", type=int, default=1e30)
+    parser.add_argument("--max_length", type=int, default=512)
     parser.add_argument(
         "--load_sentence_pairs",
-        type=str,
-        nargs = '?',
-        choices = ["default", "mean_embeddings", "reverse", "multilingual"],
+        type="store_true",
         help="Set this flag to classify HT vs. MT for "
         "source/translation pairs, rather than just "
         "translations.",
     )
-    parser.add_argument(
-        "--use_google_data",
-        action="store_true",
-        help="Use Google Translate data instead of DeepL data for train/dev/test.",
-    )
+
+    parser.add_argument("--reverse", 
+    action="store_true", 
+    help="Reverse source and target when loading sentence pairs.")
+
     parser.add_argument(
         "--wandb",
         action="store_true",
@@ -260,14 +254,7 @@ def parse_args_hf():
         "a Moses normalization script to them. Right now only works for "
         "monolingual sentences",
     )
-    parser.add_argument(
-        "--test_on_language",
-        type=str,
-        nargs = '?',
-        choices = ["de", "fi", "gu", "kk", "lt", "ru", "zh", "dv"],
-        help="Test a classifier on bilingual test sets from different lanuages"
-        "from the WMT 19 news dataset.",
-    )
+
     parser.add_argument(
         "--use_majority_classification",
         action="store_true",
@@ -278,16 +265,17 @@ def parse_args_hf():
     )
     parser.add_argument(
         "--test",
+        action="store_true",
+        help="Evaluate the model on a default test set. To evaluate on a specific"
+        "sub-folder placed in data/test/ also use --test_folder to indicate the"
+        "sub-folder name.",
+    )
+
+    parser.add_argument(
+        "--test_folder",
         type=str,
-        # choices=["deepl", "google", "opus","wmt1", "wmt2", "wmt3", "wmt4", "zh", "de", "ru"],
-        help="Test a classifier on one of the test sets. For WMT "
-        "submissions there are 4 options, originating from the "
-        "WMT 19 test sets, for each language."
-        "For exact systems: https://www.statmt.org/wmt19/pdf/53/WMT01.pdf "
-        "- wmt1: best system"
-        "- wmt2: 2nd best system"
-        "- wmt3: 2nd worst system"
-        "- wmt4: worst system",
+        help="Specify a subfolder of the test folder (i.e data/mt/test/<test_folder>/) to evaluate on. Otherwise, only "
+           " the test files with correct extenstions directly in the test folder are evaluated.",
     )
 
     parser.add_argument(
@@ -295,25 +283,25 @@ def parse_args_hf():
         type=str,
         default="google",
         choices=["deepl", "google", "opus","all"],
-        help="Which dataset to use for training and testing.",
+        help="Which dataset (in the experiment data folder) to use for training and testing.",
     )
-
     
     parser.add_argument(
         "--balance_data",
         type=str,
         default="None",
         choices=["ht", "mt"],
-        help="When training on 3 mt systems, balance training/dev data. HT means that all mt data is used and ht is added 3x times to compensate.MT means all ht data is used and 1/3 mt is used from each system.",
+        help="When training on 3 mt systems, balance training/dev data. 'ht' means that all mt data"
+        "is used and ht is added 3x times to compensate. 'mt' means all ht data is used and 1/3 mt is used from each system.",
     )
 
     parser.add_argument(
-        "--eval", action="store_true", help="Evaluate on dev set using a trained model"
+        "--eval", action="store_true", help="Evaluate on dev set using a trained model. The testing data will be loaded from "
+        "data/mt/dev/ folder."
     )
     parser.add_argument(
         "--seed", type=int, default=1, help="Random number generator seed."
     )
 
-    # args = _parse_args(parser, config_parser)
 
     return parser.parse_args()
