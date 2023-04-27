@@ -1,63 +1,63 @@
 #!/bin/bash
 
-#SBATCH --job-name='38_unb_train'
+#SBATCH --job-name='8_train'
 #SBATCH --partition=gpu
-#SBATCH --time=05:00:00
+#SBATCH --time=01:00:00
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks 1
 #SBATCH --mem=16GB
 #SBATCH --output=/dev/null
-#SBATCH --array=1-3
-#SBATCH --mail-type=BEGIN,FAIL,END
-#SBATCH --mail-user=m.chichirau@student.rug.nl
+#SBATCH --array=1
 
 
 export TRANSFORMERS_CACHE=/data/pg-macocu/MT_vs_HT/cache/huggingface
 export WANDB_DISABLED=true  # for some reason this is necessary
 
-exp_id=38
+exp_id=8
 root_dir=/data/pg-macocu/MT_vs_HT/experiments/${exp_id}
 
 module purge
 module load Python/3.8.6-GCCcore-10.2.0
-source /data/$USER/.envs/macocu/bin/activate
+source $HOME/activate_py3.8.6
 
 # Hyper-parameters
-arch="microsoft/mdeberta-v3-base"
-mt="all"
+arch="microsoft/deberta-v3-large"
+mt="deepl"
 learning_rate=1e-05
-bsz=16
-max_length=512
-num_epochs=10
+bsz=32
+num_epochs=5
 weight_decay=0
 max_grad_norm=1
-warmup_steps=400
+warmup_steps=200
 label_smoothing=0.0
 dropout=0.1
-
 seed=${SLURM_ARRAY_TASK_ID}
 
-# if [ $mt == "google" ]; then
-#     flags="--use_google_data"
-# else
-#     flags=""
-# fi
+if [ $mt == "google" ]; then
+    flags="--use_google_data"
+else
+    flags=""
+fi
 
-log_model_name="mdeberta_unbalanced"
-
-logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
-outputdir="${root_dir}/results/${log_model_name}/${mt}/dev"
-logfile="${outputdir}/train_${seed}.out"
-mkdir -p $outputdir
+log_model_name=$(echo $arch | sed 's/\//-/g')
+# Make sure the logdir specified below corresponds to the directory defined in the
+# main() function of the `classifier_trf_hf.py` script!
+logdir="${root_dir}/models/${mt}/${log_model_name}_lr=${learning_rate}_bsz=${bsz}_seed=${seed}/"
+logfile="${logdir}/train.out"
 mkdir -p $logdir
 
+# Copy source code
+mkdir -p $logdir/src
+cp $HOME/MaCoCu/student_project_mt_ht/classifier_trf_hf.py $logdir/src
 
-cd $HOME/HT-vs-MT/
+# Copy this script
+cp $(realpath $0) $logdir
+
+
+cd $HOME/MaCoCu/student_project_mt_ht/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
---output_dir $logdir \
 --arch $arch \
---mt $mt \
 --learning_rate $learning_rate \
 --batch_size $bsz \
 --num_epochs $num_epochs \
@@ -67,7 +67,6 @@ python classifier_trf_hf.py \
 --label_smoothing $label_smoothing \
 --dropout $dropout \
 --seed $seed \
---strategy "epoch" \
---load_sentence_pairs "multilingual" \
---max_length $max_length \
+$flags \
+--use_normalized_data \
 &> $logfile
