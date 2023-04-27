@@ -79,8 +79,10 @@ Especially when training/testing bilingual classifiers it is important to adhere
 
 ## Experiments
 
+MAKE SURE YOU ARE ON THE MAIN BRANCH. Otherwise, the numbers of the experiments might not make sense.
+
 The folder `experiments` contains example scripts for running the experiments discussed in the paper. You will notice there are more experiments here than in the paper, since several experiments were grouped as a single larger experiment in the paper. This section provides a guide for which experiments scripts correspond to which experiments presented in the paper.
 
 ### Experiment 1 - Monolingual classifier tested on different source languages
 
-we analyse the performance of our classifier when testing a target-only model on English translations from a different source language. The corresponding experiment is 13.
+We analyse the performance of a classifier when testing a target-only model on English translations from a different source language. The corresponding experiment is 13.
