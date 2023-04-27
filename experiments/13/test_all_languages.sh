@@ -78,7 +78,8 @@ for trained_on in ${models[@]}; do
             python classifier_trf_hf.py \
             --root_dir $ROOT_DIR \
             --arch $arch \
-            --test $test_set \
+            --test 
+            --test_folder $test_set \
             --test_on_language $lang \
             --load_model $checkpoint \
             &> $logfile
