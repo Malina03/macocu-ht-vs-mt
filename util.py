@@ -121,7 +121,7 @@ def parse_args_hf():
 
     parser = argparse.ArgumentParser(
         description="Arguments for running the classifier."
-    
+    )
 
     parser.add_argument(
         "--root_dir",
