@@ -69,5 +69,5 @@ python classifier_trf_hf.py \
 --label_smoothing $label_smoothing \
 --dropout $dropout \
 --seed $seed \
-$flags \
+--mt $mt \
 &> $logfile

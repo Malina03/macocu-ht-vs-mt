@@ -25,6 +25,7 @@ source /data/$USER/.envs/macocu/bin/activate
 # Hyper-parameters
 arch="microsoft/deberta-v3-large"
 mt="deepl"
+
 learning_rate=1e-05
 bsz=32
 num_epochs=5
@@ -35,26 +36,15 @@ label_smoothing=0.0
 dropout=0.1
 seed=${SLURM_ARRAY_TASK_ID}
 
-if [ $mt == "google" ]; then
-    flags="--use_google_data"
-else
-    flags=""
-fi
 
 log_model_name=$(echo $arch | sed 's/\//-/g')
-# Make sure the logdir specified below corresponds to the directory defined in the
-# main() function of the `classifier_trf_hf.py` script!
+
 logdir="${root_dir}/models/${mt}/${log_model_name}_lr=${learning_rate}_bsz=${bsz}_seed=${seed}/"
 logfile="${logdir}/train.out"
 mkdir -p $logdir
 
-# Copy source code
+
 mkdir -p $logdir/src
-cp $HOME/HT-vs-MT/classifier_trf_hf.py $logdir/src
-
-# Copy this script
-cp $(realpath $0) $logdir
-
 
 cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
@@ -69,5 +59,5 @@ python classifier_trf_hf.py \
 --label_smoothing $label_smoothing \
 --dropout $dropout \
 --seed $seed \
-$flags \
+--mt $mt \
 &> $logfile
