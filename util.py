@@ -225,7 +225,7 @@ def parse_args_hf():
     parser.add_argument("--max_length", type=int, default=512)
     parser.add_argument(
         "--load_sentence_pairs",
-        type="store_true",
+        action="store_true",
         help="Set this flag to classify HT vs. MT for "
         "source/translation pairs, rather than just "
         "translations.",
