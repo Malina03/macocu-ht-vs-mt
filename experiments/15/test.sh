@@ -24,10 +24,9 @@ arch="microsoft/deberta-v3-large"
 arch_folder="deberta"
 learning_rate=1e-05
 bsz=32
-trained_on="google"
-# trained_on="deepl"
+trained_on="deepl"
 eval_sets=("zh-en" "de-en" "ru-en")
-seeds=(1 2 3 4 5 6 7 8 9 10)
+seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
 

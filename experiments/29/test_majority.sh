@@ -26,44 +26,31 @@ arch_folder="mdeberta"
 trained_on="google"
 # trained_on="deepl"
 test_set="test"
-eval_sets=("zh" "de" "ru")
-seeds=(1 2 3 4 5 6 7 8 9 10)
+eval_sets=("zh-en" "de-en" "ru-en")
+seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
-    # if [ $seed == 1 ]; then 
-    #     ckpt=1032
-    # fi
-    # if [ $seed == 2 ]; then
-    #     ckpt=2064
-    # fi
-    # if [ $seed == 3 ]; then
-    #     ckpt=4128
-    # fi
+ 
     checkpoint="/data/pg-macocu/MT_vs_HT/experiments/22/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
 
     for eval_on in ${eval_sets[@]}; do
 
         logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
-        # logdir="/data/$USER/MT_vs_HT/experiments/${EXP_ID}/results/${trained_on}/${test_set}/${eval_on}/"
         logfile="${logdir}/eval_majority_${seed}.out"
         mkdir -p $logdir
 
-        if [ $trained_on == "google" ]; then
-            flags="--use_google_data"
-        else
-            flags=""
-        fi
-        
+
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
         --batch_size 8 \
         --arch $arch \
+        --mt $trained_on \
         --load_model $checkpoint \
-        --load_sentence_pairs "multilingual" \
+        --load_sentence_pairs\
         --use_majority_classification \
-        --test $eval_on \
-        $flags \
+        --test_folder $eval_on \
+        --test \
         &> $logfile
     done
 done

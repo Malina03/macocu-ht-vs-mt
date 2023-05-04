@@ -20,49 +20,33 @@ source /data/$USER/.envs/macocu/bin/activate
 EXP_ID=21
 ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 
-# arch="microsoft/mdeberta-v3-base"
-# arch_folder="mdeberta"
-
 arch="microsoft/deberta-v3-large"
 arch_folder="deberta"
 learning_rate=1e-05
 bsz=32
 trained_on="google"
-# trained_on="deepl"
-test_set="test"
-eval_sets=("zh" "de" "ru")
-seeds=(1 2 3 4 5 6 7 8 9 10)
+eval_sets=("zh-en" "de-en" "ru-en")
+seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
-for seed in ${seeds[@]}; do
-       checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
+
+for seed in ${seeds[@]}; do    
+    checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
 
     for eval_on in ${eval_sets[@]}; do
 
         logdir="${ROOT_DIR}/results/${trained_on}/test/${eval_on}/"
         logfile="${logdir}/eval_${seed}.out"
-        mkdir -p $logdir    
-
-        if [ $trained_on == "google" ]; then
-            flags="--use_google_data"
-        else
-            flags=""
-        fi
-
-        if [ $test_set == "dev" ]; then
-            test_flags="--eval"
-        else
-            test_flags="--test $trained_on"
-        fi
+        mkdir -p $logdir
         
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
         --batch_size 16 \
         --arch $arch \
-        --test_on_language ${eval_on} \
+        --mt $trained_on \
+        --test
+        --test_folder ${eval_on} \
         --load_model $checkpoint \
-        $flags \
-        $test_flags \
         &> $logfile
     done
 done

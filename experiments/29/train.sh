@@ -40,13 +40,6 @@ dropout=0.1
 
 seed=${SLURM_ARRAY_TASK_ID}
 
-if [ $mt == "google" ]; then
-    flags="--use_google_data"
-else
-    flags=""
-fi
-
-
 log_model_name="mdeberta"
 
 cd $HOME/HT-vs-MT/
@@ -58,13 +51,14 @@ logfile="${outputdir}/train_${seed}.out"
 mkdir -p $outputdir
 mkdir -p $logdir
 
+cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
 --output_dir $logdir \
 --arch $arch \
+--mt $mt \
 --learning_rate $learning_rate \
 --batch_size $bsz \
---gradient_accumulation_steps $gradient_accumulation_steps \
 --num_epochs $num_epochs \
 --weight_decay $weight_decay \
 --max_grad_norm $max_grad_norm \
@@ -73,8 +67,6 @@ python classifier_trf_hf.py \
 --dropout $dropout \
 --seed $seed \
 --strategy "epoch" \
---load_sentence_pairs "multilingual" \
+--load_sentence_pairs \
 --max_length $max_length \
-$flags \
 &> $logfile
-

@@ -26,7 +26,7 @@ arch="microsoft/mdeberta-v3-base"
 arch_folder="mdeberta"
 trained_on="google"
 # trained_on="deepl"
-eval_sets=("zh" "de" "ru")
+eval_sets=("zh-en" "de-en" "ru-en")
 # seeds=(1 2 3)
 seeds=(4 5 6 7 8 9 10)
 bsz=1
@@ -42,21 +42,15 @@ for seed in ${seeds[@]}; do
         logfile="${logdir}/eval_${seed}.out"
         mkdir -p $logdir
 
-        if [ $trained_on == "google" ]; then
-            flags="--use_google_data"
-        else
-            flags=""
-        fi
-        
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
         --batch_size $bsz \
         --arch $arch \
         --load_model $checkpoint \
-        --load_sentence_pairs "multilingual" \
-        --test $eval_on \
+        --load_sentence_pairs\
+        --test_folder $eval_on \
         --max_length $max_length \
-        $flags \
+        --mt $trained_on \
         &> $logfile
     done
 done

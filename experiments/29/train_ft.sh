@@ -39,12 +39,6 @@ dropout=0.1
 
 seed=${SLURM_ARRAY_TASK_ID}
 
-if [ $mt == "google" ]; then
-    flags="--use_google_data"
-else
-    flags=""
-fi
-
 log_model_name="mdeberta_ft"
 arch_folder="mdeberta"
 checkpoint="/data/pg-macocu/MT_vs_HT/experiments/22/models/${mt}/${arch_folder}_${seed}/checkpoint-*"
@@ -60,8 +54,9 @@ cd $HOME/HT-vs-MT/
 python classifier_trf_hf.py \
 --root_dir $root_dir \
 --output_dir $logdir \
---load_model $checkpoint \
 --arch $arch \
+--load_model $checkpoint \
+--mt $mt \
 --learning_rate $learning_rate \
 --batch_size $bsz \
 --num_epochs $num_epochs \
@@ -72,8 +67,6 @@ python classifier_trf_hf.py \
 --dropout $dropout \
 --seed $seed \
 --strategy "epoch" \
---load_sentence_pairs "multilingual" \
+--load_sentence_pairs \
 --max_length $max_length \
---gradient_accumulation_steps $gradient_accumulation_steps \
-$flags \
 &> $logfile
