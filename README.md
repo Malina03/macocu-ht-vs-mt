@@ -103,6 +103,15 @@ The scripts for training and evaluating the monolingual classifiers are in exper
 
 Experiments using the monolingual classifier are 15-21, and the ones using the bilingual classifier are 22-28. For each classifier, the data used in each experiment is in the same order as the order of the results presented in Table 5, from the paper. For instance, experiments 15 and 21 only use German for training (first row of the table), experiments 19 and 26 use German and Russian (5th row from table). 
 
+|          	| Monolingual<br>(DeBERTa) 	| Bilingual<br>(mDeBERTa) 	|
+|----------	|--------------------------	|-------------------------	|
+| German   	| 15                       	| 22                      	|
+| Chinese  	| 16                       	| 23                      	|
+| Russian  	| 17                       	| 24                      	|
+| de+zh    	| 18                       	| 25                      	|
+| de+ru    	| 19                       	| 26                      	|
+| ru+zh    	| 20                       	| 27                      	|
+| de+ru+zh 	| 21                       	| 28                      	|
 
 ### Experiment 5: Sentence- vs Document-level
 

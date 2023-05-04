@@ -25,10 +25,6 @@ source /data/$USER/.envs/macocu/bin/activate
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
 mt="google"
-# mt="deepl"
-# learning_rate=5e-05
-# bsz=32
-# max_length=3072
 learning_rate=5e-05
 bsz=32
 max_length=512
@@ -40,12 +36,6 @@ label_smoothing=0.0
 dropout=0.1
 
 seed=${SLURM_ARRAY_TASK_ID}
-
-# if [ $mt == "google" ]; then
-#     flags="--use_google_data"
-# else
-#     flags=""
-# fi
 
 log_model_name="mdeberta"
 logdir="${root_dir}/models/${mt}/${log_model_name}_${seed}/"
@@ -71,6 +61,6 @@ python classifier_trf_hf.py \
 --dropout $dropout \
 --seed $seed \
 --strategy "epoch" \
---load_sentence_pairs "multilingual" \
+--load_sentence_pairs \
 --max_length $max_length \
 &> $logfile

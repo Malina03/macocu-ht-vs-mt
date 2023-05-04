@@ -23,22 +23,14 @@ ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 # Hyper-parameters
 arch="microsoft/mdeberta-v3-base"
 arch_folder="mdeberta"
-# trained_on="google"
-trained_on="deepl"
-eval_sets=("zh" "de" "ru")
+trained_on="google"
+# trained_on="deepl"
+eval_sets=("zh-en" "de-en" "ru-en")
 seeds=(1 2 3)
 
 cd $HOME/HT-vs-MT/
 for seed in ${seeds[@]}; do
-    # if [ $seed == 1 ]; then 
-    #     ckpt=1032
-    # fi
-    # if [ $seed == 2 ]; then
-    #     ckpt=2064
-    # fi
-    # if [ $seed == 3 ]; then
-    #     ckpt=4128
-    # fi
+
     checkpoint="${ROOT_DIR}/models/${trained_on}/${arch_folder}_${seed}/checkpoint-*"
 
     for eval_on in ${eval_sets[@]}; do
@@ -47,20 +39,15 @@ for seed in ${seeds[@]}; do
         logfile="${logdir}/eval_${seed}.out"
         mkdir -p $logdir
 
-        if [ $trained_on == "google" ]; then
-            flags="--use_google_data"
-        else
-            flags=""
-        fi
-        
         python classifier_trf_hf.py \
         --root_dir $ROOT_DIR \
         --batch_size 16 \
         --arch $arch \
         --load_model $checkpoint \
-        --load_sentence_pairs "multilingual" \
-        --test $eval_on \
-        $flags \
+        --load_sentence_pairs \
+        --mt $trained_on \
+        --test
+        --test_folder $eval_on \
         &> $logfile
     done
 done
