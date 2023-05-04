@@ -26,9 +26,9 @@ ROOT_DIR=/data/pg-macocu/MT_vs_HT/experiments/${EXP_ID}
 arch="microsoft/deberta-v3-large"
 arch_folder="deberta"
 
-models=("google" "deepl" "opus")
+models=("google" "deepl")
 sets=("dev" "test")
-eval_sets=("google" "deepl" "opus")
+eval_sets=("google" "deepl")
 seeds=(1 2 3)
 
 
@@ -43,12 +43,6 @@ for trained_on in ${models[@]}; do
                 logdir="${ROOT_DIR}/results/${arch_folder}/${trained_on}/${test_set}/${eval_on}/"
                 logfile="${logdir}/eval_${seed}.out"
                 mkdir -p $logdir
-
-                # if [ $eval_on == "google" ]; then
-                #     flags="--use_google_data"
-                # else
-                #     flags=""
-                # fi
 
                 if [ $test_set == "dev" ]; then
                     test_flags="--eval"
